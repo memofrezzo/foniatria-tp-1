@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Esquema de apoyo respiratorio y pliegues vocales</title>
+  <desc id="desc">Diagrama simplificado en español del recorrido del aire, los pliegues vocales y la resonancia.</desc>
+  <rect width="900" height="1200" fill="#ede5d0"/>
+  <rect x="56" y="56" width="788" height="1088" rx="36" fill="#f7f1e8" stroke="#c8973a" stroke-width="4"/>
+  <g fill="none" stroke="#7a1f2e" stroke-width="12" stroke-linecap="round">
+    <path d="M450 1040V875"/>
+    <path d="M450 774V708"/>
+    <path d="M450 460V316"/>
+  </g>
+  <g fill="#7a1f2e">
+    <polygon points="450,272 430,316 470,316"/>
+    <polygon points="450,664 430,708 470,708"/>
+    <polygon points="450,830 430,874 470,874"/>
+  </g>
+  <g>
+    <ellipse cx="450" cy="220" rx="172" ry="86" fill="#e8dbc5" stroke="#3b2e1a" stroke-width="4"/>
+    <text x="450" y="206" text-anchor="middle" font-size="42" font-family="Georgia, serif" fill="#18120a">Resonancia</text>
+    <text x="450" y="254" text-anchor="middle" font-size="28" font-family="Georgia, serif" fill="#6b5540">faringe, boca y cavidad nasal</text>
+  </g>
+  <g>
+    <path d="M380 330C380 280 407 238 450 238C493 238 520 280 520 330V470C520 548 488 620 450 676C412 620 380 548 380 470Z" fill="#d9c6af" stroke="#3b2e1a" stroke-width="5"/>
+    <path d="M432 430C432 396 440 360 450 336C460 360 468 396 468 430V518C468 552 459 578 450 596C441 578 432 552 432 518Z" fill="#f7f1e8" stroke="#7a1f2e" stroke-width="4"/>
+    <path d="M404 452C420 432 432 426 442 426" fill="none" stroke="#a33040" stroke-width="10" stroke-linecap="round"/>
+    <path d="M496 452C480 432 468 426 458 426" fill="none" stroke="#a33040" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="450" cy="506" r="20" fill="#c8973a"/>
+  </g>
+  <g>
+    <rect x="92" y="354" width="210" height="86" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="197" y="390" text-anchor="middle" font-size="30" font-family="Georgia, serif" fill="#18120a">Flujo de aire</text>
+    <text x="197" y="424" text-anchor="middle" font-size="24" font-family="Georgia, serif" fill="#6b5540">desde los pulmones</text>
+    <path d="M302 398H360" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="360,398 344,388 344,408" fill="#7a1f2e"/>
+  </g>
+  <g>
+    <rect x="598" y="366" width="210" height="74" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="703" y="410" text-anchor="middle" font-size="30" font-family="Georgia, serif" fill="#18120a">Pliegues vocales</text>
+    <path d="M598 404H536" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="536,404 552,394 552,414" fill="#7a1f2e"/>
+  </g>
+  <g>
+    <rect x="612" y="506" width="196" height="74" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="710" y="550" text-anchor="middle" font-size="30" font-family="Georgia, serif" fill="#18120a">Glotis</text>
+    <path d="M612 544H494" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="494,544 510,534 510,554" fill="#7a1f2e"/>
+  </g>
+  <g>
+    <ellipse cx="450" cy="842" rx="188" ry="204" fill="#e1d0bc" stroke="#3b2e1a" stroke-width="5"/>
+    <ellipse cx="392" cy="852" rx="78" ry="146" fill="#d9b89f" opacity=".9"/>
+    <ellipse cx="508" cy="852" rx="78" ry="146" fill="#d9b89f" opacity=".9"/>
+    <path d="M336 936C368 996 402 1016 450 1032C498 1016 532 996 564 936" fill="none" stroke="#7a1f2e" stroke-width="20" stroke-linecap="round"/>
+    <path d="M450 746V1000" fill="none" stroke="#6b5540" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g>
+    <rect x="102" y="990" width="250" height="88" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="227" y="1026" text-anchor="middle" font-size="30" font-family="Georgia, serif" fill="#18120a">Pulmones</text>
+    <text x="227" y="1060" text-anchor="middle" font-size="24" font-family="Georgia, serif" fill="#6b5540">reserva de aire</text>
+    <path d="M352 1034H404" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="404,1034 388,1024 388,1044" fill="#7a1f2e"/>
+  </g>
+  <g fill="none" stroke="#c8973a" stroke-width="6" stroke-linecap="round">
+    <path d="M542 188C598 174 646 176 708 190"/>
+    <path d="M550 208C598 198 646 201 700 212"/>
+    <path d="M560 228C606 222 648 225 694 236"/>
+  </g>
+  <g>
+    <rect x="580" y="120" width="190" height="82" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="675" y="156" text-anchor="middle" font-size="28" font-family="Georgia, serif" fill="#18120a">Sonido</text>
+    <text x="675" y="190" text-anchor="middle" font-size="24" font-family="Georgia, serif" fill="#6b5540">estable y proyectado</text>
+  </g>
+</svg>

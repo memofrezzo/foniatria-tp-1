@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Esquema anatómico del diafragma</title>
+  <desc id="desc">Diagrama simplificado en español con caja torácica, pulmones y diafragma.</desc>
+  <rect width="900" height="1200" fill="#ede5d0"/>
+  <rect x="56" y="56" width="788" height="1088" rx="36" fill="#f7f1e8" stroke="#c8973a" stroke-width="4"/>
+  <g stroke="#3b2e1a" stroke-width="8" fill="none" stroke-linecap="round">
+    <path d="M236 198C196 280 178 420 182 574C186 726 216 856 270 956"/>
+    <path d="M664 198C704 280 722 420 718 574C714 726 684 856 630 956"/>
+  </g>
+  <g stroke="#c9b79d" stroke-width="12" stroke-linecap="round">
+    <path d="M280 222C250 286 236 354 236 426"/>
+    <path d="M250 306H352"/>
+    <path d="M236 384H344"/>
+    <path d="M228 462H338"/>
+    <path d="M228 540H336"/>
+    <path d="M236 620H346"/>
+    <path d="M252 700H366"/>
+    <path d="M620 222C650 286 664 354 664 426"/>
+    <path d="M548 306H650"/>
+    <path d="M556 384H664"/>
+    <path d="M562 462H672"/>
+    <path d="M564 540H674"/>
+    <path d="M554 620H664"/>
+    <path d="M534 700H648"/>
+  </g>
+  <g>
+    <ellipse cx="356" cy="542" rx="132" ry="250" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+    <ellipse cx="544" cy="542" rx="132" ry="250" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+    <path d="M356 326C312 396 290 462 286 560C282 674 312 746 356 792" fill="none" stroke="#5f6f68" stroke-width="5"/>
+    <path d="M544 326C588 396 610 462 614 560C618 674 588 746 544 792" fill="none" stroke="#5f6f68" stroke-width="5"/>
+  </g>
+  <path d="M450 268V852" fill="none" stroke="#6b5540" stroke-width="10" stroke-linecap="round"/>
+  <path d="M254 824C330 760 390 734 450 734C510 734 570 760 646 824" fill="none" stroke="#7a1f2e" stroke-width="26" stroke-linecap="round"/>
+  <path d="M280 852C332 814 386 792 450 792C514 792 568 814 620 852" fill="none" stroke="#c8973a" stroke-width="8" stroke-linecap="round" opacity=".75"/>
+  <ellipse cx="450" cy="702" rx="62" ry="44" fill="#f7f1e8" stroke="#c8973a" stroke-width="4"/>
+  <g font-family="Georgia, serif">
+    <rect x="108" y="154" width="238" height="78" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="227" y="201" text-anchor="middle" font-size="30" fill="#18120a">Caja torácica</text>
+    <path d="M346 194H410" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="410,194 394,184 394,204" fill="#7a1f2e"/>
+    <rect x="92" y="420" width="234" height="82" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="209" y="455" text-anchor="middle" font-size="30" fill="#18120a">Pulmón derecho</text>
+    <text x="209" y="488" text-anchor="middle" font-size="23" fill="#6b5540">entra y sale el aire</text>
+    <path d="M326 462H206" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="206,462 222,452 222,472" fill="#7a1f2e"/>
+    <rect x="572" y="420" width="236" height="82" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="690" y="455" text-anchor="middle" font-size="30" fill="#18120a">Pulmón izquierdo</text>
+    <text x="690" y="488" text-anchor="middle" font-size="23" fill="#6b5540">se expande al inspirar</text>
+    <path d="M572 462H694" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="694,462 678,452 678,472" fill="#7a1f2e"/>
+    <rect x="582" y="650" width="220" height="80" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="692" y="698" text-anchor="middle" font-size="30" fill="#18120a">Centro tendinoso</text>
+    <path d="M582 690H514" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="514,690 530,680 530,700" fill="#7a1f2e"/>
+    <rect x="88" y="836" width="262" height="92" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="219" y="874" text-anchor="middle" font-size="30" fill="#18120a">Diafragma</text>
+    <text x="219" y="910" text-anchor="middle" font-size="24" fill="#6b5540">músculo principal de la inspiración</text>
+    <path d="M350 878H428" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="428,878 412,868 412,888" fill="#7a1f2e"/>
+  </g>
+</svg>

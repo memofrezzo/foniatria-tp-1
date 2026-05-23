@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Esquema de apoyo respiratorio</title>
+  <desc id="desc">Torso simplificado con etiquetas en español para costillas, diafragma, abdomen y salida del aire.</desc>
+  <rect width="900" height="1200" fill="#ede5d0"/>
+  <rect x="56" y="56" width="788" height="1088" rx="36" fill="#f7f1e8" stroke="#c8973a" stroke-width="4"/>
+  <path d="M450 154C382 154 328 210 308 278L270 424C250 498 248 578 266 654L304 826C316 878 358 916 412 924H488C542 916 584 878 596 826L634 654C652 578 650 498 630 424L592 278C572 210 518 154 450 154Z" fill="#ddccb8" stroke="#3b2e1a" stroke-width="5"/>
+  <path d="M450 170V924" fill="none" stroke="#6b5540" stroke-width="8" stroke-linecap="round"/>
+  <g stroke="#bda98e" stroke-width="10" stroke-linecap="round">
+    <path d="M314 340H432"/>
+    <path d="M300 392H424"/>
+    <path d="M292 444H420"/>
+    <path d="M288 496H418"/>
+    <path d="M586 340H468"/>
+    <path d="M600 392H476"/>
+    <path d="M608 444H480"/>
+    <path d="M612 496H482"/>
+  </g>
+  <g>
+    <ellipse cx="372" cy="420" rx="82" ry="144" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+    <ellipse cx="528" cy="420" rx="82" ry="144" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+  </g>
+  <path d="M286 594C346 528 394 502 450 502C506 502 554 528 614 594" fill="none" stroke="#7a1f2e" stroke-width="24" stroke-linecap="round"/>
+  <path d="M298 618C354 570 400 548 450 548C500 548 546 570 602 618" fill="none" stroke="#c8973a" stroke-width="8" stroke-linecap="round" opacity=".8"/>
+  <path d="M450 110V210" fill="none" stroke="#c8973a" stroke-width="18" stroke-linecap="round"/>
+  <polygon points="450,246 424,198 476,198" fill="#c8973a"/>
+  <g font-family="Georgia, serif">
+    <rect x="102" y="248" width="214" height="78" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="209" y="294" text-anchor="middle" font-size="30" fill="#18120a">Costillas</text>
+    <path d="M316 286H352" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="352,286 336,276 336,296" fill="#7a1f2e"/>
+    <rect x="594" y="226" width="212" height="92" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="700" y="264" text-anchor="middle" font-size="29" fill="#18120a">Salida del aire</text>
+    <text x="700" y="300" text-anchor="middle" font-size="23" fill="#6b5540">dosificada al cantar</text>
+    <path d="M594 274H510" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="510,274 526,264 526,284" fill="#7a1f2e"/>
+    <rect x="92" y="548" width="212" height="90" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="198" y="586" text-anchor="middle" font-size="30" fill="#18120a">Diafragma</text>
+    <text x="198" y="622" text-anchor="middle" font-size="22" fill="#6b5540">sostiene la presión</text>
+    <path d="M304 592H364" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="364,592 348,582 348,602" fill="#7a1f2e"/>
+    <rect x="582" y="734" width="224" height="94" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="694" y="772" text-anchor="middle" font-size="30" fill="#18120a">Abdomen</text>
+    <text x="694" y="808" text-anchor="middle" font-size="22" fill="#6b5540">flexible, no rígido</text>
+    <path d="M582 780H524" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="524,780 540,770 540,790" fill="#7a1f2e"/>
+  </g>
+</svg>

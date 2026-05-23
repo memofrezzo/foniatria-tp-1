@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Inspiración y espiración</title>
+  <desc id="desc">Comparación en español entre inspiración y espiración con posición del diafragma y dirección del aire.</desc>
+  <rect width="900" height="1200" fill="#ede5d0"/>
+  <rect x="56" y="56" width="788" height="1088" rx="36" fill="#f7f1e8" stroke="#c8973a" stroke-width="4"/>
+  <line x1="450" y1="124" x2="450" y2="1076" stroke="#d1c3af" stroke-width="4" stroke-dasharray="10 12"/>
+  <g font-family="Georgia, serif" text-anchor="middle">
+    <text x="254" y="148" font-size="38" fill="#18120a">Inspiración</text>
+    <text x="646" y="148" font-size="38" fill="#18120a">Espiración</text>
+    <text x="254" y="188" font-size="24" fill="#6b5540">entra el aire</text>
+    <text x="646" y="188" font-size="24" fill="#6b5540">sale el aire</text>
+  </g>
+  <g transform="translate(86 218)">
+    <path d="M170 50C136 112 122 192 124 276C126 382 154 486 212 580" fill="none" stroke="#3b2e1a" stroke-width="8" stroke-linecap="round"/>
+    <path d="M278 50C312 112 326 192 324 276C322 382 294 486 236 580" fill="none" stroke="#3b2e1a" stroke-width="8" stroke-linecap="round"/>
+    <ellipse cx="210" cy="248" rx="56" ry="128" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+    <ellipse cx="238" cy="248" rx="56" ry="128" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+    <path d="M224 88V538" fill="none" stroke="#6b5540" stroke-width="8" stroke-linecap="round"/>
+    <path d="M132 420C184 362 206 346 224 346C242 346 264 362 316 420" fill="none" stroke="#7a1f2e" stroke-width="24" stroke-linecap="round"/>
+    <path d="M224 514V432" fill="none" stroke="#c8973a" stroke-width="16" stroke-linecap="round"/>
+    <polygon points="224,394 202,434 246,434" fill="#c8973a"/>
+    <path d="M112 214C144 196 162 186 176 184" fill="none" stroke="#c8973a" stroke-width="10" stroke-linecap="round"/>
+    <path d="M336 214C304 196 286 186 272 184" fill="none" stroke="#c8973a" stroke-width="10" stroke-linecap="round"/>
+    <polygon points="92,224 130,206 108,240" fill="#c8973a"/>
+    <polygon points="356,224 318,206 340,240" fill="#c8973a"/>
+  </g>
+  <g transform="translate(478 218)">
+    <path d="M170 50C136 112 122 192 124 276C126 382 154 486 212 580" fill="none" stroke="#3b2e1a" stroke-width="8" stroke-linecap="round"/>
+    <path d="M278 50C312 112 326 192 324 276C322 382 294 486 236 580" fill="none" stroke="#3b2e1a" stroke-width="8" stroke-linecap="round"/>
+    <ellipse cx="210" cy="248" rx="56" ry="128" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+    <ellipse cx="238" cy="248" rx="56" ry="128" fill="#cfaa95" stroke="#7a1f2e" stroke-width="4"/>
+    <path d="M224 88V538" fill="none" stroke="#6b5540" stroke-width="8" stroke-linecap="round"/>
+    <path d="M120 474C176 424 202 406 224 406C246 406 272 424 328 474" fill="none" stroke="#7a1f2e" stroke-width="24" stroke-linecap="round"/>
+    <path d="M224 332V414" fill="none" stroke="#c8973a" stroke-width="16" stroke-linecap="round"/>
+    <polygon points="224,452 202,412 246,412" fill="#c8973a"/>
+    <path d="M224 48V132" fill="none" stroke="#a33040" stroke-width="16" stroke-linecap="round"/>
+    <polygon points="224,170 202,130 246,130" fill="#a33040"/>
+  </g>
+  <g font-family="Georgia, serif">
+    <rect x="100" y="924" width="306" height="124" rx="22" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="253" y="964" text-anchor="middle" font-size="28" fill="#18120a">En la inspiración</text>
+    <text x="253" y="1002" text-anchor="middle" font-size="24" fill="#6b5540">el diafragma desciende,</text>
+    <text x="253" y="1034" text-anchor="middle" font-size="24" fill="#6b5540">las costillas se expanden</text>
+    <rect x="494" y="924" width="306" height="124" rx="22" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="647" y="964" text-anchor="middle" font-size="28" fill="#18120a">En la espiración</text>
+    <text x="647" y="1002" text-anchor="middle" font-size="24" fill="#6b5540">el aire sale de forma</text>
+    <text x="647" y="1034" text-anchor="middle" font-size="24" fill="#6b5540">más controlada</text>
+  </g>
+</svg>

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Respiratorio · Foniatría</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   VARIABLES – PALETA ACADÉMICA
+══════════════════════════════════════ */
+:root {
+  --cream:       #f5f0e8;
+  --parch:       #ede5d0;
+  --ink:         #18120a;
+  --ink-mid:     #3b2e1a;
+  --ink-soft:    #6b5540;
+  --burg:        #7a1f2e;
+  --burg-l:      #a33040;
+  --gold:        #c8973a;
+  --gold-l:      #e4b55a;
+  --gold-pale:   rgba(200,151,58,.13);
+  --burg-pale:   rgba(122,31,46,.09);
+  --rule:        rgba(26,18,10,.16);
+  --sh:          rgba(26,18,10,.25);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
+  font-family:'EB Garamond',Georgia,serif; color:var(--ink); }
+
+/* ══ PROGRESS ══ */
+#prog { position:fixed; bottom:0; left:0; height:3px; width:0%;
+  background:linear-gradient(90deg,var(--burg),var(--gold));
+  transition:width .45s ease; z-index:300; }
+
+/* ══ NAV BUTTONS ══ */
+.nav-btn { position:fixed; top:50%; transform:translateY(-50%);
+  width:52px; height:52px;
+  background:rgba(245,240,232,.93); border:1px solid var(--rule);
+  color:var(--ink-mid); font-size:20px;
+  cursor:pointer; z-index:200;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .2s; box-shadow:2px 2px 10px var(--sh); }
+.nav-btn:hover { background:var(--burg); color:var(--cream); border-color:var(--burg); }
+#btn-prev { left:20px; }
+#btn-next { right:20px; }
+#btn-full {
+  top:calc(50% - 72px); left:20px; right:auto;
+  width:52px; min-width:52px; height:52px; padding:0;
+  font-size:0; letter-spacing:0;
+  background-color:rgba(245,240,232,.93);
+}
+#btn-full,
+#btn-full:hover,
+#btn-full.is-active {
+  background-image:
+    linear-gradient(currentColor,currentColor),
+    linear-gradient(currentColor,currentColor),
+    linear-gradient(currentColor,currentColor),
+    linear-gradient(currentColor,currentColor),
+    linear-gradient(currentColor,currentColor),
+    linear-gradient(currentColor,currentColor),
+    linear-gradient(currentColor,currentColor),
+    linear-gradient(currentColor,currentColor);
+  background-position:
+    left 15px top 15px,
+    left 15px top 15px,
+    right 15px top 15px,
+    right 15px top 15px,
+    left 15px bottom 15px,
+    left 15px bottom 15px,
+    right 15px bottom 15px,
+    right 15px bottom 15px;
+  background-repeat:no-repeat;
+  background-size:
+    9px 2px,
+    2px 9px,
+    9px 2px,
+    2px 9px,
+    9px 2px,
+    2px 9px,
+    9px 2px,
+    2px 9px;
+}
+#btn-full:hover,
+#btn-full.is-active { background-color:var(--burg); color:var(--cream); border-color:var(--burg); }
+#counter { position:fixed; top:20px; right:32px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--ink-soft); z-index:200;
+  background:rgba(245,240,232,.95); padding:7px 16px;
+  border:1px solid var(--rule); box-shadow:1px 1px 6px var(--sh); }
+#dots { position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+  display:flex; gap:10px; z-index:200; }
+.dot { width:7px; height:7px; background:rgba(245,240,232,.3);
+  border:1px solid rgba(245,240,232,.4); cursor:pointer; transition:all .3s; }
+.dot.on { background:var(--gold); border-color:var(--gold); transform:scale(1.4); }
+
+/* ══ DECK ══ */
+#deck { position:relative; width:100vw; height:100vh; z-index:1; }
+.slide { position:absolute; inset:0; opacity:0; pointer-events:none; }
+.slide.on { opacity:1; pointer-events:all; }
+
+/* ══ KEYFRAMES ══ */
+@keyframes fadeUp   { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+@keyframes fadeLeft { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:none} }
+@keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+@keyframes scaleIn  { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:none} }
+@keyframes lineV    { from{height:0} to{height:100%} }
+
+.slide.on .au { animation:fadeUp   .65s cubic-bezier(.4,0,.2,1) both; }
+.slide.on .al { animation:fadeLeft .65s cubic-bezier(.4,0,.2,1) both; }
+.slide.on .ai { animation:fadeIn   .85s ease both; }
+.slide.on .as { animation:scaleIn  .65s cubic-bezier(.4,0,.2,1) both; }
+
+.d1{animation-delay:.04s!important} .d2{animation-delay:.13s!important}
+.d3{animation-delay:.24s!important} .d4{animation-delay:.36s!important}
+.d5{animation-delay:.49s!important} .d6{animation-delay:.63s!important}
+.d7{animation-delay:.77s!important} .d8{animation-delay:.91s!important}
+
+/* ══════════════════════════════════════
+   SLIDE 1 · PORTADA
+══════════════════════════════════════ */
+.slide-cover {
+  display:grid; grid-template-rows:auto 1fr auto;
+  background:var(--cream);
+}
+/* Cabecera institucional */
+.cover-hdr {
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  padding:18px 52px; background:var(--ink);
+  border-bottom:2px solid var(--gold);
+}
+.cover-hdr-inst {
+  font-family:'Josefin Sans',sans-serif; font-size:11px; letter-spacing:4px;
+  text-transform:uppercase; color:var(--gold-l); line-height:1.7;
+}
+.cover-hdr-seal {
+  width:70px; height:70px; border-radius:50%;
+  border:2px solid var(--gold); color:var(--gold); font-size:30px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 0 5px rgba(200,151,58,.13);
+}
+.cover-hdr-subj {
+  text-align:right; font-family:'Josefin Sans',sans-serif;
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:rgba(245,240,232,.55); line-height:1.7;
+}
+/* Cuerpo portada */
+.cover-body { display:grid; grid-template-columns:52% 48%; overflow:hidden; }
+.cover-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:52px 60px 52px 80px; position:relative;
+  background:var(--cream); border-right:1px solid var(--rule);
+}
+.cover-left::after { content:''; position:absolute; top:0; left:0;
+  width:5px; height:100%;
+  background:linear-gradient(to bottom,var(--burg),var(--gold)); }
+.cover-eyebrow { font-family:'Josefin Sans',sans-serif; font-size:10px;
+  letter-spacing:5px; text-transform:uppercase; color:var(--burg); margin-bottom:18px; }
+.cover-ornament { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+.cover-orn-line { flex:1; height:1px; background:var(--rule); }
+.cover-orn-dia { width:9px; height:9px; background:var(--gold); transform:rotate(45deg); }
+.cover-title { font-family:'Playfair Display',serif; font-size:62px; font-weight:800;
+  line-height:1.06; color:var(--ink); margin-bottom:10px; }
+.cover-title em { color:var(--burg); font-style:italic; }
+.cover-sub { font-family:'EB Garamond',serif; font-size:22px; font-style:italic;
+  color:var(--ink-soft); line-height:1.55; margin-bottom:34px;
+  border-left:3px solid var(--gold); padding-left:18px; }
+.cover-rule { width:100%; height:1px;
+  background:linear-gradient(90deg,var(--burg),var(--gold),transparent); margin-bottom:24px; }
+.cover-int-lbl { font-family:'Josefin Sans',sans-serif; font-size:9px;
+  letter-spacing:4px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:12px; }
+.cover-ints { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.cover-ints li { font-family:'Playfair Display',serif; font-size:22px;
+  color:var(--ink-mid); display:flex; align-items:center; gap:12px; }
+.cover-ints li::before { content:''; width:22px; height:1px; background:var(--gold); flex-shrink:0; }
+/* Imagen portada */
+.cover-right { position:relative; overflow:hidden; background:var(--ink); }
+.cover-right img { width:100%; height:100%; object-fit:cover; display:block;
+  filter:brightness(.65) saturate(.7) sepia(.2); }
+.cover-right-ov { position:absolute; inset:0;
+  background:linear-gradient(to right,rgba(245,240,232,.45) 0%,transparent 28%),
+             linear-gradient(to top,rgba(26,18,10,.55) 0%,transparent 45%); }
+.cover-right-cap { position:absolute; bottom:26px; right:28px;
+  font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px;
+  text-transform:uppercase; color:rgba(245,240,232,.5); }
+/* Pie portada */
+.cover-ftr { display:flex; justify-content:space-between; align-items:center;
+  padding:14px 80px; background:var(--ink); border-top:1px solid rgba(200,151,58,.28); }
+.cover-ftr-txt { font-family:'Josefin Sans',sans-serif; font-size:10px;
+  letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.38); }
+.cover-ftr-gold { color:var(--gold-l); }
+
+/* ══════════════════════════════════════
+   SLIDES CONTENIDO  (header + 2 cols)
+══════════════════════════════════════ */
+.slide-content { display:grid; grid-template-rows:auto 1fr; background:var(--cream); }
+
+/* Header uniforme */
+.sc-hdr { display:flex; align-items:stretch; background:var(--ink);
+  border-bottom:2px solid var(--gold); height:64px; flex-shrink:0; }
+.sc-hdr-num { display:flex; align-items:center; justify-content:center;
+  width:64px; background:var(--burg); flex-shrink:0;
+  font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--cream); }
+.sc-hdr-sep { width:1px; background:rgba(200,151,58,.25); }
+.sc-hdr-titles { display:flex; align-items:center; flex:1; padding:0 30px; }
+.sc-hdr-tag { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:4px;
+  text-transform:uppercase; color:var(--gold-l);
+  margin-right:20px; padding-right:20px; border-right:1px solid rgba(200,151,58,.22); }
+.sc-hdr-title { font-family:'Playfair Display',serif; font-size:20px; font-weight:600; color:var(--cream); }
+.sc-hdr-inst { margin-left:auto; font-family:'Josefin Sans',sans-serif;
+  font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.28); }
+
+/* Cuerpo 2 cols */
+.sc-body { display:grid; grid-template-columns:40% 1fr; overflow:hidden; }
+
+/* Imagen */
+.sc-img { position:relative; overflow:hidden; background:var(--ink); }
+.sc-img img { width:100%; height:100%; object-fit:cover; display:block;
+  filter:brightness(.72) saturate(.78) sepia(.1); }
+.sc-img-ov { position:absolute; inset:0;
+  background:linear-gradient(to right,transparent 55%,rgba(245,240,232,.18)); }
+.sc-img::before { content:''; position:absolute; top:0; right:0; z-index:2;
+  width:4px; height:0;
+  background:linear-gradient(to bottom,var(--burg),var(--gold));
+  transition:height .85s cubic-bezier(.4,0,.2,1) .12s; }
+.slide.on .sc-img::before { height:100%; }
+.sc-img-cap { position:absolute; bottom:14px; left:16px; right:16px; z-index:3;
+  font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:2px;
+  text-transform:uppercase; color:rgba(245,240,232,.42);
+  border-top:1px solid rgba(245,240,232,.14); padding-top:8px; }
+
+/* Texto */
+.sc-text { padding:44px 58px; display:flex; flex-direction:column;
+  justify-content:center; overflow:hidden; position:relative; gap:0; }
+.sc-text::before { content:''; position:absolute; top:0; left:0; right:0;
+  height:2px; background:linear-gradient(90deg,var(--burg),var(--gold),transparent); }
+
+.txt-eyebrow { font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:4px;
+  text-transform:uppercase; color:var(--burg); margin-bottom:10px; }
+.txt-heading { font-family:'Playfair Display',serif; font-size:38px; font-weight:700;
+  line-height:1.15; color:var(--ink); margin-bottom:8px; }
+.txt-heading em { color:var(--burg); font-style:italic; }
+.txt-rule { width:42px; height:2px;
+  background:linear-gradient(90deg,var(--burg),var(--gold)); margin-bottom:22px; }
+
+/* Lista académica */
+.acad-list { list-style:none; display:flex; flex-direction:column; gap:13px; margin-bottom:20px; }
+.acad-list li { display:flex; align-items:flex-start; gap:16px;
+  font-family:'EB Garamond',serif; font-size:22px; line-height:1.62; color:var(--ink-mid); }
+.acad-list li::before { content:''; flex-shrink:0; width:6px; height:6px;
+  background:var(--burg); transform:rotate(45deg); margin-top:11px; }
+.acad-list li strong { color:var(--ink); font-weight:600; }
+
+/* Nota / callout */
+.acad-note { background:var(--gold-pale); border:1px solid rgba(200,151,58,.28);
+  border-left:4px solid var(--gold); padding:16px 22px; margin-top:auto; }
+.acad-note-lbl { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px;
+  text-transform:uppercase; color:var(--gold); margin-bottom:7px; }
+.acad-note p { font-family:'EB Garamond',serif; font-size:20px; line-height:1.65;
+  color:var(--ink-soft); font-style:italic; }
+.acad-note p strong { color:var(--ink); font-style:normal; font-weight:600; }
+
+/* Párrafos */
+.txt-body { font-family:'EB Garamond',serif; font-size:22px; line-height:1.72;
+  color:var(--ink-mid); margin-bottom:14px; }
+.txt-body strong { color:var(--ink); font-weight:600; }
+
+/* ══ FLOW (3 pasos) ══ */
+.flow { display:flex; flex-direction:column; gap:5px; margin-bottom:18px; }
+.flow-step { display:flex; align-items:center; gap:18px;
+  background:rgba(26,18,10,.03); border:1px solid var(--rule);
+  border-left:4px solid var(--gold); padding:13px 20px; transition:all .22s; }
+.flow-step:hover { background:var(--gold-pale); }
+.flow-num { width:38px; height:38px; background:var(--burg); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:var(--cream); }
+.flow-step h5 { font-family:'Playfair Display',serif; font-size:19px; margin-bottom:2px; color:var(--ink); }
+.flow-step p  { font-family:'EB Garamond',serif; font-size:18px; color:var(--ink-soft); line-height:1.45; }
+.flow-arr { color:var(--burg); font-size:16px; padding-left:54px; line-height:1; }
+
+/* ══════════════════════════════════════
+   SLIDE TABLA (slide 7 – sin imagen lateral)
+══════════════════════════════════════ */
+.slide-table { display:grid; grid-template-rows:auto 1fr; background:var(--cream); }
+.table-body { padding:40px 80px; display:flex; flex-direction:column;
+  justify-content:center; gap:22px; overflow:hidden; }
+.acad-table { width:100%; border-collapse:collapse;
+  font-family:'EB Garamond',serif; font-size:21px; border:1px solid var(--rule); }
+.acad-table thead th { background:var(--ink); color:var(--gold-l);
+  padding:14px 22px; text-align:left;
+  font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:3px;
+  text-transform:uppercase; font-weight:400; }
+.acad-table thead th:first-child { border-left:4px solid var(--burg); }
+.acad-table tbody tr { border-bottom:1px solid var(--rule); transition:background .18s; }
+.acad-table tbody tr:hover { background:var(--gold-pale); }
+.acad-table tbody tr:nth-child(odd) { background:rgba(26,18,10,.025); }
+.acad-table tbody td { padding:15px 22px; color:var(--ink-mid); line-height:1.5; }
+.acad-table tbody td:first-child { color:var(--ink); font-weight:600;
+  border-left:4px solid transparent; }
+.acad-table tbody tr:hover td:first-child { border-left-color:var(--gold); }
+.badge { display:inline-block; padding:4px 14px;
+  font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:2px;
+  text-transform:uppercase; }
+.badge-ok  { background:rgba(30,80,30,.09); color:#2a5c1e; border:1px solid rgba(42,92,30,.2); }
+.badge-no  { background:var(--burg-pale); color:var(--burg); border:1px solid rgba(122,31,46,.2); }
+.badge-top { background:rgba(200,151,58,.15); color:#7a5800; border:1px solid rgba(200,151,58,.35); font-weight:600; }
+
+/* ══ ERRORES (slide 9) ══ */
+.error-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; flex:1; }
+.error-item { background:var(--burg-pale); border:1px solid rgba(122,31,46,.15);
+  border-left:4px solid var(--burg); padding:15px 18px;
+  display:flex; align-items:flex-start; gap:14px; transition:background .2s; }
+.error-item:hover { background:rgba(122,31,46,.16); }
+.err-ico { font-size:22px; flex-shrink:0; margin-top:3px; }
+.error-item h5 { font-family:'Playfair Display',serif; font-size:19px;
+  color:var(--ink); margin-bottom:4px; font-weight:700; }
+.error-item p  { font-family:'EB Garamond',serif; font-size:18px;
+  color:var(--ink-soft); line-height:1.5; }
+
+/* ══════════════════════════════════════
+   SLIDE CONCLUSIÓN
+══════════════════════════════════════ */
+.slide-conclusion { display:grid; grid-template-rows:auto 1fr auto; background:var(--ink); }
+.conc-hdr { display:flex; align-items:center; padding:20px 72px;
+  border-bottom:1px solid rgba(200,151,58,.2); background:rgba(255,255,255,.025); }
+.conc-hdr-tag { font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:4px;
+  text-transform:uppercase; color:var(--gold-l); }
+.conc-hdr-line { flex:1; height:1px; background:linear-gradient(90deg,rgba(200,151,58,.3),transparent); margin:0 24px; }
+.conc-hdr-dia { width:8px; height:8px; background:var(--gold); transform:rotate(45deg); }
+.conc-body-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:36px 100px; position:relative; overflow:hidden; }
+.conc-body-wrap::before { content:'"'; position:absolute; top:-30px; left:50px;
+  font-family:'Playfair Display',serif; font-size:240px; color:rgba(200,151,58,.06);
+  line-height:1; pointer-events:none; }
+.conc-title { font-family:'Playfair Display',serif; font-size:52px; font-weight:800;
+  color:var(--cream); line-height:1.1; margin-bottom:16px; }
+.conc-title em { color:var(--gold-l); font-style:italic; }
+.conc-ornament { display:flex; align-items:center; gap:14px; margin:0 auto 22px; }
+.conc-orn-line { width:90px; height:1px; background:rgba(200,151,58,.38); }
+.conc-orn-dia  { width:8px; height:8px; background:var(--gold); transform:rotate(45deg); }
+.conc-text { font-family:'EB Garamond',serif; font-size:21px; font-weight:400;
+  color:rgba(245,240,232,.72); line-height:1.8; max-width:820px; margin-bottom:18px; }
+.conc-text strong { color:var(--cream); font-weight:600; }
+.conc-quote { font-family:'Playfair Display',serif; font-size:22px; font-style:italic;
+  color:var(--gold-l); line-height:1.6; max-width:760px; margin-bottom:28px;
+  border-top:1px solid rgba(200,151,58,.2); border-bottom:1px solid rgba(200,151,58,.2); padding:16px 0; }
+.conc-pills { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+.pill { background:rgba(245,240,232,.05); border:1px solid rgba(200,151,58,.22);
+  padding:10px 24px; font-family:'Josefin Sans',sans-serif; font-size:10px;
+  letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.55); transition:all .22s; }
+.pill:hover { background:rgba(200,151,58,.14); border-color:var(--gold); color:var(--gold-l); }
+.conc-ftr { display:flex; justify-content:space-between; align-items:center;
+  padding:14px 72px; border-top:1px solid rgba(200,151,58,.14); }
+.conc-ftr-txt { font-family:'Josefin Sans',sans-serif; font-size:10px;
+  letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.25); }
+
+@media (max-width: 1100px) {
+  html, body { overflow:auto; }
+  #deck { height:auto; min-height:100vh; }
+  .slide { position:static; inset:auto; display:none; opacity:1; min-height:100vh; }
+  .slide.on { display:grid; }
+  .cover-body, .sc-body { grid-template-columns:1fr; }
+  .cover-right, .sc-img { min-height:34vh; }
+  .cover-left, .sc-text, .table-body, .conc-body-wrap { padding:32px 24px; }
+  .cover-title { font-size:44px; }
+  .txt-heading { font-size:30px; }
+  .conc-title { font-size:40px; }
+  .acad-list li, .txt-body, .conc-text { font-size:19px; line-height:1.55; }
+  .acad-table { font-size:18px; }
+  .error-grid { grid-template-columns:1fr; }
+  .cover-hdr, .cover-ftr, .conc-hdr, .conc-ftr { padding-left:24px; padding-right:24px; }
+  #btn-prev, #btn-next { top:auto; bottom:62px; transform:none; }
+  #btn-prev { left:14px; }
+  #btn-next { right:14px; }
+  #btn-full { left:14px; top:auto; bottom:110px; width:38px; min-width:38px; height:38px; padding:0; font-size:16px; }
+  #counter { top:14px; right:14px; padding:6px 12px; font-size:10px; letter-spacing:2px; }
+}
+
+@media (max-width: 720px) {
+  .cover-hdr { grid-template-columns:1fr; gap:10px; padding:18px 20px; text-align:center; }
+  .cover-hdr-inst, .cover-hdr-subj { text-align:center; }
+  .cover-left { padding:28px 20px; }
+  .cover-title { font-size:38px; }
+  .cover-sub { font-size:20px; }
+  .cover-ftr, .conc-ftr { padding:14px 20px; gap:10px; flex-wrap:wrap; }
+  .sc-hdr { height:auto; }
+  .sc-hdr-titles { flex-wrap:wrap; gap:10px; padding:14px 18px; }
+  .sc-hdr-inst { width:100%; margin-left:0; }
+  .sc-hdr-title { font-size:18px; }
+  .txt-heading { font-size:26px; }
+  .table-body { padding:28px 16px 96px; }
+  .acad-table { display:block; overflow:auto; }
+  .conc-hdr { padding:18px 20px; }
+  .conc-body-wrap { padding:28px 20px; }
+  .conc-title { font-size:32px; }
+  .conc-quote { font-size:18px; }
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="counter"><span id="cur">1</span>&nbsp;/&nbsp;<span id="tot"></span></div>
+<button class="nav-btn" id="btn-full" type="button" aria-label="Activar pantalla completa" aria-pressed="false" title="Activar pantalla completa">⛶</button>
+<button class="nav-btn" id="btn-prev">&#8592;</button>
+<button class="nav-btn" id="btn-next">&#8594;</button>
+<div id="dots"></div>
+
+<div id="deck">
+
+<!-- ══════════════════════════════════════
+     SLIDE 1 · PORTADA
+══════════════════════════════════════ -->
+<div class="slide slide-cover on">
+  <div class="cover-hdr au d1">
+    <div class="cover-hdr-inst">
+      Conservatorio Superior de Música<br>
+      <span style="color:var(--cream);letter-spacing:2px;font-size:13px;">Juan R. Pérez Cruz</span>
+    </div>
+    <div class="cover-hdr-seal">♪</div>
+    <div class="cover-hdr-subj">
+      Foniatría · Técnica Vocal<br>
+      <span style="color:rgba(245,240,232,.35);">Presentación grupal · 22 de mayo de 2026</span>
+    </div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-left">
+      <div class="cover-eyebrow au d2">Sistema Respiratorio</div>
+      <div class="cover-ornament au d2">
+        <div class="cover-orn-line"></div>
+        <div class="cover-orn-dia"></div>
+        <div class="cover-orn-line"></div>
+      </div>
+      <h1 class="cover-title au d3">Sistema<br>Respiratorio<br><em>y voz cantada</em></h1>
+      <p class="cover-sub au d4">Cómo trabaja el cuerpo para que la voz salga con apoyo, estabilidad y libertad al cantar.</p>
+      <div class="cover-rule au d5"></div>
+      <div class="cover-int-lbl au d5">Integrantes del grupo</div>
+      <ul class="cover-ints">
+        <li class="au d6">Alain</li>
+        <li class="au d7">Azul</li>
+        <li class="au d8">Trinidad</li>
+      </ul>
+    </div>
+    <div class="cover-right as d3">
+      <!-- Sistema respiratorio completo – diagrama anatómico SVG (Wikimedia, dominio público) -->
+      <img
+        src="assets/cover-system-es.svg"
+        alt="Anatomía del sistema respiratorio"
+        style="object-fit:contain; object-position:center; background:#ede5d0; padding:14px;"
+      >
+      <div class="cover-right-ov"></div>
+      <div class="cover-right-cap">Sistema Respiratorio · Anatomía General</div>
+    </div>
+  </div>
+
+  <div class="cover-ftr au d8">
+    <div class="cover-ftr-txt">Trabajo práctico · 22 de mayo de 2026</div>
+    <div class="cover-ftr-txt cover-ftr-gold">✦ Conservatorio Juan R. Pérez Cruz ✦</div>
+    <div class="cover-ftr-txt">Foniatría · Exposición oral</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 2 · IMPORTANCIA DE LA RESPIRACIÓN
+══════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">2</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Fundamento</div>
+      <div class="sc-hdr-title">Importancia de la Respiración en el Canto</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-img ai d2">
+      <!-- Esquema simplificado del apoyo respiratorio y los pliegues vocales -->
+      <img
+        src="assets/vocal-support-es.svg"
+        alt="Esquema del apoyo respiratorio y los pliegues vocales"
+        style="object-fit:contain; background:#ede5d0; padding:10px;"
+      >
+      <div class="sc-img-ov"></div>
+      <div class="sc-img-cap">Pliegues vocales · Esquema simplificado</div>
+    </div>
+    <div class="sc-text">
+      <div class="txt-eyebrow au d2">Punto de partida</div>
+      <div class="txt-heading au d3">¿Por qué respirar bien<br>es <em>cantar bien</em>?</div>
+      <div class="txt-rule au d3"></div>
+      <ul class="acad-list">
+        <li class="au d3">Sin aire no hay voz: el flujo que sale de los pulmones es el <strong>motor que pone en vibración</strong> los pliegues vocales.</li>
+        <li class="au d4">Si respiramos mal, la voz pierde estabilidad, apoyo y resistencia.</li>
+        <li class="au d5">Con un buen manejo del aire podemos <strong>sostener frases largas</strong> y hacer matices con más comodidad.</li>
+        <li class="au d6">También ayuda a evitar fatiga vocal y tensión en cuello, mandíbula y garganta.</li>
+      </ul>
+      <div class="acad-note au d7">
+        <div class="acad-note-lbl">Idea clave</div>
+        <p>En canto, respirar no es solo "tomar aire": también es <strong>organizar el soplo</strong> y coordinarlo con la fonación.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 3 · RELACIÓN RESPIRACIÓN Y VOZ
+══════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">3</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Fisiología</div>
+      <div class="sc-hdr-title">Relación entre Respiración y Voz</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-img ai d2">
+      <!-- Laringe externa – esquema en español -->
+      <img
+        src="assets/larynx-external-es.svg"
+        alt="Laringe externa con etiquetas en español"
+        style="object-fit:contain; background:#ede5d0; padding:8px;"
+      >
+      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 60%,rgba(245,240,232,.22))"></div>
+      <div class="sc-img-cap">Laringe externa · Vista anterolateral</div>
+    </div>
+    <div class="sc-text">
+      <div class="txt-eyebrow au d2">Cómo se arma la voz</div>
+      <div class="txt-heading au d3">Del aire al sonido</div>
+      <div class="txt-rule au d3"></div>
+      <div class="flow">
+        <div class="flow-step au d3">
+          <div class="flow-num">1</div>
+          <div><h5>Respiración</h5><p>Toma y administra el aire que después va a usar la voz.</p></div>
+        </div>
+        <div class="flow-arr au d4">↓</div>
+        <div class="flow-step au d4">
+          <div class="flow-num">2</div>
+          <div><h5>Fonación</h5><p>En la laringe, ese aire hace vibrar los pliegues vocales y aparece el sonido.</p></div>
+        </div>
+        <div class="flow-arr au d5">↓</div>
+        <div class="flow-step au d5">
+          <div class="flow-num">3</div>
+          <div><h5>Resonancia</h5><p>Faringe, boca y cavidades nasales amplifican y le dan color al sonido.</p></div>
+        </div>
+      </div>
+      <div class="acad-note au d6">
+        <div class="acad-note-lbl">Cuerpo y aire</div>
+        <p>Si el cuerpo está rígido o mal alineado, el aire circula peor y la voz pierde libertad.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 4 · VÍAS AÉREAS
+══════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">4</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Anatomía</div>
+      <div class="sc-hdr-title">Vías Aéreas</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-img ai d2">
+      <!-- Vías respiratorias con etiquetas en español -->
+      <img
+        src="assets/conducting-passages.svg"
+        alt="Vías conductoras del aire"
+        style="object-fit:contain; background:#ede5d0; padding:34px 22px 34px 68px;"
+      >
+      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 65%,rgba(245,240,232,.22))"></div>
+      <div class="sc-img-cap">Vías conductoras · Del exterior a los alvéolos</div>
+    </div>
+    <div class="sc-text">
+      <div class="txt-eyebrow au d2">Recorrido del aire</div>
+      <div class="txt-heading au d3">Por dónde pasa el aire<br><em>al cantar</em></div>
+      <div class="txt-rule au d3"></div>
+      <p class="txt-body au d3"><strong>Vías superiores:</strong> la nariz filtra, humidifica y templa el aire; la faringe y la laringe también participan en la producción vocal.</p>
+      <p class="txt-body au d4"><strong>Vías inferiores:</strong> tráquea, bronquios, bronquiolos y alvéolos conducen el aire y permiten el intercambio gaseoso.</p>
+      <div class="acad-note au d5">
+        <div class="acad-note-lbl">¿Qué aporta a la voz?</div>
+        <p>Para cantar no importa solo cuánto aire entra, sino <strong>por dónde pasa y cómo lo administramos</strong> antes de emitir el sonido.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 5 · EL DIAFRAGMA
+══════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">5</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Músculo principal</div>
+      <div class="sc-hdr-title">El Diafragma</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-img ai d2">
+      <!-- Esquema simplificado del diafragma -->
+      <img
+        src="assets/diaphragm-anatomy-es.svg"
+        alt="Esquema anatómico del diafragma con etiquetas en español"
+        style="object-fit:contain; background:#ede5d0; padding:8px;"
+      >
+      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 62%,rgba(245,240,232,.22))"></div>
+      <div class="sc-img-cap">Diafragma · Esquema simplificado</div>
+    </div>
+    <div class="sc-text">
+      <div class="txt-eyebrow au d2">Músculo principal</div>
+      <div class="txt-heading au d3">Anatomía, función<br>y <em>rol en el canto</em></div>
+      <div class="txt-rule au d3"></div>
+      <ul class="acad-list">
+        <li class="au d3">Es un músculo con forma de <strong>cúpula</strong> que separa el tórax del abdomen.</li>
+        <li class="au d4">Cuando se contrae, <strong>baja</strong>, agranda la caja torácica y facilita la entrada de aire.</li>
+        <li class="au d5">Cuando se relaja, <strong>sube</strong> y acompaña la salida del aire.</li>
+        <li class="au d6">En el canto ayuda a sostener la <strong>presión subglótica</strong> sin apretar la garganta.</li>
+      </ul>
+      <div class="acad-note au d7">
+        <div class="acad-note-lbl">Ojo con esto</div>
+        <p>Cuando decimos "usar el diafragma", en realidad hablamos de <strong>coordinar todo el apoyo respiratorio</strong>, no de tensar un músculo aislado.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 6 · MECÁNICA RESPIRATORIA
+══════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">6</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Movimiento</div>
+      <div class="sc-hdr-title">Mecánica Respiratoria</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-img ai d2">
+      <!-- Esquema comparativo de inspiración y espiración -->
+      <img
+        src="assets/diaphragm-cycle-es.svg"
+        alt="Comparación entre inspiración y espiración con etiquetas en español"
+        style="object-fit:contain; background:#ede5d0; padding:8px;"
+      >
+      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 65%,rgba(245,240,232,.22))"></div>
+      <div class="sc-img-cap">Mecánica respiratoria · Inspiración y espiración</div>
+    </div>
+    <div class="sc-text">
+      <div class="txt-eyebrow au d2">Ciclo respiratorio</div>
+      <div class="txt-heading au d3">Inspiración y espiración<br><em>controlada</em></div>
+      <div class="txt-rule au d3"></div>
+      <p class="txt-body au d3"><strong>Inspiración (activa):</strong> el diafragma baja, las costillas se expanden y entra el aire.</p>
+      <p class="txt-body au d4"><strong>Espiración en el canto:</strong> el aire sale de forma <strong>dosificada y coordinada</strong> con la laringe para sostener la vibración vocal.</p>
+      <div class="acad-note au d5">
+        <div class="acad-note-lbl">Idea central</div>
+        <p>La técnica vocal se apoya en la <strong>coordinación de todo el sistema</strong>: no se trata de empujar el aire, sino de administrarlo con estabilidad.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 7 · TIPOS Y MODOS DE RESPIRACIÓN
+══════════════════════════════════════ -->
+<div class="slide slide-table">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">7</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Clasificación</div>
+      <div class="sc-hdr-title">Tipos y Modos de Respiración</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="table-body">
+    <div class="au d2">
+      <div class="txt-eyebrow">Comparativa de formas de respirar</div>
+      <div class="txt-heading" style="font-size:34px; margin-bottom:4px;">¿Cuál nos conviene más para cantar?</div>
+      <div class="txt-rule"></div>
+    </div>
+    <table class="acad-table au d3">
+      <thead>
+        <tr>
+          <th>Tipo de respiración</th>
+          <th>Características</th>
+          <th>Qué pasa al cantar</th>
+          <th>¿Conviene?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Clavicular</td>
+          <td>Eleva hombros y parte alta del pecho; superficial</td>
+          <td>Genera tensión y escaso control del soplo</td>
+          <td><span class="badge badge-no">No recomendable</span></td>
+        </tr>
+        <tr>
+          <td>Costal</td>
+          <td>Expansión lateral de costillas</td>
+          <td>Aporta estabilidad y mayor capacidad de aire</td>
+          <td><span class="badge badge-ok">Útil</span></td>
+        </tr>
+        <tr>
+          <td>Abdominal / Diafragmática</td>
+          <td>Descenso del diafragma con expansión abdominal</td>
+          <td>Entrada de aire más profunda y sensación de mayor soltura</td>
+          <td><span class="badge badge-ok">Recomendable</span></td>
+        </tr>
+        <tr>
+          <td>Costo-diafragmática</td>
+          <td>Combina expansión costal y acción diafragmática</td>
+          <td>Mayor equilibrio, control y apoyo vocal</td>
+          <td><span class="badge badge-top">Óptima ✦</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="acad-note au d4" style="margin-top:0;">
+      <div class="acad-note-lbl">Conclusión práctica</div>
+      <p>La respiración <strong>costo-diafragmática</strong> es la que más nos conviene porque combina expansión costal, descenso del diafragma y mejor control del aire.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 8 · RESPIRACIÓN APLICADA AL CANTO
+══════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">8</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Técnica vocal</div>
+      <div class="sc-hdr-title">Respiración Aplicada al Canto</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-img ai d2">
+      <!-- Apoyo respiratorio en el canto -->
+      <img
+        src="assets/appoggio-es.svg"
+        alt="Esquema del apoyo respiratorio con etiquetas en español"
+        style="object-fit:contain; background:#ede5d0; padding:8px;"
+      >
+      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 60%,rgba(245,240,232,.22))"></div>
+      <div class="sc-img-cap">Apoyo respiratorio · Coordinación corporal</div>
+    </div>
+    <div class="sc-text">
+      <div class="txt-eyebrow au d2">Appoggio · Apoyo respiratorio</div>
+      <div class="txt-heading au d3">Del aire al sonido<br><em>con intención</em></div>
+      <div class="txt-rule au d3"></div>
+      <ul class="acad-list">
+        <li class="au d3">La inspiración conviene que sea <strong>silenciosa, rápida y sin levantar los hombros</strong>.</li>
+        <li class="au d4">Después, el aire se dosifica según lo que pide la frase musical.</li>
+        <li class="au d5">El <em>appoggio</em> coordina diafragma, tórax, abdomen y laringe: la idea es <strong>sostener, no empujar</strong>.</li>
+        <li class="au d6">Eso nos permite cantar con más estabilidad, hacer matices y evitar sobreesfuerzo.</li>
+      </ul>
+      <div class="acad-note au d7">
+        <div class="acad-note-lbl">Cuerpo y postura</div>
+        <p>Cuando el cuerpo está alineado y sin tensión innecesaria, la respiración trabaja mejor y la voz sale más libre.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 9 · ERRORES COMUNES
+══════════════════════════════════════ -->
+<div class="slide slide-content">
+  <div class="sc-hdr al d1">
+    <div class="sc-hdr-num">9</div><div class="sc-hdr-sep"></div>
+    <div class="sc-hdr-titles">
+      <div class="sc-hdr-tag">Diagnóstico</div>
+      <div class="sc-hdr-title">Errores Comunes en la Respiración</div>
+      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    </div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-img ai d2">
+      <!-- Zonas frecuentes de tensión al cantar -->
+      <img
+        src="assets/tension-zones-es.svg"
+        alt="Esquema de zonas frecuentes de tensión con etiquetas en español"
+        style="object-fit:contain; background:#ede5d0; padding:8px;"
+      >
+      <div class="sc-img-ov"></div>
+      <div class="sc-img-cap">Zonas de tensión · Esquema orientativo</div>
+    </div>
+    <div class="sc-text">
+      <div class="txt-eyebrow au d2" style="color:var(--burg);">Qué conviene evitar</div>
+      <div class="txt-heading au d3">Hábitos que comprometen<br>la calidad vocal</div>
+      <div class="txt-rule au d3"></div>
+      <div class="error-grid">
+        <div class="error-item au d3">
+          <div class="err-ico">🫸</div>
+          <div><h5>Elevar los hombros</h5><p>Genera tensión cervical y reduce el apoyo respiratorio.</p></div>
+        </div>
+        <div class="error-item au d4">
+          <div class="err-ico">💨</div>
+          <div><h5>Expulsar el aire con fuerza</h5><p>Agota la reserva aérea y fuerza la emisión vocal.</p></div>
+        </div>
+        <div class="error-item au d4">
+          <div class="err-ico">🫁</div>
+          <div><h5>Inflar de más el pecho</h5><p>Favorece la respiración clavicular y genera tensión.</p></div>
+        </div>
+        <div class="error-item au d5">
+          <div class="err-ico">🔒</div>
+          <div><h5>Bloquear el abdomen</h5><p>Impide el descenso del diafragma y la coordinación vocal.</p></div>
+        </div>
+        <div class="error-item au d5">
+          <div class="err-ico">⚡</div>
+          <div><h5>Inspirar superficial y rápido</h5><p>Reduce la reserva de aire e introduce tensiones.</p></div>
+        </div>
+        <div class="error-item au d6">
+          <div class="err-ico">🧍</div>
+          <div><h5>Ignorar la postura</h5><p>Sin alineación, la voz pierde facilidad y proyección.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SLIDE 10 · CONCLUSIÓN
+══════════════════════════════════════ -->
+<div class="slide slide-conclusion">
+  <div class="conc-hdr au d1">
+    <div class="conc-hdr-tag">Conclusión · Foniatría y Canto</div>
+    <div class="conc-hdr-line"></div>
+    <div class="conc-hdr-dia"></div>
+  </div>
+  <div class="conc-body-wrap">
+    <h2 class="conc-title au d2">El aire sostiene toda<br>la <em>emisión vocal</em></h2>
+    <div class="conc-ornament au d3">
+      <div class="conc-orn-line"></div>
+      <div class="conc-orn-dia"></div>
+      <div class="conc-orn-line"></div>
+    </div>
+    <p class="conc-text au d4">
+      Para nosotros, la voz no se entiende aislada de la respiración. Cuando vías aéreas, diafragma, caja torácica, abdomen y postura trabajan coordinados, cantar se vuelve más estable, cómodo y sano.
+    </p>
+    <div class="conc-quote au d5">
+      "Cuanto mejor organizamos el aire, más libre, segura y expresiva sale la voz."
+    </div>
+    <div class="conc-pills au d6">
+      <div class="pill">Apoyo respiratorio</div>
+      <div class="pill">Coordinación</div>
+      <div class="pill">Postura</div>
+      <div class="pill">Cuidado de la voz</div>
+    </div>
+  </div>
+  <div class="conc-ftr au d7">
+    <div class="conc-ftr-txt">Conservatorio Juan R. Pérez Cruz</div>
+    <div class="conc-ftr-txt" style="color:rgba(200,151,58,.45);">✦ Foniatría · Técnica Vocal ✦</div>
+    <div class="conc-ftr-txt">22 de mayo de 2026 · Alain · Azul · Trinidad</div>
+  </div>
+</div>
+
+</div><!-- fin #deck -->
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const curEl  = document.getElementById('cur');
+const totEl  = document.getElementById('tot');
+const bar    = document.getElementById('prog');
+const fullBtn = document.getElementById('btn-full');
+const total = slides.length;
+const requestedSlide = Number.parseInt(new URLSearchParams(window.location.search).get('slide') || '', 10);
+let cur = Number.isFinite(requestedSlide) ? Math.min(Math.max(requestedSlide - 1, 0), total - 1) : 0;
+totEl.textContent = total;
+slides.forEach((slide, i) => slide.classList.toggle('on', i === cur));
+
+slides.forEach((_,i)=>{
+  const d = document.createElement('div');
+  d.className='dot'+(i===cur?' on':'');
+  d.addEventListener('click',()=>goTo(i));
+  dotsEl.appendChild(d);
+});
+
+function goTo(n){
+  slides[cur].classList.remove('on');
+  dotsEl.children[cur].classList.remove('on');
+  cur=(n+total)%total;
+  void slides[cur].offsetWidth;
+  slides[cur].classList.add('on');
+  dotsEl.children[cur].classList.add('on');
+  curEl.textContent=cur+1;
+  bar.style.width=((cur+1)/total*100)+'%';
+}
+
+function syncFullscreenButton(){
+  const isFullscreen = !!document.fullscreenElement;
+  fullBtn.classList.toggle('is-active', isFullscreen);
+  fullBtn.setAttribute('aria-label', isFullscreen ? 'Salir de pantalla completa' : 'Activar pantalla completa');
+  fullBtn.setAttribute('aria-pressed', isFullscreen ? 'true' : 'false');
+  fullBtn.title = isFullscreen ? 'Salir de pantalla completa' : 'Activar pantalla completa';
+}
+
+async function toggleFullscreen(){
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await document.documentElement.requestFullscreen();
+    }
+  } catch (err) {
+    console.warn('No se pudo cambiar el modo de pantalla completa.', err);
+  }
+}
+
+document.getElementById('btn-prev').addEventListener('click',()=>goTo(cur-1));
+document.getElementById('btn-next').addEventListener('click',()=>goTo(cur+1));
+if (document.fullscreenEnabled) {
+  fullBtn.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', syncFullscreenButton);
+  syncFullscreenButton();
+} else {
+  fullBtn.style.display = 'none';
+}
+document.addEventListener('keydown',e=>{
+  if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === 'f') {
+    e.preventDefault();
+    toggleFullscreen();
+    return;
+  }
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();goTo(cur+1);}
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();goTo(cur-1);}
+});
+curEl.textContent = cur + 1;
+bar.style.width=((cur+1)/total*100)+'%';
+</script>
+</body>
+</html>
