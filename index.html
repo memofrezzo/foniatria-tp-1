@@ -91,12 +91,6 @@ html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
   color:var(--ink-soft); z-index:200;
   background:rgba(245,240,232,.95); padding:7px 16px;
   border:1px solid var(--rule); box-shadow:1px 1px 6px var(--sh); }
-#dots { position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
-  display:flex; gap:10px; z-index:200; }
-.dot { width:7px; height:7px; background:rgba(245,240,232,.3);
-  border:1px solid rgba(245,240,232,.4); cursor:pointer; transition:all .3s; }
-.dot.on { background:var(--gold); border-color:var(--gold); transform:scale(1.4); }
-
 /* ══ DECK ══ */
 #deck { position:relative; width:100vw; height:100vh; z-index:1; }
 .slide { position:absolute; inset:0; opacity:0; pointer-events:none; }
@@ -569,7 +563,6 @@ html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
 <button class="nav-btn" id="btn-full" type="button" aria-label="Activar pantalla completa" aria-pressed="false" title="Activar pantalla completa">⛶</button>
 <button class="nav-btn" id="btn-prev">&#8592;</button>
 <button class="nav-btn" id="btn-next">&#8594;</button>
-<div id="dots"></div>
 
 <div id="deck">
 
@@ -602,9 +595,8 @@ html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
       <div class="cover-rule au d5"></div>
       <div class="cover-int-lbl au d5">Integrantes del grupo</div>
       <ul class="cover-ints">
-        <li class="au d6">Alain</li>
-        <li class="au d7">Azul</li>
-        <li class="au d8">Trinidad</li>
+        <li class="au d6">Alain Gerfauo</li>
+        <li class="au d8">Trinidad arfo</li>
       </ul>
     </div>
     <div class="cover-right as d3">
@@ -640,14 +632,14 @@ html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
   </div>
   <div class="sc-body">
     <div class="sc-img ai d2">
-      <!-- Esquema simplificado del apoyo respiratorio y los pliegues vocales -->
+      <!-- Infografía simplificada del recorrido del aire, la fonación y la resonancia -->
       <img
         src="assets/vocal-support-es.svg"
-        alt="Esquema del apoyo respiratorio y los pliegues vocales"
+        alt="Infografía del aire, la laringe y la resonancia en el canto"
         style="object-fit:contain; background:#ede5d0; padding:10px;"
       >
       <div class="sc-img-ov"></div>
-      <div class="sc-img-cap">Pliegues vocales · Esquema simplificado</div>
+      <div class="sc-img-cap">Aire, fonación y resonancia · Esquema simplificado</div>
     </div>
     <div class="sc-text">
       <div class="txt-eyebrow au d2">Punto de partida</div>
@@ -1030,7 +1022,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
   <div class="conc-ftr au d7">
     <div class="conc-ftr-txt">Conservatorio Juan R. Pérez Cruz</div>
     <div class="conc-ftr-txt" style="color:rgba(200,151,58,.45);">✦ Foniatría · Técnica Vocal ✦</div>
-    <div class="conc-ftr-txt">22 de mayo de 2026 · Alain · Azul · Trinidad</div>
+    <div class="conc-ftr-txt">22 de mayo de 2026 · Alain Gerfauo · Trinidad Arfo</div>
   </div>
 </div>
 
@@ -1038,7 +1030,6 @@ html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
 
 <script>
 const slides = document.querySelectorAll('.slide');
-const dotsEl = document.getElementById('dots');
 const curEl  = document.getElementById('cur');
 const totEl  = document.getElementById('tot');
 const bar    = document.getElementById('prog');
@@ -1049,20 +1040,11 @@ let cur = Number.isFinite(requestedSlide) ? Math.min(Math.max(requestedSlide - 1
 totEl.textContent = total;
 slides.forEach((slide, i) => slide.classList.toggle('on', i === cur));
 
-slides.forEach((_,i)=>{
-  const d = document.createElement('div');
-  d.className='dot'+(i===cur?' on':'');
-  d.addEventListener('click',()=>goTo(i));
-  dotsEl.appendChild(d);
-});
-
 function goTo(n){
   slides[cur].classList.remove('on');
-  dotsEl.children[cur].classList.remove('on');
   cur=(n+total)%total;
   void slides[cur].offsetWidth;
   slides[cur].classList.add('on');
-  dotsEl.children[cur].classList.add('on');
   curEl.textContent=cur+1;
   bar.style.width=((cur+1)/total*100)+'%';
 }

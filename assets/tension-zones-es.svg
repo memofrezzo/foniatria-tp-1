@@ -1,41 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-labelledby="title desc">
-  <title id="title">Zonas frecuentes de tensión al cantar</title>
-  <desc id="desc">Torso simplificado con hombros, cuello, pecho alto y abdomen marcados como zonas de tensión.</desc>
+  <title id="title">Zonas frecuentes de tension al cantar</title>
+  <desc id="desc">Figura frontal simplificada con hombros, cuello, pecho alto y abdomen marcados como zonas de tension frecuentes.</desc>
   <rect width="900" height="1200" fill="#ede5d0"/>
   <rect x="56" y="56" width="788" height="1088" rx="36" fill="#f7f1e8" stroke="#c8973a" stroke-width="4"/>
-  <path d="M450 162C392 162 350 212 334 266L292 404C272 472 266 546 276 620L302 810C314 888 380 944 458 944C536 944 602 888 614 810L640 620C650 546 644 472 624 404L582 266C566 212 524 162 466 162Z" fill="#dfcfbc" stroke="#3b2e1a" stroke-width="5"/>
-  <path d="M450 180V944" fill="none" stroke="#6b5540" stroke-width="8" stroke-linecap="round"/>
-  <g fill="#b93b44" opacity=".9">
-    <ellipse cx="366" cy="238" rx="82" ry="54"/>
-    <ellipse cx="534" cy="238" rx="82" ry="54"/>
-    <rect x="404" y="210" width="92" height="112" rx="40"/>
-    <ellipse cx="450" cy="408" rx="160" ry="88"/>
-    <ellipse cx="450" cy="730" rx="140" ry="88"/>
-  </g>
-  <g stroke="#7a1f2e" stroke-width="4" stroke-dasharray="10 10" fill="none">
-    <ellipse cx="366" cy="238" rx="82" ry="54"/>
-    <ellipse cx="534" cy="238" rx="82" ry="54"/>
-    <rect x="404" y="210" width="92" height="112" rx="40"/>
-    <ellipse cx="450" cy="408" rx="160" ry="88"/>
-    <ellipse cx="450" cy="730" rx="140" ry="88"/>
-  </g>
+
   <g font-family="Georgia, serif">
-    <rect x="88" y="152" width="240" height="80" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
-    <text x="208" y="198" text-anchor="middle" font-size="29" fill="#18120a">Hombros altos</text>
-    <path d="M328 192H292" fill="none" stroke="#7a1f2e" stroke-width="4"/>
-    <polygon points="292,192 308,182 308,202" fill="#7a1f2e"/>
-    <rect x="582" y="256" width="224" height="84" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
-    <text x="694" y="302" text-anchor="middle" font-size="29" fill="#18120a">Cuello tenso</text>
-    <path d="M582 296H514" fill="none" stroke="#7a1f2e" stroke-width="4"/>
-    <polygon points="514,296 530,286 530,306" fill="#7a1f2e"/>
-    <rect x="92" y="378" width="220" height="84" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
-    <text x="202" y="424" text-anchor="middle" font-size="29" fill="#18120a">Pecho inflado</text>
-    <path d="M312 418H350" fill="none" stroke="#7a1f2e" stroke-width="4"/>
-    <polygon points="350,418 334,408 334,428" fill="#7a1f2e"/>
-    <rect x="566" y="686" width="240" height="96" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
-    <text x="686" y="724" text-anchor="middle" font-size="29" fill="#18120a">Abdomen rígido</text>
-    <text x="686" y="760" text-anchor="middle" font-size="22" fill="#6b5540">bloquea el apoyo</text>
-    <path d="M566 734H516" fill="none" stroke="#7a1f2e" stroke-width="4"/>
-    <polygon points="516,734 532,724 532,744" fill="#7a1f2e"/>
+    <text x="450" y="122" text-anchor="middle" font-size="24" letter-spacing="5" fill="#7a1f2e">TENSIONES QUE CONVIENE EVITAR</text>
+    <text x="450" y="160" text-anchor="middle" font-size="35" fill="#18120a">Cuando el cuerpo aprieta,</text>
+    <text x="450" y="198" text-anchor="middle" font-size="35" fill="#18120a">la voz pierde libertad</text>
+  </g>
+
+  <g transform="translate(0 44)">
+    <ellipse cx="450" cy="246" rx="88" ry="110" fill="#ddccb8" stroke="#3b2e1a" stroke-width="5"/>
+    <path d="M410 340H490V390C490 416 472 438 450 438C428 438 410 416 410 390Z" fill="#ddccb8" stroke="#3b2e1a" stroke-width="5"/>
+    <path d="M312 474C330 426 374 396 450 396C526 396 570 426 588 474L626 614C646 688 648 780 616 850C584 920 530 970 450 998C370 970 316 920 284 850C252 780 254 688 274 614Z" fill="#ddccb8" stroke="#3b2e1a" stroke-width="5"/>
+    <path d="M450 438V996" fill="none" stroke="#6b5540" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+    <path d="M340 550C360 516 394 494 450 494C506 494 540 516 560 550" fill="none" stroke="#b9a58c" stroke-width="10" stroke-linecap="round"/>
+    <path d="M360 824C384 842 412 852 450 852C488 852 516 842 540 824" fill="none" stroke="#b9a58c" stroke-width="10" stroke-linecap="round"/>
+
+    <g fill="#b93b44" opacity=".82">
+      <path d="M330 424C360 402 402 392 450 392C498 392 540 402 570 424L602 470C552 466 500 458 450 458C400 458 348 466 298 470Z"/>
+      <rect x="414" y="310" width="72" height="126" rx="30"/>
+      <ellipse cx="450" cy="564" rx="138" ry="76"/>
+      <ellipse cx="450" cy="824" rx="122" ry="74"/>
+    </g>
+
+    <g stroke="#7a1f2e" stroke-width="4" stroke-dasharray="10 10" fill="none">
+      <path d="M330 424C360 402 402 392 450 392C498 392 540 402 570 424L602 470C552 466 500 458 450 458C400 458 348 466 298 470Z"/>
+      <rect x="414" y="310" width="72" height="126" rx="30"/>
+      <ellipse cx="450" cy="564" rx="138" ry="76"/>
+      <ellipse cx="450" cy="824" rx="122" ry="74"/>
+    </g>
+  </g>
+
+  <g font-family="Georgia, serif">
+    <rect x="122" y="306" width="198" height="84" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="221" y="342" text-anchor="middle" font-size="26" fill="#18120a">Hombros elevados</text>
+    <text x="221" y="372" text-anchor="middle" font-size="20" fill="#6b5540">suben y rigidezan el apoyo</text>
+    <path d="M320 348H356" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="356,348 340,338 340,358" fill="#7a1f2e"/>
+
+    <rect x="594" y="280" width="214" height="90" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="701" y="318" text-anchor="middle" font-size="26" fill="#18120a">Mandibula y cuello</text>
+    <text x="701" y="350" text-anchor="middle" font-size="20" fill="#6b5540">tensos al emitir</text>
+    <path d="M594 324H528" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="528,324 544,314 544,334" fill="#7a1f2e"/>
+
+    <rect x="124" y="548" width="194" height="90" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="221" y="586" text-anchor="middle" font-size="26" fill="#18120a">Pecho alto rigido</text>
+    <text x="221" y="618" text-anchor="middle" font-size="20" fill="#6b5540">empuja en vez de sostener</text>
+    <path d="M318 592H322" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="322,592 306,582 306,602" fill="#7a1f2e"/>
+
+    <rect x="582" y="802" width="222" height="90" rx="18" fill="#f5f0e8" stroke="#c8973a" stroke-width="3"/>
+    <text x="693" y="840" text-anchor="middle" font-size="26" fill="#18120a">Abdomen bloqueado</text>
+    <text x="693" y="872" text-anchor="middle" font-size="20" fill="#6b5540">pierde elasticidad</text>
+    <path d="M582 848H516" fill="none" stroke="#7a1f2e" stroke-width="4"/>
+    <polygon points="516,848 532,838 532,858" fill="#7a1f2e"/>
+  </g>
+
+  <g font-family="Georgia, serif">
+    <rect x="126" y="1012" width="648" height="86" rx="22" fill="#f5eddc" stroke="#c8973a" stroke-width="3"/>
+    <text x="450" y="1050" text-anchor="middle" font-size="27" fill="#7a1f2e">La tension suele subir hacia cuello y pecho o trabar el abdomen.</text>
+    <text x="450" y="1080" text-anchor="middle" font-size="21" fill="#6b5540">Cuando eso pasa, el aire se organiza peor y la voz se fatiga antes.</text>
   </g>
 </svg>
