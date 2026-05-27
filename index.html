@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -7,49 +7,73 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════
-   VARIABLES – PALETA ACADÉMICA
-══════════════════════════════════════ */
 :root {
-  --cream:       #f5f0e8;
-  --parch:       #ede5d0;
-  --ink:         #18120a;
-  --ink-mid:     #3b2e1a;
-  --ink-soft:    #6b5540;
-  --burg:        #7a1f2e;
-  --burg-l:      #a33040;
-  --gold:        #c8973a;
-  --gold-l:      #e4b55a;
-  --gold-pale:   rgba(200,151,58,.13);
-  --burg-pale:   rgba(122,31,46,.09);
-  --rule:        rgba(26,18,10,.16);
-  --sh:          rgba(26,18,10,.25);
+  --cream:#f5f0e8;
+  --parch:#ede5d0;
+  --ink:#18120a;
+  --ink-mid:#3b2e1a;
+  --ink-soft:#6b5540;
+  --burg:#7a1f2e;
+  --burg-l:#a33040;
+  --gold:#c8973a;
+  --gold-l:#e4b55a;
+  --gold-pale:rgba(200,151,58,.13);
+  --burg-pale:rgba(122,31,46,.09);
+  --rule:rgba(26,18,10,.16);
+  --sh:rgba(26,18,10,.25);
 }
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
-  font-family:'EB Garamond',Georgia,serif; color:var(--ink); }
 
-/* ══ PROGRESS ══ */
-#prog { position:fixed; bottom:0; left:0; height:3px; width:0%;
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html, body {
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--ink);
+  font-family:'EB Garamond', Georgia, serif;
+}
+
+#prog {
+  position:fixed;
+  bottom:0;
+  left:0;
+  height:3px;
+  width:0%;
+  z-index:300;
   background:linear-gradient(90deg,var(--burg),var(--gold));
-  transition:width .45s ease; z-index:300; }
+  transition:width .45s ease;
+}
 
-/* ══ NAV BUTTONS ══ */
-.nav-btn { position:fixed; top:50%; transform:translateY(-50%);
-  width:52px; height:52px;
-  background:rgba(245,240,232,.93); border:1px solid var(--rule);
-  color:var(--ink-mid); font-size:20px;
-  cursor:pointer; z-index:200;
-  display:flex; align-items:center; justify-content:center;
-  transition:all .2s; box-shadow:2px 2px 10px var(--sh); }
+.nav-btn {
+  position:fixed;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:200;
+  width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(245,240,232,.93);
+  border:1px solid var(--rule);
+  color:var(--ink-mid);
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:2px 2px 10px var(--sh);
+  transition:all .2s;
+}
 .nav-btn:hover { background:var(--burg); color:var(--cream); border-color:var(--burg); }
 #btn-prev { left:20px; }
 #btn-next { right:20px; }
 #btn-full {
-  top:calc(50% - 72px); left:20px; right:auto;
-  width:52px; min-width:52px; height:52px; padding:0;
-  font-size:0; letter-spacing:0;
-  background-color:rgba(245,240,232,.93);
+  top:calc(50% - 72px);
+  left:20px;
+  width:52px;
+  min-width:52px;
+  height:52px;
+  padding:0;
+  font-size:0;
+  letter-spacing:0;
 }
 #btn-full,
 #btn-full:hover,
@@ -85,971 +109,2047 @@ html, body { width:100%; height:100%; overflow:hidden; background:#18120a;
 }
 #btn-full:hover,
 #btn-full.is-active { background-color:var(--burg); color:var(--cream); border-color:var(--burg); }
-#counter { position:fixed; top:20px; right:32px;
-  font-family:'Josefin Sans',sans-serif;
-  font-size:11px; letter-spacing:3px; text-transform:uppercase;
-  color:var(--ink-soft); z-index:200;
-  background:rgba(245,240,232,.95); padding:7px 16px;
-  border:1px solid var(--rule); box-shadow:1px 1px 6px var(--sh); }
-/* ══ DECK ══ */
+
+#counter {
+  position:fixed;
+  top:20px;
+  right:32px;
+  z-index:200;
+  padding:7px 16px;
+  background:rgba(245,240,232,.95);
+  border:1px solid var(--rule);
+  color:var(--ink-soft);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:11px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  box-shadow:1px 1px 6px var(--sh);
+}
+
 #deck { position:relative; width:100vw; height:100vh; z-index:1; }
-.slide { position:absolute; inset:0; opacity:0; pointer-events:none; }
+.slide { position:absolute; inset:0; opacity:0; pointer-events:none; background:var(--cream); }
 .slide.on { opacity:1; pointer-events:all; }
 
-/* ══ KEYFRAMES ══ */
-@keyframes fadeUp   { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
 @keyframes fadeLeft { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:none} }
-@keyframes fadeIn   { from{opacity:0} to{opacity:1} }
-@keyframes scaleIn  { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:none} }
-@keyframes lineV    { from{height:0} to{height:100%} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes scaleIn { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:none} }
+@keyframes slowFocus { from{transform:scale(.985)} to{transform:scale(1.015)} }
 
-.slide.on .au { animation:fadeUp   .65s cubic-bezier(.4,0,.2,1) both; }
+.slide.on .au { animation:fadeUp .65s cubic-bezier(.4,0,.2,1) both; }
 .slide.on .al { animation:fadeLeft .65s cubic-bezier(.4,0,.2,1) both; }
-.slide.on .ai { animation:fadeIn   .85s ease both; }
-.slide.on .as { animation:scaleIn  .65s cubic-bezier(.4,0,.2,1) both; }
-
+.slide.on .ai { animation:fadeIn .85s ease both; }
+.slide.on .as { animation:scaleIn .65s cubic-bezier(.4,0,.2,1) both; }
 .d1{animation-delay:.04s!important} .d2{animation-delay:.13s!important}
 .d3{animation-delay:.24s!important} .d4{animation-delay:.36s!important}
 .d5{animation-delay:.49s!important} .d6{animation-delay:.63s!important}
-.d7{animation-delay:.77s!important} .d8{animation-delay:.91s!important}
 
-/* ══════════════════════════════════════
-   SLIDE 1 · PORTADA
-══════════════════════════════════════ */
 .slide-cover {
-  display:grid; grid-template-rows:auto 1fr auto;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
   background:var(--cream);
 }
-/* Cabecera institucional */
 .cover-hdr {
-  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
-  padding:18px 52px; background:var(--ink);
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  padding:18px 52px;
+  background:var(--ink);
   border-bottom:2px solid var(--gold);
 }
+.cover-hdr-inst,
+.cover-hdr-subj,
+.cover-ftr-txt,
+.sc-hdr-tag,
+.sc-hdr-inst,
+.txt-eyebrow,
+.activity-kicker,
+.mini-tag,
+.match-status,
+.action-btn,
+.label-chip {
+  font-family:'Josefin Sans', sans-serif;
+  text-transform:uppercase;
+}
 .cover-hdr-inst {
-  font-family:'Josefin Sans',sans-serif; font-size:11px; letter-spacing:4px;
-  text-transform:uppercase; color:var(--gold-l); line-height:1.7;
+  color:var(--gold-l);
+  font-size:11px;
+  letter-spacing:4px;
+  line-height:1.7;
 }
 .cover-hdr-seal {
-  width:70px; height:70px; border-radius:50%;
-  border:2px solid var(--gold); color:var(--gold); font-size:30px;
-  display:flex; align-items:center; justify-content:center;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  border:2px solid var(--gold);
+  color:var(--gold);
+  font-size:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   box-shadow:0 0 0 5px rgba(200,151,58,.13);
 }
 .cover-hdr-subj {
-  text-align:right; font-family:'Josefin Sans',sans-serif;
-  font-size:11px; letter-spacing:3px; text-transform:uppercase;
-  color:rgba(245,240,232,.55); line-height:1.7;
+  text-align:right;
+  font-size:11px;
+  letter-spacing:3px;
+  color:rgba(245,240,232,.55);
+  line-height:1.7;
 }
-/* Cuerpo portada */
 .cover-body { display:grid; grid-template-columns:52% 48%; overflow:hidden; }
 .cover-left {
-  display:flex; flex-direction:column; justify-content:center;
-  padding:52px 60px 52px 80px; position:relative;
-  background:var(--cream); border-right:1px solid var(--rule);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:52px 60px 52px 80px;
+  border-right:1px solid var(--rule);
 }
-.cover-left::after { content:''; position:absolute; top:0; left:0;
-  width:5px; height:100%;
-  background:linear-gradient(to bottom,var(--burg),var(--gold)); }
-.cover-eyebrow { font-family:'Josefin Sans',sans-serif; font-size:10px;
-  letter-spacing:5px; text-transform:uppercase; color:var(--burg); margin-bottom:18px; }
+.cover-left::after {
+  content:'';
+  position:absolute;
+  inset:0 auto 0 0;
+  width:5px;
+  background:linear-gradient(to bottom,var(--burg),var(--gold));
+}
+.cover-eyebrow {
+  margin-bottom:18px;
+  color:var(--burg);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:10px;
+  letter-spacing:5px;
+  text-transform:uppercase;
+}
 .cover-ornament { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
 .cover-orn-line { flex:1; height:1px; background:var(--rule); }
 .cover-orn-dia { width:9px; height:9px; background:var(--gold); transform:rotate(45deg); }
-.cover-title { font-family:'Playfair Display',serif; font-size:62px; font-weight:800;
-  line-height:1.06; color:var(--ink); margin-bottom:10px; }
-.cover-title em { color:var(--burg); font-style:italic; }
-.cover-sub { font-family:'EB Garamond',serif; font-size:22px; font-style:italic;
-  color:var(--ink-soft); line-height:1.55; margin-bottom:34px;
-  border-left:3px solid var(--gold); padding-left:18px; }
-.cover-rule { width:100%; height:1px;
-  background:linear-gradient(90deg,var(--burg),var(--gold),transparent); margin-bottom:24px; }
-.cover-int-lbl { font-family:'Josefin Sans',sans-serif; font-size:9px;
-  letter-spacing:4px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:12px; }
-.cover-ints { list-style:none; display:flex; flex-direction:column; gap:8px; }
-.cover-ints li { font-family:'Playfair Display',serif; font-size:22px;
-  color:var(--ink-mid); display:flex; align-items:center; gap:12px; }
-.cover-ints li::before { content:''; width:22px; height:1px; background:var(--gold); flex-shrink:0; }
-/* Imagen portada */
+.cover-title {
+  margin-bottom:10px;
+  color:var(--ink);
+  font-family:'Playfair Display', serif;
+  font-size:62px;
+  font-weight:800;
+  line-height:1.06;
+}
+.cover-title em,
+.txt-heading em,
+.closing-title em { color:var(--burg); font-style:italic; }
+.cover-sub {
+  margin-bottom:34px;
+  padding-left:18px;
+  border-left:3px solid var(--gold);
+  color:var(--ink-soft);
+  font-size:22px;
+  font-style:italic;
+  line-height:1.55;
+}
+.cover-rule {
+  width:100%;
+  height:1px;
+  margin-bottom:24px;
+  background:linear-gradient(90deg,var(--burg),var(--gold),transparent);
+}
+.cover-int-lbl {
+  margin-bottom:12px;
+  color:var(--ink-soft);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:9px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+}
+.cover-ints { display:flex; flex-direction:column; gap:8px; list-style:none; }
+.cover-ints li {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:var(--ink-mid);
+  font-family:'Playfair Display', serif;
+  font-size:22px;
+}
+.cover-ints li::before {
+  content:'';
+  width:22px;
+  height:1px;
+  background:var(--gold);
+  flex-shrink:0;
+}
 .cover-right { position:relative; overflow:hidden; background:var(--ink); }
-.cover-right img { width:100%; height:100%; object-fit:cover; display:block;
-  filter:brightness(.65) saturate(.7) sepia(.2); }
-.cover-right-ov { position:absolute; inset:0;
+.cover-right img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  padding:14px;
+  background:var(--parch);
+  filter:brightness(.72) saturate(.78) sepia(.08);
+}
+.slide.on .cover-right img,
+.slide.on .sc-img img { animation:slowFocus 7s ease both; }
+.cover-right-ov {
+  position:absolute;
+  inset:0;
   background:linear-gradient(to right,rgba(245,240,232,.45) 0%,transparent 28%),
-             linear-gradient(to top,rgba(26,18,10,.55) 0%,transparent 45%); }
-.cover-right-cap { position:absolute; bottom:26px; right:28px;
-  font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px;
-  text-transform:uppercase; color:rgba(245,240,232,.5); }
-/* Pie portada */
-.cover-ftr { display:flex; justify-content:space-between; align-items:center;
-  padding:14px 80px; background:var(--ink); border-top:1px solid rgba(200,151,58,.28); }
-.cover-ftr-txt { font-family:'Josefin Sans',sans-serif; font-size:10px;
-  letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.38); }
+             linear-gradient(to top,rgba(26,18,10,.55) 0%,transparent 45%);
+}
+.cover-right-cap {
+  position:absolute;
+  right:28px;
+  bottom:26px;
+  color:rgba(245,240,232,.5);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+.cover-ftr {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 80px;
+  background:var(--ink);
+  border-top:1px solid rgba(200,151,58,.28);
+}
+.cover-ftr-txt {
+  color:rgba(245,240,232,.38);
+  font-size:10px;
+  letter-spacing:3px;
+}
 .cover-ftr-gold { color:var(--gold-l); }
 
-/* ══════════════════════════════════════
-   SLIDES CONTENIDO  (header + 2 cols)
-══════════════════════════════════════ */
-.slide-content { display:grid; grid-template-rows:auto 1fr; background:var(--cream); }
-
-/* Header uniforme */
-.sc-hdr { display:flex; align-items:stretch; background:var(--ink);
-  border-bottom:2px solid var(--gold); height:64px; flex-shrink:0; }
-.sc-hdr-num { display:flex; align-items:center; justify-content:center;
-  width:64px; background:var(--burg); flex-shrink:0;
-  font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--cream); }
+.slide-content {
+  display:grid;
+  grid-template-rows:auto 1fr;
+  background:var(--cream);
+}
+.sc-hdr {
+  display:flex;
+  align-items:stretch;
+  height:64px;
+  background:var(--ink);
+  border-bottom:2px solid var(--gold);
+}
+.sc-hdr-num {
+  width:64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--burg);
+  color:var(--cream);
+  font-family:'Playfair Display', serif;
+  font-size:22px;
+  font-weight:700;
+  flex-shrink:0;
+}
 .sc-hdr-sep { width:1px; background:rgba(200,151,58,.25); }
-.sc-hdr-titles { display:flex; align-items:center; flex:1; padding:0 30px; }
-.sc-hdr-tag { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:4px;
-  text-transform:uppercase; color:var(--gold-l);
-  margin-right:20px; padding-right:20px; border-right:1px solid rgba(200,151,58,.22); }
-.sc-hdr-title { font-family:'Playfair Display',serif; font-size:20px; font-weight:600; color:var(--cream); }
-.sc-hdr-inst { margin-left:auto; font-family:'Josefin Sans',sans-serif;
-  font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.28); }
-
-/* Cuerpo 2 cols */
-.sc-body { display:grid; grid-template-columns:40% 1fr; overflow:hidden; }
+.sc-hdr-titles { display:flex; align-items:center; flex:1; min-width:0; padding:0 30px; }
+.sc-hdr-tag {
+  margin-right:20px;
+  padding-right:20px;
+  border-right:1px solid rgba(200,151,58,.22);
+  color:var(--gold-l);
+  font-size:9px;
+  letter-spacing:4px;
+}
+.sc-hdr-title {
+  color:var(--cream);
+  font-family:'Playfair Display', serif;
+  font-size:20px;
+  font-weight:600;
+}
+.sc-hdr-inst {
+  margin-left:auto;
+  color:rgba(245,240,232,.28);
+  font-size:9px;
+  letter-spacing:3px;
+}
+.sc-body {
+  display:grid;
+  grid-template-columns:36% 1fr;
+  min-height:0;
+  overflow:hidden;
+}
 .sc-body > *,
 .sc-text,
 .sc-img,
-.flow,
-.text-grid,
-.conc-summary { min-width:0; }
-
-/* Imagen */
-.sc-img { position:relative; overflow:hidden; background:var(--ink); }
-.sc-img img { width:100%; height:100%; object-fit:cover; display:block;
-  filter:brightness(.72) saturate(.78) sepia(.1); }
-.sc-img-ov { position:absolute; inset:0;
-  background:linear-gradient(to right,transparent 55%,rgba(245,240,232,.18)); }
-.sc-img::before { content:''; position:absolute; top:0; right:0; z-index:2;
-  width:4px; height:0;
+.interactive-wrap,
+.match-game,
+.visual-panel,
+.drop-figure,
+.word-bank { min-width:0; }
+.sc-img {
+  position:relative;
+  overflow:hidden;
+  background:var(--ink);
+}
+.sc-img img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  padding:10px;
+  background:var(--parch);
+  filter:brightness(.72) saturate(.78) sepia(.1);
+}
+.sc-img-ov {
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to right,transparent 62%,rgba(245,240,232,.2));
+  pointer-events:none;
+}
+.sc-img::before {
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  z-index:2;
+  width:4px;
+  height:0;
   background:linear-gradient(to bottom,var(--burg),var(--gold));
-  transition:height .85s cubic-bezier(.4,0,.2,1) .12s; }
+  transition:height .85s cubic-bezier(.4,0,.2,1) .12s;
+}
 .slide.on .sc-img::before { height:100%; }
-.sc-img-cap { position:absolute; bottom:14px; left:16px; right:16px; z-index:3;
-  font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:2px;
-  text-transform:uppercase; color:rgba(245,240,232,.42);
-  border-top:1px solid rgba(245,240,232,.14); padding-top:8px; }
-
-/* Texto */
-.sc-text { padding:44px 58px; display:flex; flex-direction:column;
-  justify-content:center; overflow:hidden; position:relative; gap:0; }
-.sc-text::before { content:''; position:absolute; top:0; left:0; right:0;
-  height:2px; background:linear-gradient(90deg,var(--burg),var(--gold),transparent); }
-
-.txt-eyebrow { font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:4px;
-  text-transform:uppercase; color:var(--burg); margin-bottom:10px; }
-.txt-heading { font-family:'Playfair Display',serif; font-size:38px; font-weight:700;
-  line-height:1.15; color:var(--ink); margin-bottom:8px; }
-.txt-heading em { color:var(--burg); font-style:italic; }
-.txt-rule { width:42px; height:2px;
-  background:linear-gradient(90deg,var(--burg),var(--gold)); margin-bottom:22px; }
-
-/* Lista académica */
-.acad-list { list-style:none; display:flex; flex-direction:column; gap:13px; margin-bottom:20px; }
-.acad-list li { display:flex; align-items:flex-start; gap:16px;
-  font-family:'EB Garamond',serif; font-size:22px; line-height:1.62; color:var(--ink-mid); }
-.acad-list li::before { content:''; flex-shrink:0; width:6px; height:6px;
-  background:var(--burg); transform:rotate(45deg); margin-top:11px; }
-.acad-list li strong { color:var(--ink); font-weight:600; }
-
-/* Nota / callout */
-.acad-note { background:var(--gold-pale); border:1px solid rgba(200,151,58,.28);
-  border-left:4px solid var(--gold); padding:16px 22px; margin-top:auto; }
-.acad-note-lbl { font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:3px;
-  text-transform:uppercase; color:var(--gold); margin-bottom:7px; }
-.acad-note p { font-family:'EB Garamond',serif; font-size:20px; line-height:1.65;
-  color:var(--ink-soft); font-style:italic; }
-.acad-note p strong { color:var(--ink); font-style:normal; font-weight:600; }
-
-/* Párrafos */
-.txt-body { font-family:'EB Garamond',serif; font-size:22px; line-height:1.72;
-  color:var(--ink-mid); margin-bottom:14px; }
-.txt-body strong { color:var(--ink); font-weight:600; }
-
-/* ══ REFLOW PARA SLIDES DE CONTENIDO ══ */
-.slide-reflow .sc-body { grid-template-columns:36% 1fr; }
-.slide-reflow .sc-text {
+.sc-img-cap {
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:14px;
+  z-index:3;
+  padding-top:8px;
+  border-top:1px solid rgba(245,240,232,.14);
+  color:rgba(245,240,232,.42);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:9px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.sc-text {
+  position:relative;
+  display:flex;
+  flex-direction:column;
   justify-content:flex-start;
+  gap:0;
   padding:34px 44px 30px;
+  overflow:hidden;
 }
-.slide-reflow .txt-heading { font-size:46px; max-width:720px; }
-.slide-reflow .txt-rule { margin-bottom:18px; }
-.slide-reflow .txt-body {
-  font-size:24px;
-  line-height:1.58;
-  margin-bottom:0;
+.sc-text::before {
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg,var(--burg),var(--gold),transparent);
 }
-.slide-reflow .txt-body + .txt-body { margin-top:14px; }
-.slide-reflow .acad-note {
-  margin-top:18px;
-  padding:18px 22px;
+.txt-eyebrow {
+  margin-bottom:10px;
+  color:var(--burg);
+  font-size:10px;
+  letter-spacing:4px;
 }
-.slide-reflow .acad-note p {
-  font-size:21px;
-  line-height:1.58;
+.txt-heading {
+  margin-bottom:8px;
+  color:var(--ink);
+  font-family:'Playfair Display', serif;
+  font-size:44px;
+  font-weight:700;
+  line-height:1.14;
 }
-
-.slide-bullets .acad-list {
+.txt-rule {
+  width:42px;
+  height:2px;
+  margin-bottom:18px;
+  background:linear-gradient(90deg,var(--burg),var(--gold));
+}
+.acad-list {
   display:grid;
   grid-template-columns:1fr;
   gap:12px;
   margin-bottom:18px;
+  list-style:none;
 }
-.slide-bullets .acad-list li {
-  min-height:100%;
+.acad-list li {
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  padding:14px 18px;
   background:rgba(26,18,10,.03);
   border:1px solid var(--rule);
   border-left:4px solid var(--gold);
-  padding:14px 18px;
+  color:var(--ink-mid);
   font-size:22px;
   line-height:1.5;
 }
-
-.slide-process .flow {
+.acad-list li::before {
+  content:'';
+  width:6px;
+  height:6px;
+  margin-top:11px;
+  flex-shrink:0;
+  background:var(--burg);
+  transform:rotate(45deg);
+}
+.acad-list li strong,
+.txt-body strong,
+.acad-note p strong { color:var(--ink); font-weight:600; }
+.txt-body {
+  color:var(--ink-mid);
+  font-size:24px;
+  line-height:1.58;
+}
+.acad-note {
+  margin-top:18px;
+  padding:18px 22px;
+  background:var(--gold-pale);
+  border:1px solid rgba(200,151,58,.28);
+  border-left:4px solid var(--gold);
+}
+.acad-note-lbl {
+  margin-bottom:7px;
+  color:var(--gold);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+.acad-note p {
+  color:var(--ink-soft);
+  font-size:21px;
+  font-style:italic;
+  line-height:1.58;
+}
+.mini-visuals {
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px 18px;
-  margin-bottom:18px;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:14px;
 }
-.slide-process .flow-arr { display:none; }
-.slide-process .flow-step {
-  min-height:116px;
-  padding:15px 18px;
-}
-.slide-process .flow-step-full { grid-column:1 / -1; }
-
-.slide-panels .text-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px 18px;
-  align-content:start;
-}
-.slide-panels .txt-body {
+.anatomy-card {
+  min-height:94px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:5px;
+  padding:12px;
   background:rgba(26,18,10,.03);
   border:1px solid var(--rule);
   border-left:4px solid var(--gold);
-  padding:18px 18px;
+  color:var(--ink-mid);
+  cursor:pointer;
+  transition:background .18s, transform .18s;
 }
-.slide-panels .text-grid .acad-note {
-  grid-column:1 / -1;
-  margin-top:0;
+.anatomy-card:hover,
+.anatomy-card.is-open { background:var(--gold-pale); transform:translateY(-2px); }
+.anatomy-card strong {
+  color:var(--ink);
+  font-family:'Playfair Display', serif;
+  font-size:18px;
 }
-
-.slide-table-reflow .table-body {
-  justify-content:flex-start;
-  padding:32px 70px 26px;
-  gap:18px;
+.anatomy-card span {
+  color:var(--ink-soft);
+  font-size:15px;
+  line-height:1.25;
 }
-.slide-table-reflow .txt-heading { font-size:40px !important; }
-.slide-table-reflow .acad-table { font-size:22px; }
-
-@media (min-width: 1101px) {
-  .slide-bullets .acad-list {
-    flex:1;
-    align-content:space-between;
-  }
-
-  .slide-bullets .acad-list li {
-    min-height:0;
-    padding:14px 18px;
-  }
-
-  .slide-process .flow {
-    flex:1;
-    align-content:stretch;
-    grid-auto-rows:minmax(0,1fr);
-  }
-
-  .slide-process .flow-step {
-    min-height:0;
-    display:flex;
-    align-items:center;
-  }
-
-  .slide-process .acad-note { margin-top:0; }
-
-  .slide-panels .text-grid {
-    flex:1;
-    align-content:stretch;
-    grid-auto-rows:minmax(0,1fr);
-  }
-
-  .slide-panels .txt-body {
-    padding:22px 20px;
-  }
-
-  .slide-panels .text-grid .acad-note {
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-  }
-
-  .slide-table-reflow .table-body { justify-content:space-between; }
-}
-
-/* ══ FLOW (3 pasos) ══ */
-.flow { display:flex; flex-direction:column; gap:5px; margin-bottom:18px; }
-.flow-step { display:flex; align-items:center; gap:18px;
-  background:rgba(26,18,10,.03); border:1px solid var(--rule);
-  border-left:4px solid var(--gold); padding:13px 20px; transition:all .22s; }
-.flow-step:hover { background:var(--gold-pale); }
-.flow-num { width:38px; height:38px; background:var(--burg); flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:var(--cream); }
-.flow-step h5 { font-family:'Playfair Display',serif; font-size:19px; margin-bottom:2px; color:var(--ink); }
-.flow-step p  { font-family:'EB Garamond',serif; font-size:18px; color:var(--ink-soft); line-height:1.45; }
-.flow-arr { color:var(--burg); font-size:16px; padding-left:54px; line-height:1; }
-
-/* ══════════════════════════════════════
-   SLIDE TABLA (slide 7 – sin imagen lateral)
-══════════════════════════════════════ */
-.slide-table { display:grid; grid-template-rows:auto 1fr; background:var(--cream); }
-.table-body { padding:40px 80px; display:flex; flex-direction:column;
-  justify-content:center; gap:22px; overflow:hidden; }
-.acad-table { width:100%; border-collapse:collapse;
-  font-family:'EB Garamond',serif; font-size:21px; border:1px solid var(--rule); }
-.acad-table thead th { background:var(--ink); color:var(--gold-l);
-  padding:14px 22px; text-align:left;
-  font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:3px;
-  text-transform:uppercase; font-weight:400; }
-.acad-table thead th:first-child { border-left:4px solid var(--burg); }
-.acad-table tbody tr { border-bottom:1px solid var(--rule); transition:background .18s; }
-.acad-table tbody tr:hover { background:var(--gold-pale); }
-.acad-table tbody tr:nth-child(odd) { background:rgba(26,18,10,.025); }
-.acad-table tbody td { padding:15px 22px; color:var(--ink-mid); line-height:1.5; }
-.acad-table tbody td:first-child { color:var(--ink); font-weight:600;
-  border-left:4px solid transparent; }
-.acad-table tbody tr:hover td:first-child { border-left-color:var(--gold); }
-.badge { display:inline-block; padding:4px 14px;
-  font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:2px;
-  text-transform:uppercase; }
-.badge-ok  { background:rgba(30,80,30,.09); color:#2a5c1e; border:1px solid rgba(42,92,30,.2); }
-.badge-no  { background:var(--burg-pale); color:var(--burg); border:1px solid rgba(122,31,46,.2); }
-.badge-top { background:rgba(200,151,58,.15); color:#7a5800; border:1px solid rgba(200,151,58,.35); font-weight:600; }
-
-/* ══ ERRORES (slide 9) ══ */
-.error-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; flex:1; }
-.error-item { background:var(--burg-pale); border:1px solid rgba(122,31,46,.15);
-  border-left:4px solid var(--burg); padding:15px 18px;
-  display:flex; align-items:flex-start; gap:14px; transition:background .2s; }
-.error-item:hover { background:rgba(122,31,46,.16); }
-.err-ico { font-size:22px; flex-shrink:0; margin-top:3px; }
-.error-item h5 { font-family:'Playfair Display',serif; font-size:19px;
-  color:var(--ink); margin-bottom:4px; font-weight:700; }
-.error-item p  { font-family:'EB Garamond',serif; font-size:18px;
-  color:var(--ink-soft); line-height:1.5; }
-
-/* ══════════════════════════════════════
-   SLIDE CONCLUSIÓN
-══════════════════════════════════════ */
-.slide-conclusion { display:grid; grid-template-rows:auto 1fr auto; background:var(--ink); }
-.conc-hdr { display:flex; align-items:center; padding:20px 72px;
-  border-bottom:1px solid rgba(200,151,58,.2); background:rgba(255,255,255,.025); }
-.conc-hdr-tag { font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:4px;
-  text-transform:uppercase; color:var(--gold-l); }
-.conc-hdr-line { flex:1; height:1px; background:linear-gradient(90deg,rgba(200,151,58,.3),transparent); margin:0 24px; }
-.conc-hdr-dia { width:8px; height:8px; background:var(--gold); transform:rotate(45deg); }
-.conc-body-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:36px 100px; position:relative; overflow:hidden; }
-.conc-body-wrap::before { content:'"'; position:absolute; top:-30px; left:50px;
-  font-family:'Playfair Display',serif; font-size:240px; color:rgba(200,151,58,.06);
-  line-height:1; pointer-events:none; }
-.conc-title { font-family:'Playfair Display',serif; font-size:52px; font-weight:800;
-  color:var(--cream); line-height:1.1; margin-bottom:16px; }
-.conc-title em { color:var(--gold-l); font-style:italic; }
-.conc-ornament { display:flex; align-items:center; gap:14px; margin:0 auto 22px; }
-.conc-orn-line { width:90px; height:1px; background:rgba(200,151,58,.38); }
-.conc-orn-dia  { width:8px; height:8px; background:var(--gold); transform:rotate(45deg); }
-.conc-summary {
+.text-grid {
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:28px;
-  align-items:start;
-  width:min(1080px,100%);
-  margin:0 auto 26px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px 18px;
+  align-content:stretch;
 }
-.conc-text { font-family:'EB Garamond',serif; font-size:21px; font-weight:400;
-  color:rgba(245,240,232,.72); line-height:1.8; max-width:820px; margin-bottom:18px; }
-.conc-text strong { color:var(--cream); font-weight:600; }
-.conc-quote { font-family:'Playfair Display',serif; font-size:22px; font-style:italic;
-  color:var(--gold-l); line-height:1.6; max-width:760px; margin-bottom:28px;
-  border-top:1px solid rgba(200,151,58,.2); border-bottom:1px solid rgba(200,151,58,.2); padding:16px 0; }
-.slide-conclusion-reflow .conc-body-wrap { padding:30px 92px; }
-.slide-conclusion-reflow .conc-title { font-size:58px; margin-bottom:18px; }
-.slide-conclusion-reflow .conc-summary .conc-text,
-.slide-conclusion-reflow .conc-summary .conc-quote {
-  max-width:none;
-  margin-bottom:0;
-  text-align:left;
+.text-grid .txt-body {
+  padding:22px 20px;
+  background:rgba(26,18,10,.03);
+  border:1px solid var(--rule);
+  border-left:4px solid var(--gold);
 }
-.slide-conclusion-reflow .conc-summary .conc-text { font-size:23px; }
-.slide-conclusion-reflow .conc-summary .conc-quote {
+.txt-body .body-icon {
+  float:left;
+  width:54px;
+  height:54px;
+  margin:0 14px 8px 0;
+}
+.text-grid .acad-note { grid-column:1 / -1; margin-top:0; }
+.flow {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  margin-bottom:18px;
+}
+.flow-step {
   display:flex;
   align-items:center;
-  min-height:100%;
+  gap:16px;
+  min-height:160px;
+  padding:18px;
+  background:rgba(26,18,10,.03);
+  border:1px solid var(--rule);
+  border-left:4px solid var(--gold);
 }
-.conc-pills { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
-.pill { background:rgba(245,240,232,.05); border:1px solid rgba(200,151,58,.22);
-  padding:10px 24px; font-family:'Josefin Sans',sans-serif; font-size:10px;
-  letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.55); transition:all .22s; }
-.pill:hover { background:rgba(200,151,58,.14); border-color:var(--gold); color:var(--gold-l); }
-.conc-ftr { display:flex; justify-content:space-between; align-items:center;
-  padding:14px 72px; border-top:1px solid rgba(200,151,58,.14); }
-.conc-ftr-txt { font-family:'Josefin Sans',sans-serif; font-size:10px;
-  letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,232,.25); }
+.flow-visual,
+.body-icon {
+  width:58px;
+  height:58px;
+  flex-shrink:0;
+  color:var(--burg);
+  filter:drop-shadow(1px 1px 1px rgba(26,18,10,.18));
+  transition:transform .16s;
+}
+.flow-step:hover .flow-visual,
+.anatomy-card:hover .body-icon,
+.label-chip:hover .chip-icon { transform:translateY(-2px) scale(1.04); }
+.flow-num {
+  width:42px;
+  height:42px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--burg);
+  color:var(--cream);
+  font-family:'Playfair Display', serif;
+  font-size:20px;
+  font-weight:700;
+}
+.flow-step h5 {
+  margin-bottom:4px;
+  color:var(--ink);
+  font-family:'Playfair Display', serif;
+  font-size:22px;
+}
+.flow-step p {
+  color:var(--ink-soft);
+  font-size:19px;
+  line-height:1.42;
+}
+
+.slide-interactive .sc-body { grid-template-columns:34% 1fr; }
+.activity-copy {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:38px 42px 38px 78px;
+  background:var(--cream);
+  border-right:1px solid var(--rule);
+}
+.activity-kicker,
+.mini-tag {
+  color:var(--burg);
+  font-size:10px;
+  letter-spacing:4px;
+}
+.activity-title {
+  margin:12px 0 14px;
+  color:var(--ink);
+  font-family:'Playfair Display', serif;
+  font-size:44px;
+  line-height:1.12;
+}
+.activity-copy p {
+  color:var(--ink-mid);
+  font-size:23px;
+  line-height:1.55;
+}
+.activity-card {
+  margin-top:24px;
+  padding:18px 20px;
+  background:var(--gold-pale);
+  border:1px solid rgba(200,151,58,.28);
+  border-left:4px solid var(--gold);
+  color:var(--ink-soft);
+  font-size:20px;
+  font-style:italic;
+  line-height:1.55;
+}
+.interactive-wrap {
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  padding:32px 54px 30px;
+  overflow:hidden;
+}
+.match-game {
+  display:grid;
+  grid-template-rows:1fr auto auto;
+  gap:16px;
+  height:100%;
+  min-height:0;
+}
+.drop-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  min-height:0;
+}
+.drop-target,
+.drop-bin {
+  position:relative;
+  min-height:172px;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:10px;
+  background:rgba(26,18,10,.03);
+  border:2px dashed rgba(122,31,46,.38);
+  color:var(--ink-soft);
+  transition:background .18s, border-color .18s, transform .18s;
+}
+.drop-target::before,
+.drop-bin::before {
+  content:attr(data-label);
+  color:var(--gold);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+.drop-target strong,
+.drop-bin strong {
+  color:var(--ink);
+  font-family:'Playfair Display', serif;
+  font-size:23px;
+}
+.drop-target.is-over,
+.drop-bin.is-over { background:var(--gold-pale); border-color:var(--gold); }
+.drop-target.is-correct,
+.drop-bin.is-correct { border-style:solid; border-color:rgba(42,92,30,.45); background:rgba(30,80,30,.08); }
+.drop-target.is-wrong,
+.drop-bin.is-wrong { border-color:var(--burg); background:rgba(122,31,46,.13); transform:translateY(-2px); }
+.word-bank {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  padding:16px;
+  background:rgba(255,255,255,.32);
+  border:1px solid var(--rule);
+}
+.label-chip {
+  min-height:46px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:11px 18px;
+  background:var(--ink);
+  border:1px solid rgba(200,151,58,.45);
+  color:var(--cream);
+  font-size:10px;
+  letter-spacing:2px;
+  cursor:grab;
+  user-select:none;
+  box-shadow:2px 2px 8px rgba(26,18,10,.18);
+  transition:transform .16s, background .16s, color .16s;
+}
+.chip-icon {
+  width:36px;
+  height:36px;
+  flex-shrink:0;
+  color:var(--gold-l);
+  transition:transform .16s;
+}
+.label-chip span { pointer-events:none; }
+.label-chip:hover,
+.label-chip.is-selected { transform:translateY(-2px); background:var(--burg); }
+.label-chip.is-locked {
+  cursor:default;
+  background:var(--gold);
+  color:var(--ink);
+  box-shadow:none;
+}
+.label-chip.is-locked .chip-icon { color:var(--burg); }
+.label-chip.dragging { opacity:.55; }
+.match-actions {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+.action-btn {
+  border:1px solid var(--rule);
+  background:rgba(245,240,232,.92);
+  color:var(--ink-mid);
+  min-height:42px;
+  padding:10px 16px;
+  font-size:10px;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:all .18s;
+}
+.action-btn:hover { background:var(--burg); border-color:var(--burg); color:var(--cream); }
+.match-status {
+  color:var(--ink-soft);
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+.body-map {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  height:100%;
+}
+.drop-figure {
+  position:relative;
+  min-height:0;
+  overflow:hidden;
+  background:#d8cdbb;
+  border:1px solid var(--rule);
+}
+.drop-figure img {
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  padding:18px;
+}
+.airway-blank {
+  width:100%;
+  height:100%;
+  display:block;
+  padding:34px;
+}
+.map-target {
+  position:absolute;
+  width:142px;
+  min-height:54px;
+  padding:9px;
+  align-items:center;
+  text-align:center;
+  background:rgba(245,240,232,.94);
+  box-shadow:1px 1px 7px rgba(26,18,10,.18);
+}
+.map-target strong { font-size:16px; }
+.target-nasal { left:10%; top:17%; }
+.target-faringe { right:8%; top:32%; }
+.target-laringe { right:9%; top:48%; }
+.target-traquea { left:12%; top:65%; }
+.map-side { display:flex; flex-direction:column; min-height:0; gap:16px; }
+.map-side .word-bank { align-content:flex-start; flex:1; }
+
+.sort-board {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  min-height:0;
+}
+.drop-bin {
+  min-height:360px;
+  justify-content:flex-start;
+}
+.drop-bin .label-chip {
+  width:100%;
+  min-height:42px;
+}
+
+.closing {
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  background:var(--ink);
+  color:var(--cream);
+}
+.closing-hdr,
+.closing-ftr {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 72px;
+  border-color:rgba(200,151,58,.18);
+}
+.closing-hdr { border-bottom:1px solid rgba(200,151,58,.2); }
+.closing-ftr { border-top:1px solid rgba(200,151,58,.14); }
+.closing-body {
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:44px;
+  align-items:center;
+  padding:52px 96px;
+}
+.closing-title {
+  color:var(--cream);
+  font-family:'Playfair Display', serif;
+  font-size:58px;
+  line-height:1.1;
+}
+.closing-text {
+  color:rgba(245,240,232,.72);
+  font-size:24px;
+  line-height:1.65;
+}
+.closing-pills {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:24px;
+}
+.pill {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 18px;
+  border:1px solid rgba(200,151,58,.22);
+  color:rgba(245,240,232,.58);
+  font-family:'Josefin Sans', sans-serif;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+.pill .chip-icon { width:28px; height:28px; color:var(--gold-l); }
+.icon-sprite { position:absolute; width:0; height:0; overflow:hidden; }
 
 @media (max-width: 1100px) {
-  html, body { overflow:auto; }
-  #deck { height:auto; min-height:100vh; }
-  .slide { position:static; inset:auto; display:none; opacity:1; min-height:100vh; }
+  html, body { overflow:auto; overflow-x:hidden; }
+  #deck { width:100%; height:auto; min-height:100vh; overflow-x:hidden; }
+  .slide { position:static; display:none; width:100%; min-height:100vh; opacity:1; overflow-x:hidden; }
   .slide.on { display:grid; }
-  .cover-body, .sc-body { grid-template-columns:1fr; }
-  .slide-reflow .sc-body { grid-template-columns:1fr; }
-  .cover-right, .sc-img { min-height:34vh; }
-  .cover-left, .sc-text, .table-body, .conc-body-wrap { padding:32px 24px; }
+  .cover-body,
+  .sc-body,
+  .slide-interactive .sc-body,
+  .body-map,
+  .closing-body { grid-template-columns:1fr; }
+  .cover-right,
+  .sc-img,
+  .drop-figure { min-height:34vh; }
+  .cover-left,
+  .activity-copy,
+  .sc-text,
+  .interactive-wrap,
+  .closing-body { padding:32px 24px; }
+  .activity-copy,
+  .interactive-wrap,
+  .sc-text,
+  .match-game,
+  .drop-grid,
+  .sort-board,
+  .word-bank { width:100%; max-width:100%; }
+  .activity-copy > *,
+  .interactive-wrap > * { max-width:min(100%, 300px); }
+  .interactive-wrap { align-items:flex-start; }
   .cover-title { font-size:44px; }
-  .txt-heading { font-size:30px; }
-  .slide-reflow .txt-heading { font-size:36px; max-width:none; }
-  .conc-title { font-size:40px; }
-  .acad-list li, .txt-body, .conc-text { font-size:19px; line-height:1.55; }
-  .acad-table { font-size:18px; }
-  .error-grid { grid-template-columns:1fr; }
-  .slide-bullets .acad-list,
-  .slide-process .flow,
-  .slide-panels .text-grid,
-  .conc-summary { grid-template-columns:1fr; }
-  .slide-process .flow-step-full,
-  .slide-panels .text-grid .acad-note { grid-column:auto; }
-  .cover-hdr, .cover-ftr, .conc-hdr, .conc-ftr { padding-left:24px; padding-right:24px; }
+  .txt-heading,
+  .activity-title,
+  .closing-title { font-size:36px; }
+  .flow,
+  .drop-grid,
+  .sort-board,
+  .mini-visuals,
+  .text-grid { grid-template-columns:1fr; }
+  .match-game { min-height:auto; }
+  .drop-target,
+  .drop-bin,
+  .flow-step { min-height:170px; }
+  .map-side .word-bank { flex:0 1 auto; }
+  .cover-hdr,
+  .cover-ftr,
+  .closing-hdr,
+  .closing-ftr { padding-left:24px; padding-right:24px; }
   #btn-prev, #btn-next { top:auto; bottom:62px; transform:none; }
   #btn-prev { left:14px; }
   #btn-next { right:14px; }
-  #btn-full { left:14px; top:auto; bottom:110px; width:38px; min-width:38px; height:38px; padding:0; font-size:16px; }
+  #btn-full { left:14px; top:auto; bottom:110px; width:38px; min-width:38px; height:38px; }
   #counter { top:14px; right:14px; padding:6px 12px; font-size:10px; letter-spacing:2px; }
 }
 
 @media (max-width: 720px) {
   .cover-hdr { grid-template-columns:1fr; gap:10px; padding:18px 20px; text-align:center; }
-  .cover-hdr-inst, .cover-hdr-subj { text-align:center; }
+  .cover-hdr-inst,
+  .cover-hdr-subj { text-align:center; }
   .cover-left { padding:28px 20px; }
   .cover-title { font-size:38px; }
   .cover-sub { font-size:20px; }
-  .cover-ftr, .conc-ftr { padding:14px 20px; gap:10px; flex-wrap:wrap; }
+  .cover-ftr,
+  .closing-ftr { padding:14px 20px; gap:10px; flex-wrap:wrap; }
   .sc-hdr { height:auto; }
   .sc-hdr-titles { flex-wrap:wrap; gap:10px; padding:14px 18px; }
   .sc-hdr-inst { width:100%; margin-left:0; }
   .sc-hdr-title { font-size:18px; }
-  .txt-heading { font-size:26px; }
-  .slide-reflow .txt-heading { font-size:30px; }
-  .table-body { padding:28px 16px 96px; }
-  .acad-table { display:block; overflow:auto; }
-  .conc-hdr { padding:18px 20px; }
-  .conc-body-wrap { padding:28px 20px; }
-  .conc-title { font-size:32px; }
-  .conc-quote { font-size:18px; }
-  .slide-reflow .sc-text { padding:28px 18px 96px; }
-  .slide-bullets .acad-list li,
-  .slide-reflow .txt-body,
-  .slide-reflow .acad-note p { font-size:20px; }
+  .txt-heading,
+  .activity-title,
+  .closing-title { font-size:30px; }
+  .sc-body,
+  .activity-copy,
+  .interactive-wrap,
+  .sc-text { width:100vw; max-width:100vw; }
+  .activity-copy > *,
+  .sc-text > * { max-width:min(300px, calc(100vw - 84px)); }
+  .interactive-wrap > * {
+    max-width:min(300px, calc(100vw - 64px));
+  }
+  .activity-title { font-size:28px; line-height:1.12; }
+  .cover-title,
+  .txt-heading,
+  .activity-title,
+  .activity-copy p,
+  .activity-card,
+  .acad-list li,
+  .txt-body,
+  .drop-target strong,
+  .drop-bin strong,
+  .closing-text { overflow-wrap:anywhere; }
+  .acad-list li,
+  .txt-body,
+  .activity-copy p,
+  .closing-text { font-size:20px; }
+  .activity-copy p,
+  .activity-card { font-size:18px; }
+  .interactive-wrap { padding-left:18px; padding-right:30px; }
+  .drop-target,
+  .drop-bin,
+  .word-bank { max-width:100%; }
+  .map-target {
+    width:118px;
+    min-height:48px;
+    padding:7px;
+  }
+  .map-target strong { font-size:14px; }
+  .label-chip { width:100%; }
+  .match-actions { align-items:stretch; flex-direction:column; }
 }
 </style>
 </head>
 <body>
-
 <div id="prog"></div>
 <div id="counter"><span id="cur">1</span>&nbsp;/&nbsp;<span id="tot"></span></div>
-<button class="nav-btn" id="btn-full" type="button" aria-label="Activar pantalla completa" aria-pressed="false" title="Activar pantalla completa">⛶</button>
-<button class="nav-btn" id="btn-prev">&#8592;</button>
-<button class="nav-btn" id="btn-next">&#8594;</button>
+<button class="nav-btn" id="btn-full" type="button" aria-label="Activar pantalla completa" aria-pressed="false" title="Activar pantalla completa"></button>
+<button class="nav-btn" id="btn-prev" type="button" aria-label="Diapositiva anterior">&#8592;</button>
+<button class="nav-btn" id="btn-next" type="button" aria-label="Diapositiva siguiente">&#8594;</button>
+
+<svg class="icon-sprite" aria-hidden="true" focusable="false">
+  <symbol id="icon-lungs" viewBox="0 0 80 80">
+    <path d="M40 12v42" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+    <path d="M38 36C27 25 13 28 11 45C9 60 15 70 28 70C36 70 40 62 40 54Z" fill="#cfaa95" stroke="#7a1f2e" stroke-width="3"/>
+    <path d="M42 36C53 25 67 28 69 45C71 60 65 70 52 70C44 70 40 62 40 54Z" fill="#cfaa95" stroke="#7a1f2e" stroke-width="3"/>
+    <path d="M26 50c7 2 10 6 14 11M54 50c-7 2-10 6-14 11" fill="none" stroke="#3b2e1a" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-larynx" viewBox="0 0 80 80">
+    <path d="M40 8C54 8 62 21 62 36v9c0 14-8 25-22 32C26 70 18 59 18 45v-9C18 21 26 8 40 8Z" fill="#ddccb8" stroke="currentColor" stroke-width="4"/>
+    <path d="M31 36c5-8 10-10 18-10M49 36c-5-8-10-10-18-10" fill="none" stroke="#7a1f2e" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="40" cy="47" rx="9" ry="10" fill="#c8973a"/>
+    <path d="M40 16v52" fill="none" stroke="#6b5540" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-resonance" viewBox="0 0 80 80">
+    <path d="M30 12C44 12 55 24 55 39C55 48 51 56 44 61L47 73H34L30 64H22C14 64 9 58 9 50V31C9 20 18 12 30 12Z" fill="#e8dbc5" stroke="currentColor" stroke-width="4"/>
+    <path d="M31 29c7-4 14-4 21 1M31 41c9-4 19-2 27 4M31 53c11-2 21 1 30 8" fill="none" stroke="#7a1f2e" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-nose" viewBox="0 0 80 80">
+    <path d="M28 12C44 12 55 24 55 39C55 48 50 56 42 60H24C16 60 10 54 10 46V31C10 20 18 12 28 12Z" fill="#e8dbc5" stroke="currentColor" stroke-width="4"/>
+    <path d="M28 30h23c8 0 12 5 10 11c-2 5-8 8-15 8H27" fill="none" stroke="#7a1f2e" stroke-width="5" stroke-linecap="round"/>
+    <path d="M50 49c1 8-2 13-10 14" fill="none" stroke="#6b5540" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-pharynx" viewBox="0 0 80 80">
+    <path d="M34 10C46 18 51 29 47 43C44 53 48 60 58 66" fill="none" stroke="#7a1f2e" stroke-width="10" stroke-linecap="round"/>
+    <path d="M25 14c15 9 20 21 17 34c-2 10 2 17 14 22" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="30" cy="18" r="8" fill="#c8973a"/>
+  </symbol>
+  <symbol id="icon-trachea" viewBox="0 0 80 80">
+    <path d="M40 9v62" fill="none" stroke="#5f6f68" stroke-width="17" stroke-linecap="round"/>
+    <path d="M29 18h22M29 28h22M29 38h22M29 48h22M29 58h22" fill="none" stroke="#f5f0e8" stroke-width="3" stroke-linecap="round"/>
+    <path d="M40 58c-9 7-15 10-25 13M40 58c9 7 15 10 25 13" fill="none" stroke="#7a1f2e" stroke-width="6" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-bronchi" viewBox="0 0 80 80">
+    <path d="M40 8v26" fill="none" stroke="#5f6f68" stroke-width="9" stroke-linecap="round"/>
+    <path d="M40 34c-11 7-17 15-24 30M40 34c11 7 17 15 24 30" fill="none" stroke="#7a1f2e" stroke-width="7" stroke-linecap="round"/>
+    <path d="M26 50l-12-8M29 57l-14 2M54 50l12-8M51 57l14 2" fill="none" stroke="#3b2e1a" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-alveoli" viewBox="0 0 80 80">
+    <path d="M20 60C32 43 43 34 61 26" fill="none" stroke="#7a1f2e" stroke-width="6" stroke-linecap="round"/>
+    <g fill="#cfaa95" stroke="currentColor" stroke-width="3">
+      <circle cx="58" cy="24" r="10"/>
+      <circle cx="44" cy="31" r="9"/>
+      <circle cx="64" cy="40" r="9"/>
+      <circle cx="48" cy="48" r="10"/>
+      <circle cx="31" cy="49" r="8"/>
+    </g>
+  </symbol>
+  <!-- diafragma: dome shape -->
+  <symbol id="icon-diaphragm" viewBox="0 0 80 80">
+    <path d="M10 48 Q40 20 70 48" fill="none" stroke="#7a1f2e" stroke-width="8" stroke-linecap="round"/>
+    <path d="M10 54 Q40 26 70 54" fill="none" stroke="#c8973a" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+    <line x1="40" y1="48" x2="40" y2="66" stroke="#3b2e1a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M26 62 Q40 70 54 62" fill="none" stroke="#6b5540" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="40" cy="38" rx="6" ry="4" fill="#c8973a" opacity=".7"/>
+  </symbol>
+  <!-- proyección: sound radiating out -->
+  <symbol id="icon-projection" viewBox="0 0 80 80">
+    <circle cx="26" cy="40" r="8" fill="#7a1f2e"/>
+    <path d="M36 40 L64 40" stroke="#7a1f2e" stroke-width="5" stroke-linecap="round"/>
+    <path d="M52 24 Q68 32 68 40 Q68 48 52 56" fill="none" stroke="#c8973a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M58 14 Q78 26 78 40 Q78 54 58 66" fill="none" stroke="#c8973a" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+  </symbol>
+  <!-- articulación: lips/mouth shape -->
+  <symbol id="icon-articulation" viewBox="0 0 80 80">
+    <path d="M16 38 Q40 22 64 38 Q40 54 16 38 Z" fill="#dac4a8" stroke="#7a1f2e" stroke-width="4"/>
+    <path d="M22 38 Q40 28 58 38" fill="none" stroke="#c8973a" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M22 38 Q40 48 58 38" fill="none" stroke="#3b2e1a" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+    <circle cx="40" cy="38" r="5" fill="#7a1f2e"/>
+  </symbol>
+</svg>
 
 <div id="deck">
-
-<!-- ══════════════════════════════════════
-     SLIDE 1 · PORTADA
-══════════════════════════════════════ -->
-<div class="slide slide-cover on">
-  <div class="cover-hdr au d1">
-    <div class="cover-hdr-inst">
-      Conservatorio Superior de Música<br>
-      <span style="color:var(--cream);letter-spacing:2px;font-size:13px;">Juan R. Pérez Cruz</span>
-    </div>
-    <div class="cover-hdr-seal">♪</div>
-    <div class="cover-hdr-subj">
-      Foniatría · Técnica Vocal<br>
-      <span style="color:rgba(245,240,232,.35);">Presentación grupal · 22 de mayo de 2026</span>
-    </div>
-  </div>
-
-  <div class="cover-body">
-    <div class="cover-left">
-      <div class="cover-eyebrow au d2">Sistema Respiratorio</div>
-      <div class="cover-ornament au d2">
-        <div class="cover-orn-line"></div>
-        <div class="cover-orn-dia"></div>
-        <div class="cover-orn-line"></div>
+  <section class="slide slide-cover on">
+    <div class="cover-hdr au d1">
+      <div class="cover-hdr-inst">
+        Conservatorio Superior de Música<br>
+        <span style="color:var(--cream);letter-spacing:2px;font-size:13px;">Juan R. Pérez Cruz</span>
       </div>
-      <h1 class="cover-title au d3">Sistema<br>Respiratorio<br><em>y voz cantada</em></h1>
-      <p class="cover-sub au d4">Cómo trabaja el cuerpo para que la voz salga con apoyo, estabilidad y libertad al cantar.</p>
-      <div class="cover-rule au d5"></div>
-      <div class="cover-int-lbl au d5">Integrantes del grupo</div>
-      <ul class="cover-ints">
-        <li class="au d6">Alain Gerfauo</li>
-        <li class="au d8">Trinidad arfo</li>
-      </ul>
-    </div>
-    <div class="cover-right as d3">
-      <!-- Sistema respiratorio completo – diagrama anatómico SVG (Wikimedia, dominio público) -->
-      <img
-        src="assets/cover-system-es.svg"
-        alt="Anatomía del sistema respiratorio"
-        style="object-fit:contain; object-position:center; background:#ede5d0; padding:14px;"
-      >
-      <div class="cover-right-ov"></div>
-      <div class="cover-right-cap">Sistema Respiratorio · Anatomía General</div>
-    </div>
-  </div>
-
-  <div class="cover-ftr au d8">
-    <div class="cover-ftr-txt">Trabajo práctico · 22 de mayo de 2026</div>
-    <div class="cover-ftr-txt cover-ftr-gold">✦ Conservatorio Juan R. Pérez Cruz ✦</div>
-    <div class="cover-ftr-txt">Foniatría · Exposición oral</div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     SLIDE 2 · IMPORTANCIA DE LA RESPIRACIÓN
-══════════════════════════════════════ -->
-<div class="slide slide-content slide-reflow slide-bullets">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">2</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Fundamento</div>
-      <div class="sc-hdr-title">Importancia de la Respiración en el Canto</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
-    </div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-img ai d2">
-      <!-- Infografía simplificada del recorrido del aire, la fonación y la resonancia -->
-      <img
-        src="assets/vocal-support-es.svg"
-        alt="Infografía del aire, la laringe y la resonancia en el canto"
-        style="object-fit:contain; background:#ede5d0; padding:10px;"
-      >
-      <div class="sc-img-ov"></div>
-      <div class="sc-img-cap">Aire, fonación y resonancia · Esquema simplificado</div>
-    </div>
-    <div class="sc-text">
-      <div class="txt-eyebrow au d2">Punto de partida</div>
-      <div class="txt-heading au d3">¿Por qué respirar bien<br>es <em>cantar bien</em>?</div>
-      <div class="txt-rule au d3"></div>
-      <ul class="acad-list">
-        <li class="au d3">Sin aire no hay voz: el flujo que sale de los pulmones es el <strong>motor que pone en vibración</strong> los pliegues vocales.</li>
-        <li class="au d4">Si respiramos mal, la voz pierde estabilidad, apoyo y resistencia.</li>
-        <li class="au d5">Con un buen manejo del aire podemos <strong>sostener frases largas</strong> y hacer matices con más comodidad.</li>
-        <li class="au d6">También ayuda a evitar fatiga vocal y tensión en cuello, mandíbula y garganta.</li>
-      </ul>
-      <div class="acad-note au d7">
-        <div class="acad-note-lbl">Idea clave</div>
-        <p>En canto, respirar no es solo "tomar aire": también es <strong>organizar el soplo</strong> y coordinarlo con la fonación.</p>
+      <div class="cover-hdr-seal">♪</div>
+      <div class="cover-hdr-subj">
+        Foniatría · Técnica Vocal<br>
+        <span style="color:rgba(245,240,232,.35);">Presentación grupal · 22 de mayo de 2026</span>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ══════════════════════════════════════
-     SLIDE 3 · RELACIÓN RESPIRACIÓN Y VOZ
-══════════════════════════════════════ -->
-<div class="slide slide-content slide-reflow slide-process">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">3</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Fisiología</div>
-      <div class="sc-hdr-title">Relación entre Respiración y Voz</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
-    </div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-img ai d2">
-      <!-- Laringe externa – esquema en español -->
-      <img
-        src="assets/larynx-external-es.svg"
-        alt="Laringe externa con etiquetas en español"
-        style="object-fit:contain; background:#ede5d0; padding:8px;"
-      >
-      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 60%,rgba(245,240,232,.22))"></div>
-      <div class="sc-img-cap">Laringe externa · Vista anterolateral</div>
-    </div>
-    <div class="sc-text">
-      <div class="txt-eyebrow au d2">Cómo se arma la voz</div>
-      <div class="txt-heading au d3">Del aire al sonido</div>
-      <div class="txt-rule au d3"></div>
-      <div class="flow">
-        <div class="flow-step au d3">
-          <div class="flow-num">1</div>
-          <div><h5>Respiración</h5><p>Toma y administra el aire que después va a usar la voz.</p></div>
+    <div class="cover-body">
+      <div class="cover-left">
+        <div class="cover-eyebrow au d2">Sistema Respiratorio</div>
+        <div class="cover-ornament au d2">
+          <div class="cover-orn-line"></div>
+          <div class="cover-orn-dia"></div>
+          <div class="cover-orn-line"></div>
         </div>
-        <div class="flow-arr au d4">↓</div>
-        <div class="flow-step au d4">
-          <div class="flow-num">2</div>
-          <div><h5>Fonación</h5><p>En la laringe, ese aire hace vibrar los pliegues vocales y aparece el sonido.</p></div>
-        </div>
-        <div class="flow-arr au d5">↓</div>
-        <div class="flow-step flow-step-full au d5">
-          <div class="flow-num">3</div>
-          <div><h5>Resonancia</h5><p>Faringe, boca y cavidades nasales amplifican y le dan color al sonido.</p></div>
-        </div>
+        <h1 class="cover-title au d3">Sistema<br>Respiratorio<br><em>y voz cantada</em></h1>
+        <p class="cover-sub au d4">Cómo trabaja el cuerpo para que la voz salga con apoyo, estabilidad y libertad al cantar.</p>
+        <div class="cover-rule au d5"></div>
+        <div class="cover-int-lbl au d5">Integrantes del grupo</div>
+        <ul class="cover-ints">
+          <li class="au d6">Alain Gerfauo</li>
+          <li class="au d6">Trinidad Arfo</li>
+        </ul>
       </div>
-      <div class="acad-note au d6">
-        <div class="acad-note-lbl">Cuerpo y aire</div>
-        <p>Si el cuerpo está rígido o mal alineado, el aire circula peor y la voz pierde libertad.</p>
+      <div class="cover-right as d3">
+        <img src="assets/cover-system-es.svg" alt="Anatomía del sistema respiratorio">
+        <div class="cover-right-ov"></div>
+        <div class="cover-right-cap">Sistema respiratorio · Anatomía general</div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ══════════════════════════════════════
-     SLIDE 4 · VÍAS AÉREAS
-══════════════════════════════════════ -->
-<div class="slide slide-content slide-reflow slide-panels">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">4</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Anatomía</div>
-      <div class="sc-hdr-title">Vías Aéreas</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    <div class="cover-ftr au d6">
+      <div class="cover-ftr-txt">Trabajo práctico · 22 de mayo de 2026</div>
+      <div class="cover-ftr-txt cover-ftr-gold">✦ Conservatorio Juan R. Pérez Cruz ✦</div>
+      <div class="cover-ftr-txt">Foniatría · Exposición oral</div>
     </div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-img ai d2">
-      <!-- Vías respiratorias con etiquetas en español -->
-      <img
-        src="assets/conducting-passages.svg"
-        alt="Vías conductoras del aire"
-        style="object-fit:contain; background:#ede5d0; padding:34px 22px 34px 68px;"
-      >
-      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 65%,rgba(245,240,232,.22))"></div>
-      <div class="sc-img-cap">Vías conductoras · Del exterior a los alvéolos</div>
+  </section>
+
+  <section class="slide slide-content">
+    <div class="sc-hdr al d1">
+      <div class="sc-hdr-num">2</div><div class="sc-hdr-sep"></div>
+      <div class="sc-hdr-titles">
+        <div class="sc-hdr-tag">Fundamento</div>
+        <div class="sc-hdr-title">Importancia de la Respiración en el Canto</div>
+        <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+      </div>
     </div>
-    <div class="sc-text">
-      <div class="txt-eyebrow au d2">Recorrido del aire</div>
-      <div class="txt-heading au d3">Por dónde pasa el aire<br><em>al cantar</em></div>
-      <div class="txt-rule au d3"></div>
-      <div class="text-grid">
-        <p class="txt-body au d3"><strong>Vías superiores:</strong> la nariz filtra, humidifica y templa el aire; la faringe y la laringe también participan en la producción vocal.</p>
-        <p class="txt-body au d4"><strong>Vías inferiores:</strong> tráquea, bronquios, bronquiolos y alvéolos conducen el aire y permiten el intercambio gaseoso.</p>
-        <div class="acad-note au d5">
-          <div class="acad-note-lbl">¿Qué aporta a la voz?</div>
-          <p>Para cantar no importa solo cuánto aire entra, sino <strong>por dónde pasa y cómo lo administramos</strong> antes de emitir el sonido.</p>
+    <div class="sc-body">
+      <div class="sc-img ai d2">
+        <img src="assets/vocal-support-es.svg" alt="Infografía del aire, la laringe y la resonancia en el canto">
+        <div class="sc-img-ov"></div>
+        <div class="sc-img-cap">Aire, fonación y resonancia · Esquema simplificado</div>
+      </div>
+      <div class="sc-text">
+        <div class="txt-eyebrow au d2">Punto de partida</div>
+        <div class="txt-heading au d3">¿Por qué respirar bien<br>es <em>cantar bien</em>?</div>
+        <div class="txt-rule au d3"></div>
+        <ul class="acad-list">
+          <li class="au d3">Sin aire no hay voz: el flujo que sale de los pulmones es el <strong>motor que pone en vibración</strong> los pliegues vocales.</li>
+          <li class="au d4">Si respiramos mal, la voz pierde estabilidad, apoyo y resistencia.</li>
+          <li class="au d5">Con un buen manejo del aire podemos <strong>sostener frases largas</strong> y hacer matices con más comodidad.</li>
+          <li class="au d6">También ayuda a evitar fatiga vocal y tensión en cuello, mandíbula y garganta.</li>
+        </ul>
+        <div class="acad-note au d6">
+          <div class="acad-note-lbl">Idea clave</div>
+          <p>Respirar para cantar es <strong>organizar el soplo</strong> y coordinarlo con la fonación.</p>
+        </div>
+        <div class="mini-visuals au d6" aria-label="Partes que participan en la voz">
+          <button class="anatomy-card" type="button">
+            <svg class="body-icon"><use href="#icon-lungs"></use></svg>
+            <strong>Pulmones</strong>
+            <span>reservan y empujan el aire</span>
+          </button>
+          <button class="anatomy-card" type="button">
+            <svg class="body-icon"><use href="#icon-larynx"></use></svg>
+            <strong>Laringe</strong>
+            <span>convierte aire en vibración</span>
+          </button>
+          <button class="anatomy-card" type="button">
+            <svg class="body-icon"><use href="#icon-resonance"></use></svg>
+            <strong>Resonadores</strong>
+            <span>amplifican y colorean</span>
+          </button>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ══════════════════════════════════════
-     SLIDE 5 · EL DIAFRAGMA
-══════════════════════════════════════ -->
-<div class="slide slide-content slide-reflow slide-bullets">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">5</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Músculo principal</div>
-      <div class="sc-hdr-title">El Diafragma</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
-    </div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-img ai d2">
-      <!-- Esquema simplificado del diafragma -->
-      <img
-        src="assets/diaphragm-anatomy-es.svg"
-        alt="Esquema anatómico del diafragma con etiquetas en español"
-        style="object-fit:contain; background:#ede5d0; padding:8px;"
-      >
-      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 62%,rgba(245,240,232,.22))"></div>
-      <div class="sc-img-cap">Diafragma · Esquema simplificado</div>
-    </div>
-    <div class="sc-text">
-      <div class="txt-eyebrow au d2">Músculo principal</div>
-      <div class="txt-heading au d3">Anatomía, función<br>y <em>rol en el canto</em></div>
-      <div class="txt-rule au d3"></div>
-      <ul class="acad-list">
-        <li class="au d3">Es un músculo con forma de <strong>cúpula</strong> que separa el tórax del abdomen.</li>
-        <li class="au d4">Cuando se contrae, <strong>baja</strong>, agranda la caja torácica y facilita la entrada de aire.</li>
-        <li class="au d5">Cuando se relaja, <strong>sube</strong> y acompaña la salida del aire.</li>
-        <li class="au d6">En el canto ayuda a sostener la <strong>presión subglótica</strong> sin apretar la garganta.</li>
-      </ul>
-      <div class="acad-note au d7">
-        <div class="acad-note-lbl">Ojo con esto</div>
-        <p>Cuando decimos "usar el diafragma", en realidad hablamos de <strong>coordinar todo el apoyo respiratorio</strong>, no de tensar un músculo aislado.</p>
+  <!-- ═══════════════════════════════════════════
+       SLIDE 3 · JUEGO: ORDENÁ EL CAMINO DE LA VOZ
+       7 eventos en secuencia correcta · timer 60 s
+  ═══════════════════════════════════════════ -->
+  <section class="slide slide-content slide-interactive" id="slide3">
+    <div class="sc-hdr al d1">
+      <div class="sc-hdr-num">3</div><div class="sc-hdr-sep"></div>
+      <div class="sc-hdr-titles">
+        <div class="sc-hdr-tag">Participación</div>
+        <div class="sc-hdr-title">Ordená el camino de la voz</div>
+        <div class="sc-hdr-inst">Secuencia · 7 pasos</div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ══════════════════════════════════════
-     SLIDE 6 · MECÁNICA RESPIRATORIA
-══════════════════════════════════════ -->
-<div class="slide slide-content slide-reflow slide-panels">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">6</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Movimiento</div>
-      <div class="sc-hdr-title">Mecánica Respiratoria</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+    <style>
+    /* ── Secuencer game (slide 3 only) ── */
+    #seq-game {
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      height:100%;
+      gap:0;
+    }
+    #seq-top {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 28px;
+      background:rgba(26,18,10,.04);
+      border-bottom:1px solid var(--rule);
+      gap:18px;
+    }
+    #seq-timer-wrap {
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    #seq-timer-circle {
+      width:56px;
+      height:56px;
+      flex-shrink:0;
+    }
+    #seq-timer-circle circle {
+      transition:stroke-dashoffset .9s linear;
+    }
+    #seq-timer-num {
+      font-family:'Playfair Display',serif;
+      font-size:28px;
+      font-weight:700;
+      color:var(--burg);
+      min-width:38px;
+      text-align:center;
+      transition:color .3s;
+    }
+    #seq-timer-num.ok { color:#2a7c1a; }
+    #seq-score-wrap {
+      display:flex;
+      gap:22px;
+      align-items:center;
+    }
+    .seq-score-box {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:8px 18px;
+      background:var(--gold-pale);
+      border:1px solid rgba(200,151,58,.28);
+      border-left:3px solid var(--gold);
+      min-width:80px;
+    }
+    .seq-score-box span:first-child {
+      font-family:'Josefin Sans',sans-serif;
+      font-size:9px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+    .seq-score-val {
+      font-family:'Playfair Display',serif;
+      font-size:26px;
+      font-weight:700;
+      color:var(--ink);
+    }
+    /* Wave SVG display */
+    #seq-wave-wrap {
+      position:relative;
+      overflow:hidden;
+      background:var(--parch);
+      border-bottom:1px solid var(--rule);
+      border-right:1px solid var(--rule);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    #seq-wave-svg {
+      width:100%;
+      height:100%;
+    }
+    #seq-wave-path {
+      transition:d 0.6s cubic-bezier(.4,0,.2,1);
+    }
+    /* Cards area */
+    #seq-cards-area {
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:10px;
+      padding:14px 18px;
+      align-items:stretch;
+    }
+    .seq-slot {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:center;
+    }
+    .seq-slot-num {
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--ink);
+      color:var(--cream);
+      font-family:'Playfair Display',serif;
+      font-size:14px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .seq-drop {
+      flex:1;
+      min-height:110px;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:10px 8px;
+      background:rgba(26,18,10,.04);
+      border:2px dashed rgba(122,31,46,.35);
+      transition:background .18s,border-color .18s,transform .14s;
+      cursor:default;
+      text-align:center;
+    }
+    .seq-drop.is-over { background:var(--gold-pale); border-color:var(--gold); }
+    .seq-drop.is-correct { border-style:solid; border-color:rgba(42,130,30,.55); background:rgba(30,100,30,.1); }
+    .seq-drop.is-wrong { border-color:var(--burg); background:rgba(122,31,46,.14); transform:translateY(-2px); }
+    .seq-drop .seq-drop-hint {
+      font-family:'EB Garamond',serif;
+      font-size:13.5px;
+      line-height:1.4;
+      color:var(--ink-soft);
+      font-style:italic;
+    }
+    /* Chips bank row */
+    #seq-bank {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding:12px 18px;
+      background:rgba(255,255,255,.28);
+      border-top:1px solid var(--rule);
+    }
+    .seq-chip {
+      min-height:46px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      background:var(--ink);
+      border:1px solid rgba(200,151,58,.45);
+      color:var(--cream);
+      font-family:'Josefin Sans',sans-serif;
+      font-size:10px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      cursor:grab;
+      user-select:none;
+      box-shadow:2px 2px 8px rgba(26,18,10,.18);
+      transition:transform .16s,background .16s;
+    }
+    .seq-chip:hover,.seq-chip.is-selected { transform:translateY(-2px); background:var(--burg); }
+    .seq-chip.is-locked { cursor:default; background:var(--gold); color:var(--ink); box-shadow:none; }
+    .seq-chip.dragging { opacity:.5; }
+    .seq-chip svg { width:30px; height:30px; flex-shrink:0; color:var(--gold-l); }
+    .seq-chip.is-locked svg { color:var(--burg); }
+    /* bottom bar */
+    #seq-bottom {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 18px;
+      border-top:1px solid var(--rule);
+      background:rgba(26,18,10,.03);
+      gap:14px;
+    }
+    #seq-feedback {
+      font-family:'EB Garamond',serif;
+      font-size:20px;
+      font-style:italic;
+      color:var(--ink-mid);
+      flex:1;
+    }
+    #seq-feedback.win { color:#1a6610; font-weight:600; font-style:normal; }
+    #seq-feedback.lose { color:var(--burg); }
+    .seq-btn {
+      border:1px solid var(--rule);
+      background:rgba(245,240,232,.92);
+      color:var(--ink-mid);
+      min-height:40px;
+      padding:9px 16px;
+      font-family:'Josefin Sans',sans-serif;
+      font-size:10px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:all .18s;
+    }
+    .seq-btn:hover { background:var(--burg); border-color:var(--burg); color:var(--cream); }
+    /* layout: left panel | right game */
+    #slide3 .sc-body {
+      grid-template-columns:28% 1fr;
+      overflow:hidden;
+    }
+    #slide3 .activity-copy {
+      padding:32px 36px 32px 62px;
+    }
+    #slide3 .interactive-wrap {
+      padding:0;
+      gap:0;
+    }
+    </style>
+
+    <div class="sc-body">
+      <div class="activity-copy">
+        <div class="activity-kicker au d2">Desafío cronometrado</div>
+        <h2 class="activity-title au d3">¿En qué<br>orden pasa?</h2>
+        <p class="au d4">Arrastrá cada tarjeta al casillero correcto. Tenés <strong>60 segundos</strong>. Las 7 etapas forman el camino completo de la voz: desde que el diafragma se activa hasta que el sonido llega al oyente.</p>
+        <div class="activity-card au d5">💡 Pista: pensá en qué viene primero físicamente en el cuerpo, de abajo hacia arriba.</div>
+      </div>
+
+      <div class="interactive-wrap">
+        <div id="seq-game">
+
+          <!-- top bar: timer + score -->
+          <div id="seq-top">
+            <div id="seq-timer-wrap">
+              <svg id="seq-timer-circle" viewBox="0 0 56 56" aria-hidden="true">
+                <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(26,18,10,.12)" stroke-width="4"/>
+                <circle id="seq-arc" cx="28" cy="28" r="24" fill="none"
+                  stroke="#7a1f2e" stroke-width="4"
+                  stroke-dasharray="150.796" stroke-dashoffset="0"
+                  stroke-linecap="round"
+                  transform="rotate(-90 28 28)"/>
+              </svg>
+              <div id="seq-timer-num">60</div>
+              <div style="font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-soft);">segundos</div>
+            </div>
+
+            <!-- mini wave display -->
+            <div id="seq-wave-wrap" style="flex:1;max-height:56px;border-radius:0;margin:0 18px;">
+              <svg id="seq-wave-svg" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true">
+                <path id="seq-wave-path" d="M0 28 Q50 28 100 28 Q150 28 200 28 Q250 28 300 28 Q350 28 400 28"
+                  fill="none" stroke="rgba(122,31,46,.25)" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <div id="seq-score-wrap">
+              <div class="seq-score-box">
+                <span>Correctas</span>
+                <div class="seq-score-val" id="seq-ok">0</div>
+              </div>
+              <div class="seq-score-box" style="border-left-color:var(--burg);">
+                <span>Intentos</span>
+                <div class="seq-score-val" id="seq-tries">0</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- slots row -->
+          <div id="seq-cards-area">
+            <div class="seq-slot">
+              <div class="seq-slot-num">1</div>
+              <div class="seq-drop" data-seq-drop="diafragma" data-label="Paso 1">
+                <div class="seq-drop-hint">El músculo principal desciende y el tórax se expande</div>
+              </div>
+            </div>
+            <div class="seq-slot">
+              <div class="seq-slot-num">2</div>
+              <div class="seq-drop" data-seq-drop="entrada-aire" data-label="Paso 2">
+                <div class="seq-drop-hint">El aire entra por nariz/boca hacia los pulmones</div>
+              </div>
+            </div>
+            <div class="seq-slot">
+              <div class="seq-slot-num">3</div>
+              <div class="seq-drop" data-seq-drop="presion" data-label="Paso 3">
+                <div class="seq-drop-hint">El soplo asciende con presión subglótica controlada</div>
+              </div>
+            </div>
+            <div class="seq-slot">
+              <div class="seq-slot-num">4</div>
+              <div class="seq-drop" data-seq-drop="vibracion" data-label="Paso 4">
+                <div class="seq-drop-hint">Los pliegues vocales vibran y nace el sonido</div>
+              </div>
+            </div>
+            <div class="seq-slot">
+              <div class="seq-slot-num">5</div>
+              <div class="seq-drop" data-seq-drop="articulacion" data-label="Paso 5">
+                <div class="seq-drop-hint">Lengua, labios y paladar moldean las palabras</div>
+              </div>
+            </div>
+            <div class="seq-slot">
+              <div class="seq-slot-num">6</div>
+              <div class="seq-drop" data-seq-drop="resonancia" data-label="Paso 6">
+                <div class="seq-drop-hint">Las cavidades amplifican y colorean el timbre</div>
+              </div>
+            </div>
+            <div class="seq-slot">
+              <div class="seq-slot-num">7</div>
+              <div class="seq-drop" data-seq-drop="proyeccion" data-label="Paso 7">
+                <div class="seq-drop-hint">El sonido sale al espacio y llega al oyente</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- chips bank -->
+          <div id="seq-bank">
+            <div class="seq-chip" draggable="true" data-seq="resonancia">
+              <svg viewBox="0 0 80 80"><use href="#icon-resonance"/></svg><span>Resonancia</span>
+            </div>
+            <div class="seq-chip" draggable="true" data-seq="vibracion">
+              <svg viewBox="0 0 80 80"><use href="#icon-larynx"/></svg><span>Vibración vocal</span>
+            </div>
+            <div class="seq-chip" draggable="true" data-seq="diafragma">
+              <svg viewBox="0 0 80 80"><use href="#icon-diaphragm"/></svg><span>Contracción diafragma</span>
+            </div>
+            <div class="seq-chip" draggable="true" data-seq="proyeccion">
+              <svg viewBox="0 0 80 80"><use href="#icon-projection"/></svg><span>Proyección</span>
+            </div>
+            <div class="seq-chip" draggable="true" data-seq="presion">
+              <svg viewBox="0 0 80 80"><use href="#icon-trachea"/></svg><span>Presión subglótica</span>
+            </div>
+            <div class="seq-chip" draggable="true" data-seq="articulacion">
+              <svg viewBox="0 0 80 80"><use href="#icon-articulation"/></svg><span>Articulación</span>
+            </div>
+            <div class="seq-chip" draggable="true" data-seq="entrada-aire">
+              <svg viewBox="0 0 80 80"><use href="#icon-lungs"/></svg><span>Entrada de aire</span>
+            </div>
+          </div>
+
+          <!-- bottom status -->
+          <div id="seq-bottom">
+            <div id="seq-feedback">Arrastrá cada tarjeta al casillero que le corresponde.</div>
+            <button class="seq-btn" id="seq-start-btn" type="button">▶ Iniciar</button>
+            <button class="seq-btn" id="seq-reset-btn" type="button">↺ Reiniciar</button>
+          </div>
+
+        </div><!-- end #seq-game -->
+      </div>
     </div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-img ai d2">
-      <!-- Esquema comparativo de inspiración y espiración -->
-      <img
-        src="assets/diaphragm-cycle-es.svg"
-        alt="Comparación entre inspiración y espiración con etiquetas en español"
-        style="object-fit:contain; background:#ede5d0; padding:8px;"
-      >
-      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 65%,rgba(245,240,232,.22))"></div>
-      <div class="sc-img-cap">Mecánica respiratoria · Inspiración y espiración</div>
+  </section>
+
+  <section class="slide slide-content">
+    <div class="sc-hdr al d1">
+      <div class="sc-hdr-num">4</div><div class="sc-hdr-sep"></div>
+      <div class="sc-hdr-titles">
+        <div class="sc-hdr-tag">Fisiología</div>
+        <div class="sc-hdr-title">Relación entre Respiración y Voz</div>
+        <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
+      </div>
     </div>
-    <div class="sc-text">
-      <div class="txt-eyebrow au d2">Ciclo respiratorio</div>
-      <div class="txt-heading au d3">Inspiración y espiración<br><em>controlada</em></div>
-      <div class="txt-rule au d3"></div>
-      <div class="text-grid">
-        <p class="txt-body au d3"><strong>Inspiración (activa):</strong> el diafragma baja, las costillas se expanden y entra el aire.</p>
-        <p class="txt-body au d4"><strong>Espiración en el canto:</strong> el aire sale de forma <strong>dosificada y coordinada</strong> con la laringe para sostener la vibración vocal.</p>
-        <div class="acad-note au d5">
-          <div class="acad-note-lbl">Idea central</div>
-          <p>La técnica vocal se apoya en la <strong>coordinación de todo el sistema</strong>: no se trata de empujar el aire, sino de administrarlo con estabilidad.</p>
+    <div class="sc-body">
+      <div class="sc-img ai d2">
+        <img src="assets/larynx-external-es.svg" alt="Laringe externa con etiquetas en español">
+        <div class="sc-img-ov"></div>
+        <div class="sc-img-cap">Laringe externa · Vista anterolateral</div>
+      </div>
+      <div class="sc-text">
+        <div class="txt-eyebrow au d2">Cómo se arma la voz</div>
+        <div class="txt-heading au d3">Del aire al sonido</div>
+        <div class="txt-rule au d3"></div>
+        <div class="flow">
+          <div class="flow-step au d3">
+            <div class="flow-num">1</div>
+            <svg class="flow-visual"><use href="#icon-lungs"></use></svg>
+            <div><h5>Respiración</h5><p>Toma y administra el aire que después va a usar la voz.</p></div>
+          </div>
+          <div class="flow-step au d4">
+            <div class="flow-num">2</div>
+            <svg class="flow-visual"><use href="#icon-larynx"></use></svg>
+            <div><h5>Fonación</h5><p>En la laringe, ese aire hace vibrar los pliegues vocales.</p></div>
+          </div>
+          <div class="flow-step au d5">
+            <div class="flow-num">3</div>
+            <svg class="flow-visual"><use href="#icon-resonance"></use></svg>
+            <div><h5>Resonancia</h5><p>Faringe, boca y cavidades nasales amplifican el sonido.</p></div>
+          </div>
+        </div>
+        <div class="acad-note au d6">
+          <div class="acad-note-lbl">Cuerpo y aire</div>
+          <p>Si el cuerpo está rígido o mal alineado, el aire circula peor y la voz pierde libertad.</p>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ══════════════════════════════════════
-     SLIDE 7 · TIPOS Y MODOS DE RESPIRACIÓN
-══════════════════════════════════════ -->
-<div class="slide slide-table slide-table-reflow">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">7</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Clasificación</div>
-      <div class="sc-hdr-title">Tipos y Modos de Respiración</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
-    </div>
-  </div>
-  <div class="table-body">
-    <div class="au d2">
-      <div class="txt-eyebrow">Comparativa de formas de respirar</div>
-      <div class="txt-heading" style="font-size:34px; margin-bottom:4px;">¿Cuál nos conviene más para cantar?</div>
-      <div class="txt-rule"></div>
-    </div>
-    <table class="acad-table au d3">
-      <thead>
-        <tr>
-          <th>Tipo de respiración</th>
-          <th>Características</th>
-          <th>Qué pasa al cantar</th>
-          <th>¿Conviene?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Clavicular</td>
-          <td>Eleva hombros y parte alta del pecho; superficial</td>
-          <td>Genera tensión y escaso control del soplo</td>
-          <td><span class="badge badge-no">No recomendable</span></td>
-        </tr>
-        <tr>
-          <td>Costal</td>
-          <td>Expansión lateral de costillas</td>
-          <td>Aporta estabilidad y mayor capacidad de aire</td>
-          <td><span class="badge badge-ok">Útil</span></td>
-        </tr>
-        <tr>
-          <td>Abdominal / Diafragmática</td>
-          <td>Descenso del diafragma con expansión abdominal</td>
-          <td>Entrada de aire más profunda y sensación de mayor soltura</td>
-          <td><span class="badge badge-ok">Recomendable</span></td>
-        </tr>
-        <tr>
-          <td>Costo-diafragmática</td>
-          <td>Combina expansión costal y acción diafragmática</td>
-          <td>Mayor equilibrio, control y apoyo vocal</td>
-          <td><span class="badge badge-top">Óptima ✦</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="acad-note au d4" style="margin-top:0;">
-      <div class="acad-note-lbl">Conclusión práctica</div>
-      <p>La respiración <strong>costo-diafragmática</strong> es la que más nos conviene porque combina expansión costal, descenso del diafragma y mejor control del aire.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     SLIDE 8 · RESPIRACIÓN APLICADA AL CANTO
-══════════════════════════════════════ -->
-<div class="slide slide-content slide-reflow slide-bullets">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">8</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Técnica vocal</div>
-      <div class="sc-hdr-title">Respiración Aplicada al Canto</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
-    </div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-img ai d2">
-      <!-- Apoyo respiratorio en el canto -->
-      <img
-        src="assets/appoggio-es.svg"
-        alt="Esquema del apoyo respiratorio con etiquetas en español"
-        style="object-fit:contain; background:#ede5d0; padding:8px;"
-      >
-      <div class="sc-img-ov" style="background:linear-gradient(to right,transparent 60%,rgba(245,240,232,.22))"></div>
-      <div class="sc-img-cap">Apoyo respiratorio · Coordinación corporal</div>
-    </div>
-    <div class="sc-text">
-      <div class="txt-eyebrow au d2">Appoggio · Apoyo respiratorio</div>
-      <div class="txt-heading au d3">Del aire al sonido<br><em>con intención</em></div>
-      <div class="txt-rule au d3"></div>
-      <ul class="acad-list">
-        <li class="au d3">La inspiración conviene que sea <strong>silenciosa, rápida y sin levantar los hombros</strong>.</li>
-        <li class="au d4">Después, el aire se dosifica según lo que pide la frase musical.</li>
-        <li class="au d5">El <em>appoggio</em> coordina diafragma, tórax, abdomen y laringe: la idea es <strong>sostener, no empujar</strong>.</li>
-        <li class="au d6">Eso nos permite cantar con más estabilidad, hacer matices y evitar sobreesfuerzo.</li>
-      </ul>
-      <div class="acad-note au d7">
-        <div class="acad-note-lbl">Cuerpo y postura</div>
-        <p>Cuando el cuerpo está alineado y sin tensión innecesaria, la respiración trabaja mejor y la voz sale más libre.</p>
+  <section class="slide slide-content">
+    <div class="sc-hdr al d1">
+      <div class="sc-hdr-num">5</div><div class="sc-hdr-sep"></div>
+      <div class="sc-hdr-titles">
+        <div class="sc-hdr-tag">Anatomía</div>
+        <div class="sc-hdr-title">Vías Aéreas</div>
+        <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     SLIDE 9 · ERRORES COMUNES
-══════════════════════════════════════ -->
-<div class="slide slide-content">
-  <div class="sc-hdr al d1">
-    <div class="sc-hdr-num">9</div><div class="sc-hdr-sep"></div>
-    <div class="sc-hdr-titles">
-      <div class="sc-hdr-tag">Diagnóstico</div>
-      <div class="sc-hdr-title">Errores Comunes en la Respiración</div>
-      <div class="sc-hdr-inst">Conservatorio Juan R. Pérez Cruz</div>
-    </div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-img ai d2">
-      <!-- Zonas frecuentes de tensión al cantar -->
-      <img
-        src="assets/tension-zones-es.svg"
-        alt="Esquema de zonas frecuentes de tensión con etiquetas en español"
-        style="object-fit:contain; background:#ede5d0; padding:8px;"
-      >
-      <div class="sc-img-ov"></div>
-      <div class="sc-img-cap">Zonas de tensión · Esquema orientativo</div>
-    </div>
-    <div class="sc-text">
-      <div class="txt-eyebrow au d2" style="color:var(--burg);">Qué conviene evitar</div>
-      <div class="txt-heading au d3">Hábitos que comprometen<br>la calidad vocal</div>
-      <div class="txt-rule au d3"></div>
-      <div class="error-grid">
-        <div class="error-item au d3">
-          <div class="err-ico">🫸</div>
-          <div><h5>Elevar los hombros</h5><p>Genera tensión cervical y reduce el apoyo respiratorio.</p></div>
-        </div>
-        <div class="error-item au d4">
-          <div class="err-ico">💨</div>
-          <div><h5>Expulsar el aire con fuerza</h5><p>Agota la reserva aérea y fuerza la emisión vocal.</p></div>
-        </div>
-        <div class="error-item au d4">
-          <div class="err-ico">🫁</div>
-          <div><h5>Inflar de más el pecho</h5><p>Favorece la respiración clavicular y genera tensión.</p></div>
-        </div>
-        <div class="error-item au d5">
-          <div class="err-ico">🔒</div>
-          <div><h5>Bloquear el abdomen</h5><p>Impide el descenso del diafragma y la coordinación vocal.</p></div>
-        </div>
-        <div class="error-item au d5">
-          <div class="err-ico">⚡</div>
-          <div><h5>Inspirar superficial y rápido</h5><p>Reduce la reserva de aire e introduce tensiones.</p></div>
-        </div>
-        <div class="error-item au d6">
-          <div class="err-ico">🧍</div>
-          <div><h5>Ignorar la postura</h5><p>Sin alineación, la voz pierde facilidad y proyección.</p></div>
+    <div class="sc-body">
+      <div class="sc-img ai d2">
+        <img src="assets/conducting-passages.svg" alt="Vías conductoras del aire" style="padding:34px 22px 34px 68px;">
+        <div class="sc-img-ov"></div>
+        <div class="sc-img-cap">Vías conductoras · Del exterior a los alvéolos</div>
+      </div>
+      <div class="sc-text">
+        <div class="txt-eyebrow au d2">Recorrido del aire</div>
+        <div class="txt-heading au d3">Por dónde pasa el aire<br><em>al cantar</em></div>
+        <div class="txt-rule au d3"></div>
+        <div class="text-grid">
+          <p class="txt-body au d3"><svg class="body-icon"><use href="#icon-nose"></use></svg><strong>Vías superiores:</strong> la nariz filtra, humidifica y templa el aire; la faringe y la laringe también participan en la producción vocal.</p>
+          <p class="txt-body au d4"><svg class="body-icon"><use href="#icon-bronchi"></use></svg><strong>Vías inferiores:</strong> tráquea, bronquios, bronquiolos y alvéolos conducen el aire y permiten el intercambio gaseoso.</p>
+          <div class="acad-note au d5">
+            <div class="acad-note-lbl">¿Qué aporta a la voz?</div>
+            <p>Para cantar no importa solo cuánto aire entra, sino <strong>por dónde pasa y cómo lo administramos</strong> antes de emitir el sonido.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ══════════════════════════════════════
-     SLIDE 10 · CONCLUSIÓN
-══════════════════════════════════════ -->
-<div class="slide slide-conclusion slide-conclusion-reflow">
-  <div class="conc-hdr au d1">
-    <div class="conc-hdr-tag">Conclusión · Foniatría y Canto</div>
-    <div class="conc-hdr-line"></div>
-    <div class="conc-hdr-dia"></div>
-  </div>
-  <div class="conc-body-wrap">
-    <h2 class="conc-title au d2">El aire sostiene toda<br>la <em>emisión vocal</em></h2>
-    <div class="conc-ornament au d3">
-      <div class="conc-orn-line"></div>
-      <div class="conc-orn-dia"></div>
-      <div class="conc-orn-line"></div>
-    </div>
-    <div class="conc-summary">
-      <p class="conc-text au d4">
-        Para nosotros, la voz no se entiende aislada de la respiración. Cuando vías aéreas, diafragma, caja torácica, abdomen y postura trabajan coordinados, cantar se vuelve más estable, cómodo y sano.
-      </p>
-      <div class="conc-quote au d5">
-        "Cuanto mejor organizamos el aire, más libre, segura y expresiva sale la voz."
+  <!-- ═══════════════════════════════════════════
+       SLIDE 6 · JUEGO: ADIVINÁ LA ESTRUCTURA
+       10 pistas · el grupo elige en el diagrama SVG
+  ═══════════════════════════════════════════ -->
+  <section class="slide slide-content slide-interactive" id="slide6">
+    <div class="sc-hdr al d1">
+      <div class="sc-hdr-num">6</div><div class="sc-hdr-sep"></div>
+      <div class="sc-hdr-titles">
+        <div class="sc-hdr-tag">Participación</div>
+        <div class="sc-hdr-title">Adiviná la estructura</div>
+        <div class="sc-hdr-inst">Quiz · toque en el diagrama</div>
       </div>
     </div>
-    <div class="conc-pills au d6">
-      <div class="pill">Apoyo respiratorio</div>
-      <div class="pill">Coordinación</div>
-      <div class="pill">Postura</div>
-      <div class="pill">Cuidado de la voz</div>
-    </div>
-  </div>
-  <div class="conc-ftr au d7">
-    <div class="conc-ftr-txt">Conservatorio Juan R. Pérez Cruz</div>
-    <div class="conc-ftr-txt" style="color:rgba(200,151,58,.45);">✦ Foniatría · Técnica Vocal ✦</div>
-    <div class="conc-ftr-txt">22 de mayo de 2026 · Alain Gerfauo · Trinidad Arfo</div>
-  </div>
-</div>
 
-</div><!-- fin #deck -->
+    <style>
+    /* ── Quiz game (slide 6) ── */
+    #slide6 .sc-body { grid-template-columns:44% 1fr; overflow:hidden; }
+
+    #quiz-wrap {
+      display:flex;
+      flex-direction:column;
+      height:100%;
+      overflow:hidden;
+    }
+
+    /* SVG diagram panel */
+    #quiz-diagram-panel {
+      position:relative;
+      flex:1;
+      overflow:hidden;
+      background:#d8cdbb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-right:1px solid var(--rule);
+    }
+    #quiz-diagram-svg {
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    /* Clickable hotspots */
+    .q-hotspot {
+      cursor:pointer;
+      transition:opacity .18s;
+    }
+    .q-hotspot:hover .q-hs-bg { opacity:1; }
+    .q-hs-bg {
+      opacity:0;
+      transition:opacity .18s;
+    }
+    .q-hotspot.hs-correct .q-hs-bg { opacity:1; fill:#2a7c1a !important; }
+    .q-hotspot.hs-wrong .q-hs-bg { opacity:1; fill:#7a1f2e !important; }
+    .q-hotspot.hs-correct .q-hs-ring { stroke:#2a7c1a; }
+    .q-hotspot.hs-wrong .q-hs-ring { stroke:#7a1f2e; }
+    .q-hotspot.hs-revealed { cursor:default; }
+    .q-hotspot.hs-revealed .q-hs-bg { opacity:.85; fill:var(--gold) !important; }
+    .q-hotspot.hs-revealed .q-hs-ring { stroke:var(--gold); }
+
+    /* Label badge inside SVG */
+    .q-label-text {
+      font-family:'Josefin Sans',sans-serif;
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      fill:var(--cream);
+      pointer-events:none;
+    }
+    .q-label-badge { pointer-events:none; }
+    .q-badge-bg { fill:var(--ink); opacity:.82; rx:3; }
+
+    /* Right panel */
+    #quiz-right {
+      display:flex;
+      flex-direction:column;
+      padding:26px 38px;
+      gap:16px;
+      overflow:hidden;
+    }
+    #quiz-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    #quiz-progress-label {
+      font-family:'Josefin Sans',sans-serif;
+      font-size:10px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+    #quiz-progress-bar-wrap {
+      flex:1;
+      height:6px;
+      background:rgba(26,18,10,.1);
+    }
+    #quiz-progress-bar {
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--burg),var(--gold));
+      transition:width .4s ease;
+    }
+    #quiz-score-display {
+      display:flex;
+      gap:14px;
+    }
+    .q-score-pill {
+      padding:6px 14px;
+      font-family:'Josefin Sans',sans-serif;
+      font-size:10px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      border:1px solid var(--rule);
+      background:rgba(26,18,10,.03);
+      color:var(--ink-soft);
+    }
+    .q-score-pill span {
+      font-family:'Playfair Display',serif;
+      font-size:18px;
+      font-weight:700;
+      color:var(--ink);
+      margin-left:6px;
+    }
+
+    /* Clue card */
+    #quiz-clue-card {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:24px 28px;
+      background:var(--burg-pale);
+      border:1px solid rgba(122,31,46,.18);
+      border-left:5px solid var(--burg);
+      position:relative;
+      overflow:hidden;
+    }
+    #quiz-clue-card::before {
+      content:'?';
+      position:absolute;
+      right:18px;
+      top:50%;
+      transform:translateY(-50%);
+      font-family:'Playfair Display',serif;
+      font-size:110px;
+      font-weight:800;
+      color:rgba(122,31,46,.07);
+      line-height:1;
+      pointer-events:none;
+    }
+    #quiz-clue-n {
+      font-family:'Josefin Sans',sans-serif;
+      font-size:9px;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      color:var(--burg-l);
+      margin-bottom:10px;
+    }
+    #quiz-clue-text {
+      font-family:'EB Garamond',serif;
+      font-size:26px;
+      line-height:1.55;
+      color:var(--ink-mid);
+    }
+    #quiz-clue-text strong { color:var(--ink); }
+    #quiz-clue-hint {
+      margin-top:14px;
+      font-family:'EB Garamond',serif;
+      font-size:19px;
+      font-style:italic;
+      color:var(--ink-soft);
+      line-height:1.5;
+    }
+
+    /* Instruction / feedback line */
+    #quiz-instruction {
+      font-family:'EB Garamond',serif;
+      font-size:20px;
+      color:var(--ink-mid);
+      font-style:italic;
+      padding:6px 0;
+      min-height:36px;
+      transition:color .25s;
+    }
+    #quiz-instruction.qi-ok { color:#1a6610; font-style:normal; font-weight:600; }
+    #quiz-instruction.qi-err { color:var(--burg); font-style:normal; }
+
+    /* Choices row (fallback touch) */
+    #quiz-choices {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .q-choice-btn {
+      flex:1;
+      min-width:120px;
+      padding:11px 16px;
+      background:var(--ink);
+      border:1px solid rgba(200,151,58,.4);
+      color:var(--cream);
+      font-family:'Josefin Sans',sans-serif;
+      font-size:10px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:background .16s,transform .14s;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .q-choice-btn:hover:not(:disabled) { background:var(--burg); transform:translateY(-2px); }
+    .q-choice-btn:disabled { opacity:.55; cursor:default; transform:none; }
+    .q-choice-btn.cb-correct { background:#1a6010; border-color:#1a6010; }
+    .q-choice-btn.cb-wrong { background:var(--burg); border-color:var(--burg); }
+    .q-choice-btn svg { width:26px; height:26px; color:var(--gold-l); flex-shrink:0; }
+
+    /* Bottom action row */
+    #quiz-actions {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .quiz-btn {
+      border:1px solid var(--rule);
+      background:rgba(245,240,232,.92);
+      color:var(--ink-mid);
+      min-height:40px;
+      padding:9px 18px;
+      font-family:'Josefin Sans',sans-serif;
+      font-size:10px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:all .18s;
+    }
+    .quiz-btn:hover { background:var(--burg); border-color:var(--burg); color:var(--cream); }
+    .quiz-btn:disabled { opacity:.45; pointer-events:none; }
+    #quiz-end-msg {
+      display:none;
+      font-family:'Playfair Display',serif;
+      font-size:22px;
+      font-weight:700;
+      color:var(--ink);
+    }
+    #quiz-end-msg.show { display:block; }
+    </style>
+
+    <div class="sc-body">
+
+      <!-- LEFT: SVG anatomy diagram with clickable hotspots -->
+      <div id="quiz-diagram-panel" class="ai d2">
+        <svg id="quiz-diagram-svg" viewBox="0 0 380 680" aria-label="Diagrama del sistema respiratorio">
+          <defs>
+            <linearGradient id="bg-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e8ddc8"/>
+              <stop offset="100%" stop-color="#d0c3ab"/>
+            </linearGradient>
+            <filter id="soft-sh">
+              <feDropShadow dx="1" dy="2" stdDeviation="3" flood-color="#3b2e1a" flood-opacity=".22"/>
+            </filter>
+          </defs>
+          <rect width="380" height="680" fill="url(#bg-grad)"/>
+
+          <!-- ─── BODY SILHOUETTE ─── -->
+          <!-- Head -->
+          <ellipse cx="190" cy="72" rx="52" ry="60" fill="#e2d0b8" stroke="#3b2e1a" stroke-width="3"/>
+          <!-- Neck -->
+          <rect x="172" y="124" width="36" height="44" rx="8" fill="#e2d0b8" stroke="#3b2e1a" stroke-width="2.5"/>
+          <!-- Torso -->
+          <path d="M120 168 Q100 200 98 290 Q96 380 110 420 L270 420 Q284 380 282 290 Q280 200 260 168 Z"
+            fill="#dcc9b2" stroke="#3b2e1a" stroke-width="3"/>
+
+          <!-- ─── NASAL CAVITY ─── -->
+          <g id="hs-nasal" class="q-hotspot" data-qs="nasal">
+            <ellipse class="q-hs-bg" cx="190" cy="55" rx="38" ry="30" fill="#c8973a" opacity="0"/>
+            <ellipse class="q-hs-ring" cx="190" cy="55" rx="38" ry="30" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <!-- Nasal passages drawing -->
+            <path d="M172 42 C170 50 168 65 172 75 C175 82 185 85 190 85 C195 85 205 82 208 75 C212 65 210 50 208 42"
+              fill="none" stroke="#3b2e1a" stroke-width="2.5"/>
+            <path d="M182 42 Q190 50 198 42" fill="none" stroke="#3b2e1a" stroke-width="2"/>
+            <circle cx="182" cy="78" r="6" fill="#c8a88c" stroke="#3b2e1a" stroke-width="2"/>
+            <circle cx="198" cy="78" r="6" fill="#c8a88c" stroke="#3b2e1a" stroke-width="2"/>
+          </g>
+
+          <!-- ─── PHARYNX ─── -->
+          <g id="hs-faringe" class="q-hotspot" data-qs="faringe">
+            <rect class="q-hs-bg" x="152" y="90" width="76" height="38" rx="4" fill="#c8973a" opacity="0"/>
+            <rect class="q-hs-ring" x="152" y="90" width="76" height="38" rx="4" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <path d="M162 96 Q190 116 218 96" fill="none" stroke="#7a4a2a" stroke-width="5" stroke-linecap="round"/>
+            <path d="M165 110 Q190 128 215 110" fill="none" stroke="#7a4a2a" stroke-width="3.5" stroke-linecap="round"/>
+          </g>
+
+          <!-- ─── LARYNX ─── -->
+          <g id="hs-laringe" class="q-hotspot" data-qs="laringe">
+            <rect class="q-hs-bg" x="162" y="128" width="56" height="44" rx="4" fill="#c8973a" opacity="0"/>
+            <rect class="q-hs-ring" x="162" y="128" width="56" height="44" rx="4" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <!-- Thyroid cartilage outline -->
+            <path d="M172 132 L168 160 L190 170 L212 160 L208 132 Z"
+              fill="#dac4a8" stroke="#3b2e1a" stroke-width="2.5"/>
+            <!-- Vocal folds symbol -->
+            <path d="M176 148 Q190 141 204 148" fill="none" stroke="#7a1f2e" stroke-width="4" stroke-linecap="round"/>
+            <path d="M176 154 Q190 161 204 154" fill="none" stroke="#7a1f2e" stroke-width="4" stroke-linecap="round"/>
+          </g>
+
+          <!-- ─── TRACHEA ─── -->
+          <g id="hs-traquea" class="q-hotspot" data-qs="traquea">
+            <rect class="q-hs-bg" x="174" y="172" width="32" height="90" rx="4" fill="#c8973a" opacity="0"/>
+            <rect class="q-hs-ring" x="174" y="172" width="32" height="90" rx="4" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <!-- Tracheal rings -->
+            <rect x="178" y="174" width="24" height="78" rx="12" fill="#8aada0" stroke="#3b2e1a" stroke-width="2.5"/>
+            <line x1="178" y1="195" x2="202" y2="195" stroke="#f5f0e8" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="178" y1="210" x2="202" y2="210" stroke="#f5f0e8" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="178" y1="225" x2="202" y2="225" stroke="#f5f0e8" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="178" y1="240" x2="202" y2="240" stroke="#f5f0e8" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+
+          <!-- ─── BRONCHI ─── -->
+          <g id="hs-bronquios" class="q-hotspot" data-qs="bronquios">
+            <ellipse class="q-hs-bg" cx="190" cy="290" rx="80" ry="32" fill="#c8973a" opacity="0"/>
+            <ellipse class="q-hs-ring" cx="190" cy="290" rx="80" ry="32" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <path d="M190 262 L190 278" stroke="#7a1f2e" stroke-width="8" stroke-linecap="round"/>
+            <path d="M190 278 C180 282 160 284 140 278" fill="none" stroke="#7a1f2e" stroke-width="7" stroke-linecap="round"/>
+            <path d="M190 278 C200 282 220 284 240 278" fill="none" stroke="#7a1f2e" stroke-width="7" stroke-linecap="round"/>
+            <path d="M140 278 C134 290 134 306 138 318" fill="none" stroke="#a04040" stroke-width="5" stroke-linecap="round"/>
+            <path d="M240 278 C246 290 246 306 242 318" fill="none" stroke="#a04040" stroke-width="5" stroke-linecap="round"/>
+          </g>
+
+          <!-- ─── LEFT LUNG ─── -->
+          <g id="hs-pulmon-izq" class="q-hotspot" data-qs="pulmones">
+            <path class="q-hs-bg" d="M185 266 C172 254 132 258 118 288 C108 310 112 370 130 398 C148 424 174 418 185 398 Z"
+              fill="#c8973a" opacity="0"/>
+            <path class="q-hs-ring" d="M185 266 C172 254 132 258 118 288 C108 310 112 370 130 398 C148 424 174 418 185 398 Z"
+              fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <path d="M185 266 C172 254 132 258 118 288 C108 310 112 370 130 398 C148 424 174 418 185 398 Z"
+              fill="#cfaa95" stroke="#3b2e1a" stroke-width="3"/>
+            <!-- Bronchiole lines -->
+            <path d="M163 298 C150 312 144 330 150 354" fill="none" stroke="#3b2e1a" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+            <path d="M163 298 C158 318 162 340 158 360" fill="none" stroke="#3b2e1a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+          </g>
+
+          <!-- ─── RIGHT LUNG ─── -->
+          <g id="hs-pulmon-der" class="q-hotspot" data-qs="pulmones">
+            <path class="q-hs-bg" d="M195 266 C208 254 248 258 262 288 C272 310 268 370 250 398 C232 424 206 418 195 398 Z"
+              fill="#c8973a" opacity="0"/>
+            <path class="q-hs-ring" d="M195 266 C208 254 248 258 262 288 C272 310 268 370 250 398 C232 424 206 418 195 398 Z"
+              fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <path d="M195 266 C208 254 248 258 262 288 C272 310 268 370 250 398 C232 424 206 418 195 398 Z"
+              fill="#cfaa95" stroke="#3b2e1a" stroke-width="3"/>
+            <path d="M217 298 C230 312 236 330 230 354" fill="none" stroke="#3b2e1a" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+            <path d="M217 298 C222 318 218 340 222 360" fill="none" stroke="#3b2e1a" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+          </g>
+
+          <!-- ─── DIAPHRAGM ─── -->
+          <g id="hs-diafragma" class="q-hotspot" data-qs="diafragma">
+            <ellipse class="q-hs-bg" cx="190" cy="424" rx="88" ry="20" fill="#c8973a" opacity="0"/>
+            <ellipse class="q-hs-ring" cx="190" cy="424" rx="88" ry="20" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-dasharray="6 4" opacity=".7"/>
+            <path d="M102 420 Q150 406 190 408 Q230 406 278 420"
+              fill="none" stroke="#6b5540" stroke-width="7" stroke-linecap="round"/>
+            <path d="M102 420 Q150 432 190 430 Q230 432 278 420"
+              fill="none" stroke="#8a6a50" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+          </g>
+
+          <!-- ─── LABEL BADGES (shown after correct answer) ─── -->
+          <g id="qd-labels">
+            <g id="lbl-nasal" class="q-label-badge" opacity="0" style="transition:opacity .3s">
+              <rect x="82" y="28" width="88" height="22" rx="3" fill="#18120a" opacity=".82"/>
+              <text class="q-label-text" x="126" y="44" text-anchor="middle">FOSAS NASALES</text>
+            </g>
+            <g id="lbl-faringe" class="q-label-badge" opacity="0" style="transition:opacity .3s">
+              <rect x="232" y="93" width="72" height="22" rx="3" fill="#18120a" opacity=".82"/>
+              <text class="q-label-text" x="268" y="109" text-anchor="middle">FARINGE</text>
+            </g>
+            <g id="lbl-laringe" class="q-label-badge" opacity="0" style="transition:opacity .3s">
+              <rect x="232" y="140" width="70" height="22" rx="3" fill="#18120a" opacity=".82"/>
+              <text class="q-label-text" x="267" y="156" text-anchor="middle">LARINGE</text>
+            </g>
+            <g id="lbl-traquea" class="q-label-badge" opacity="0" style="transition:opacity .3s">
+              <rect x="214" y="208" width="74" height="22" rx="3" fill="#18120a" opacity=".82"/>
+              <text class="q-label-text" x="251" y="224" text-anchor="middle">TRÁQUEA</text>
+            </g>
+            <g id="lbl-bronquios" class="q-label-badge" opacity="0" style="transition:opacity .3s">
+              <rect x="76" y="292" width="88" height="22" rx="3" fill="#18120a" opacity=".82"/>
+              <text class="q-label-text" x="120" y="308" text-anchor="middle">BRONQUIOS</text>
+            </g>
+            <g id="lbl-pulmones" class="q-label-badge" opacity="0" style="transition:opacity .3s">
+              <rect x="62" y="350" width="84" height="22" rx="3" fill="#18120a" opacity=".82"/>
+              <text class="q-label-text" x="104" y="366" text-anchor="middle">PULMONES</text>
+            </g>
+            <g id="lbl-diafragma" class="q-label-badge" opacity="0" style="transition:opacity .3s">
+              <rect x="218" y="432" width="90" height="22" rx="3" fill="#18120a" opacity=".82"/>
+              <text class="q-label-text" x="263" y="448" text-anchor="middle">DIAFRAGMA</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- RIGHT: Clue panel + choices -->
+      <div id="quiz-right" class="au d3">
+
+        <div id="quiz-header">
+          <div id="quiz-progress-label">Pregunta <span id="qp-cur">1</span> de <span id="qp-tot">10</span></div>
+          <div id="quiz-progress-bar-wrap"><div id="quiz-progress-bar"></div></div>
+          <div id="quiz-score-display">
+            <div class="q-score-pill">✓<span id="q-ok-n">0</span></div>
+            <div class="q-score-pill">✗<span id="q-err-n">0</span></div>
+          </div>
+        </div>
+
+        <div id="quiz-clue-card">
+          <div id="quiz-clue-n">Pista</div>
+          <div id="quiz-clue-text"></div>
+          <div id="quiz-clue-hint"></div>
+        </div>
+
+        <div id="quiz-instruction">👆 Tocá en el diagrama la estructura que corresponde.</div>
+
+        <div id="quiz-choices"></div>
+
+        <div id="quiz-actions">
+          <div id="quiz-end-msg"></div>
+          <button class="quiz-btn" id="quiz-reveal-btn" type="button">Ver respuesta</button>
+          <button class="quiz-btn" id="quiz-next-btn" type="button" disabled>Siguiente →</button>
+          <button class="quiz-btn" id="quiz-restart-btn" type="button">↺ Reiniciar</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide-content slide-interactive">
+    <div class="sc-hdr al d1">
+      <div class="sc-hdr-num">7</div><div class="sc-hdr-sep"></div>
+      <div class="sc-hdr-titles">
+        <div class="sc-hdr-tag">Participación</div>
+        <div class="sc-hdr-title">Vías superiores e inferiores</div>
+        <div class="sc-hdr-inst">Clasificación rápida</div>
+      </div>
+    </div>
+    <div class="sc-body">
+      <div class="activity-copy">
+        <div class="activity-kicker au d2">Clasificar para recordar</div>
+        <h2 class="activity-title au d3">¿Arriba o abajo?</h2>
+        <p class="au d4">La clasificación ayuda a ordenar el recorrido del aire y a entender por qué algunas zonas son más importantes para filtrar, resonar o conducir el soplo.</p>
+        <div class="activity-card au d5">Podés repartir las palabras y pedir que cada alumno defienda su elección en una frase.</div>
+      </div>
+      <div class="interactive-wrap">
+        <div class="match-game" data-game>
+          <div class="sort-board">
+            <div class="drop-bin" data-drop data-accept="superiores" data-label="Vías superiores">
+              <strong>Filtran, templan y participan en la resonancia</strong>
+            </div>
+            <div class="drop-bin" data-drop data-accept="inferiores" data-label="Vías inferiores">
+              <strong>Conducen el aire hacia los pulmones o hacia la sangre</strong>
+            </div>
+          </div>
+          <div class="word-bank" data-bank>
+            <div class="label-chip" draggable="true" data-answer="inferiores"><svg class="chip-icon"><use href="#icon-bronchi"></use></svg><span>Bronquios</span></div>
+            <div class="label-chip" draggable="true" data-answer="superiores"><svg class="chip-icon"><use href="#icon-nose"></use></svg><span>Cavidad nasal</span></div>
+            <div class="label-chip" draggable="true" data-answer="inferiores"><svg class="chip-icon"><use href="#icon-trachea"></use></svg><span>Tráquea</span></div>
+            <div class="label-chip" draggable="true" data-answer="superiores"><svg class="chip-icon"><use href="#icon-pharynx"></use></svg><span>Faringe</span></div>
+            <div class="label-chip" draggable="true" data-answer="inferiores"><svg class="chip-icon"><use href="#icon-alveoli"></use></svg><span>Alvéolos</span></div>
+            <div class="label-chip" draggable="true" data-answer="superiores"><svg class="chip-icon"><use href="#icon-larynx"></use></svg><span>Laringe</span></div>
+          </div>
+          <div class="match-actions">
+            <button class="action-btn" type="button" data-reset>Reiniciar actividad</button>
+            <div class="match-status" data-status>0 / 6 clasificadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide closing">
+    <div class="closing-hdr au d1">
+      <div class="mini-tag">Cierre · Foniatría y canto</div>
+      <div id="closing-counter" class="mini-tag">22 de mayo de 2026</div>
+    </div>
+    <div class="closing-body">
+      <div>
+        <h2 class="closing-title au d2">El aire sostiene toda<br>la <em>emisión vocal</em></h2>
+        <div class="closing-pills au d4">
+          <div class="pill"><svg class="chip-icon"><use href="#icon-lungs"></use></svg>Respiración</div>
+          <div class="pill"><svg class="chip-icon"><use href="#icon-larynx"></use></svg>Fonación</div>
+          <div class="pill"><svg class="chip-icon"><use href="#icon-resonance"></use></svg>Resonancia</div>
+          <div class="pill"><svg class="chip-icon"><use href="#icon-trachea"></use></svg>Vías aéreas</div>
+        </div>
+      </div>
+      <div class="closing-text au d3">
+        <p>Para nosotros, la voz no se entiende aislada de la respiración. Cuando el aire se organiza, la laringe vibra con más libertad y los resonadores terminan de darle color al sonido.</p>
+        <div class="activity-card" style="margin-top:26px;">"Cuanto mejor organizamos el aire, más libre, segura y expresiva sale la voz."</div>
+      </div>
+    </div>
+    <div class="closing-ftr au d5">
+      <div class="cover-ftr-txt">Conservatorio Juan R. Pérez Cruz</div>
+      <div class="cover-ftr-txt cover-ftr-gold">✦ Foniatría · Técnica Vocal ✦</div>
+      <div class="cover-ftr-txt">Alain Gerfauo · Trinidad Arfo</div>
+    </div>
+  </section>
+</div>
 
 <script>
 const slides = document.querySelectorAll('.slide');
-const curEl  = document.getElementById('cur');
-const totEl  = document.getElementById('tot');
-const bar    = document.getElementById('prog');
+const curEl = document.getElementById('cur');
+const totEl = document.getElementById('tot');
+const bar = document.getElementById('prog');
 const fullBtn = document.getElementById('btn-full');
 const total = slides.length;
 const requestedSlide = Number.parseInt(new URLSearchParams(window.location.search).get('slide') || '', 10);
 let cur = Number.isFinite(requestedSlide) ? Math.min(Math.max(requestedSlide - 1, 0), total - 1) : 0;
+let selectedToken = null;
+
 totEl.textContent = total;
 slides.forEach((slide, i) => slide.classList.toggle('on', i === cur));
 
-function goTo(n){
-  slides[cur].classList.remove('on');
-  cur=(n+total)%total;
-  void slides[cur].offsetWidth;
-  slides[cur].classList.add('on');
-  curEl.textContent=cur+1;
-  bar.style.width=((cur+1)/total*100)+'%';
+function updateProgress() {
+  curEl.textContent = cur + 1;
+  bar.style.width = ((cur + 1) / total * 100) + '%';
 }
 
-function syncFullscreenButton(){
+function goTo(n) {
+  slides[cur].classList.remove('on');
+  cur = (n + total) % total;
+  void slides[cur].offsetWidth;
+  slides[cur].classList.add('on');
+  updateProgress();
+}
+
+function syncFullscreenButton() {
   const isFullscreen = !!document.fullscreenElement;
   fullBtn.classList.toggle('is-active', isFullscreen);
   fullBtn.setAttribute('aria-label', isFullscreen ? 'Salir de pantalla completa' : 'Activar pantalla completa');
@@ -1057,7 +2157,7 @@ function syncFullscreenButton(){
   fullBtn.title = isFullscreen ? 'Salir de pantalla completa' : 'Activar pantalla completa';
 }
 
-async function toggleFullscreen(){
+async function toggleFullscreen() {
   try {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
@@ -1069,8 +2169,124 @@ async function toggleFullscreen(){
   }
 }
 
-document.getElementById('btn-prev').addEventListener('click',()=>goTo(cur-1));
-document.getElementById('btn-next').addEventListener('click',()=>goTo(cur+1));
+function getGame(el) {
+  return el.closest('[data-game]');
+}
+
+function canPlace(token, drop) {
+  const expected = drop.dataset.answer || drop.dataset.accept;
+  return token.dataset.answer === expected;
+}
+
+function updateGameStatus(game) {
+  const totalTokens = game.querySelectorAll('.label-chip').length;
+  const placed = game.querySelectorAll('.label-chip.is-locked').length;
+  const status = game.querySelector('[data-status]');
+  if (status) {
+    status.textContent = placed + ' / ' + totalTokens + (placed === totalTokens ? ' resueltas' : ' ubicadas');
+  }
+}
+
+function flashWrong(drop) {
+  drop.classList.add('is-wrong');
+  setTimeout(() => drop.classList.remove('is-wrong'), 520);
+}
+
+function placeToken(token, drop) {
+  if (!token || token.classList.contains('is-locked')) return;
+  const game = getGame(drop);
+  if (!canPlace(token, drop)) {
+    flashWrong(drop);
+    return;
+  }
+  if (drop.dataset.answer && drop.querySelector('.label-chip')) {
+    flashWrong(drop);
+    return;
+  }
+  drop.appendChild(token);
+  token.classList.remove('is-selected');
+  token.classList.add('is-locked');
+  token.setAttribute('draggable', 'false');
+  drop.classList.add('is-correct');
+  selectedToken = null;
+  updateGameStatus(game);
+}
+
+document.addEventListener('dragstart', event => {
+  const token = event.target.closest('.label-chip');
+  if (!token || token.classList.contains('is-locked')) return;
+  token.classList.add('dragging');
+  event.dataTransfer.setData('text/plain', token.dataset.answer);
+  selectedToken = token;
+});
+
+document.addEventListener('dragend', event => {
+  const token = event.target.closest('.label-chip');
+  if (token) token.classList.remove('dragging');
+});
+
+document.addEventListener('dragover', event => {
+  const drop = event.target.closest('[data-drop]');
+  if (!drop) return;
+  event.preventDefault();
+  drop.classList.add('is-over');
+});
+
+document.addEventListener('dragleave', event => {
+  const drop = event.target.closest('[data-drop]');
+  if (drop) drop.classList.remove('is-over');
+});
+
+document.addEventListener('drop', event => {
+  const drop = event.target.closest('[data-drop]');
+  if (!drop) return;
+  event.preventDefault();
+  drop.classList.remove('is-over');
+  const token = document.querySelector('.label-chip.dragging') || selectedToken;
+  placeToken(token, drop);
+});
+
+document.addEventListener('click', event => {
+  const token = event.target.closest('.label-chip');
+  if (token && !token.classList.contains('is-locked')) {
+    if (selectedToken) selectedToken.classList.remove('is-selected');
+    selectedToken = token;
+    token.classList.add('is-selected');
+    return;
+  }
+
+  const drop = event.target.closest('[data-drop]');
+  if (drop && selectedToken) {
+    placeToken(selectedToken, drop);
+    return;
+  }
+
+  const reset = event.target.closest('[data-reset]');
+  if (reset) {
+    const game = getGame(reset);
+    const bank = game.querySelector('[data-bank]');
+    game.querySelectorAll('.label-chip').forEach(chip => {
+      chip.classList.remove('is-locked', 'is-selected', 'dragging');
+      chip.setAttribute('draggable', 'true');
+      bank.appendChild(chip);
+    });
+    game.querySelectorAll('[data-drop]').forEach(dropArea => {
+      dropArea.classList.remove('is-correct', 'is-wrong', 'is-over');
+    });
+    selectedToken = null;
+    updateGameStatus(game);
+    return;
+  }
+
+  const anatomyCard = event.target.closest('.anatomy-card');
+  if (anatomyCard) {
+    anatomyCard.classList.toggle('is-open');
+  }
+});
+
+document.getElementById('btn-prev').addEventListener('click', () => goTo(cur - 1));
+document.getElementById('btn-next').addEventListener('click', () => goTo(cur + 1));
+
 if (document.fullscreenEnabled) {
   fullBtn.addEventListener('click', toggleFullscreen);
   document.addEventListener('fullscreenchange', syncFullscreenButton);
@@ -1078,17 +2294,444 @@ if (document.fullscreenEnabled) {
 } else {
   fullBtn.style.display = 'none';
 }
-document.addEventListener('keydown',e=>{
-  if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === 'f') {
-    e.preventDefault();
+
+document.addEventListener('keydown', event => {
+  if (!event.ctrlKey && !event.metaKey && !event.altKey && event.key.toLowerCase() === 'f') {
+    event.preventDefault();
     toggleFullscreen();
     return;
   }
-  if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();goTo(cur+1);}
-  if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();goTo(cur-1);}
+  if (['ArrowRight', 'ArrowDown', ' '].includes(event.key)) {
+    event.preventDefault();
+    goTo(cur + 1);
+  }
+  if (['ArrowLeft', 'ArrowUp'].includes(event.key)) {
+    event.preventDefault();
+    goTo(cur - 1);
+  }
 });
-curEl.textContent = cur + 1;
-bar.style.width=((cur+1)/total*100)+'%';
+
+document.querySelectorAll('[data-game]').forEach(updateGameStatus);
+updateProgress();
+
+/* ════════════════════════════════════════════
+   SLIDE 3 · SEQUENCER GAME
+════════════════════════════════════════════ */
+(function(){
+  const TOTAL_TIME = 60;
+  const CORRECT_ORDER = [
+    'diafragma','entrada-aire','presion','vibracion','articulacion','resonancia','proyeccion'
+  ];
+  const FEEDBACK = {
+    win:'🎉 ¡Perfecto! Construiste el camino completo de la voz. ¡Excelente trabajo!',
+    lose:'⏱ Se acabó el tiempo. Revisá los pasos y volvé a intentarlo.',
+    partial:'¡Muy bien! Seguí completando los pasos restantes.'
+  };
+
+  let timerInterval = null;
+  let timeLeft = TOTAL_TIME;
+  let started = false;
+  let seqSelected = null;
+
+  const arc = document.getElementById('seq-arc');
+  const timerNum = document.getElementById('seq-timer-num');
+  const okCount = document.getElementById('seq-ok');
+  const triesCount = document.getElementById('seq-tries');
+  const feedbackEl = document.getElementById('seq-feedback');
+  const startBtn = document.getElementById('seq-start-btn');
+  const resetBtn = document.getElementById('seq-reset-btn');
+  const wavePath = document.getElementById('seq-wave-path');
+  const circumference = 150.796;
+
+  function setArc(t) {
+    const pct = t / TOTAL_TIME;
+    const offset = circumference * (1 - pct);
+    arc.style.strokeDashoffset = offset;
+    arc.style.stroke = pct > 0.4 ? '#7a1f2e' : (pct > 0.2 ? '#c8973a' : '#e03030');
+  }
+
+  function buildWave(locked) {
+    // build a wave that gets more complex as more steps are locked
+    const pts = 8;
+    const amp = Math.min(locked * 3.5, 22);
+    let d = 'M0 28';
+    for (let i = 1; i <= pts; i++) {
+      const x = (i / pts) * 400;
+      const px = ((i - 0.5) / pts) * 400;
+      const dir = i % 2 === 0 ? 1 : -1;
+      const cy = 28 + dir * amp;
+      d += ` Q${px} ${cy} ${x} 28`;
+    }
+    wavePath.setAttribute('d', d);
+    wavePath.style.stroke = locked === CORRECT_ORDER.length
+      ? 'rgba(42,124,26,.7)' : 'rgba(122,31,46,.35)';
+    wavePath.style.strokeWidth = 2 + locked * 0.4;
+  }
+
+  function countLocked() {
+    return document.querySelectorAll('#seq-bank ~ * .seq-chip.is-locked, #seq-cards-area .seq-chip.is-locked').length
+      + document.querySelectorAll('#seq-cards-area .seq-drop .seq-chip').length;
+  }
+
+  function checkWin() {
+    const drops = document.querySelectorAll('[data-seq-drop]');
+    let allCorrect = true;
+    drops.forEach(d => {
+      if (!d.querySelector('.seq-chip.is-locked')) allCorrect = false;
+    });
+    if (allCorrect) {
+      clearInterval(timerInterval);
+      timerNum.classList.add('ok');
+      feedbackEl.textContent = FEEDBACK.win;
+      feedbackEl.classList.add('win');
+      buildWave(CORRECT_ORDER.length);
+    }
+  }
+
+  function placeSeqChip(chip, drop) {
+    if (!chip || chip.classList.contains('is-locked')) return;
+    const expected = drop.dataset.seqDrop;
+    const answer = chip.dataset.seq;
+    triesCount.textContent = parseInt(triesCount.textContent) + 1;
+    if (answer !== expected) {
+      drop.classList.add('is-wrong');
+      setTimeout(() => drop.classList.remove('is-wrong'), 520);
+      feedbackEl.textContent = '✗ Incorrecto. Ese no es el paso que va aquí.';
+      feedbackEl.classList.remove('win');
+      return;
+    }
+    if (drop.querySelector('.seq-chip')) {
+      drop.classList.add('is-wrong');
+      setTimeout(() => drop.classList.remove('is-wrong'), 520);
+      return;
+    }
+    const hint = drop.querySelector('.seq-drop-hint');
+    if (hint) hint.style.display = 'none';
+    drop.appendChild(chip);
+    chip.classList.remove('is-selected','dragging');
+    chip.classList.add('is-locked');
+    chip.setAttribute('draggable','false');
+    drop.classList.add('is-correct');
+    seqSelected = null;
+    okCount.textContent = parseInt(okCount.textContent) + 1;
+    const locked = parseInt(okCount.textContent);
+    buildWave(locked);
+    feedbackEl.textContent = locked < CORRECT_ORDER.length ? FEEDBACK.partial : '';
+    feedbackEl.classList.remove('win');
+    checkWin();
+  }
+
+  function startTimer() {
+    if (started) return;
+    started = true;
+    startBtn.disabled = true;
+    startBtn.textContent = '▶ En curso';
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timerNum.textContent = timeLeft;
+      setArc(timeLeft);
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        feedbackEl.textContent = FEEDBACK.lose;
+        feedbackEl.classList.add('lose');
+        // disable remaining chips
+        document.querySelectorAll('.seq-chip:not(.is-locked)').forEach(c => {
+          c.setAttribute('draggable','false');
+          c.style.opacity = '.45';
+          c.style.cursor = 'default';
+        });
+      }
+    }, 1000);
+  }
+
+  function resetSeq() {
+    clearInterval(timerInterval);
+    started = false;
+    timeLeft = TOTAL_TIME;
+    timerNum.textContent = TOTAL_TIME;
+    timerNum.classList.remove('ok');
+    setArc(TOTAL_TIME);
+    buildWave(0);
+    okCount.textContent = '0';
+    triesCount.textContent = '0';
+    feedbackEl.textContent = 'Arrastrá cada tarjeta al casillero que le corresponde.';
+    feedbackEl.className = '';
+    startBtn.disabled = false;
+    startBtn.textContent = '▶ Iniciar';
+    seqSelected = null;
+
+    const bank = document.getElementById('seq-bank');
+    document.querySelectorAll('.seq-chip').forEach(c => {
+      c.classList.remove('is-locked','is-selected','dragging');
+      c.setAttribute('draggable','true');
+      c.style.opacity = '';
+      c.style.cursor = '';
+      bank.appendChild(c);
+    });
+    document.querySelectorAll('[data-seq-drop]').forEach(d => {
+      d.classList.remove('is-correct','is-wrong','is-over');
+      const hint = d.querySelector('.seq-drop-hint');
+      if (hint) hint.style.display = '';
+    });
+  }
+
+  startBtn.addEventListener('click', startTimer);
+  resetBtn.addEventListener('click', resetSeq);
+
+  // Drag & drop for seq chips
+  document.addEventListener('dragstart', ev => {
+    const c = ev.target.closest('.seq-chip');
+    if (!c || c.classList.contains('is-locked') || !c.getAttribute('draggable') === 'true') return;
+    c.classList.add('dragging');
+    ev.dataTransfer.setData('text/plain', c.dataset.seq);
+    seqSelected = c;
+  });
+  document.addEventListener('dragend', ev => {
+    const c = ev.target.closest('.seq-chip');
+    if (c) c.classList.remove('dragging');
+  });
+  document.addEventListener('dragover', ev => {
+    const d = ev.target.closest('[data-seq-drop]');
+    if (!d) return;
+    ev.preventDefault();
+    d.classList.add('is-over');
+  });
+  document.addEventListener('dragleave', ev => {
+    const d = ev.target.closest('[data-seq-drop]');
+    if (d) d.classList.remove('is-over');
+  });
+  document.addEventListener('drop', ev => {
+    const d = ev.target.closest('[data-seq-drop]');
+    if (!d) return;
+    ev.preventDefault();
+    d.classList.remove('is-over');
+    if (!started) { startTimer(); }
+    const dragging = document.querySelector('.seq-chip.dragging') || seqSelected;
+    placeSeqChip(dragging, d);
+  });
+
+  // Click-to-select for seq chips
+  document.addEventListener('click', ev => {
+    const chip = ev.target.closest('.seq-chip');
+    if (chip && !chip.classList.contains('is-locked')) {
+      if (seqSelected) seqSelected.classList.remove('is-selected');
+      seqSelected = chip;
+      chip.classList.add('is-selected');
+      if (!started) startTimer();
+      return;
+    }
+    const drop = ev.target.closest('[data-seq-drop]');
+    if (drop && seqSelected) {
+      placeSeqChip(seqSelected, drop);
+    }
+  });
+
+  setArc(TOTAL_TIME);
+  buildWave(0);
+})();
+
+/* ════════════════════════════════════════════
+   SLIDE 6 · QUIZ GAME "ADIVINÁ LA ESTRUCTURA"
+════════════════════════════════════════════ */
+(function(){
+  const QUESTIONS = [
+    { qs:'nasal',    lbl:'lbl-nasal',
+      text:'Soy la primera barrera del sistema respiratorio. <strong>Filtro, humidifico y caliento el aire</strong> antes de que siga su camino. También participo en la resonancia nasal del canto.',
+      hint:'Pista: estoy en la parte superior de la cara, entre los ojos.' },
+    { qs:'diafragma', lbl:'lbl-diafragma',
+      text:'Soy el músculo más importante de la respiración. Tengo forma de <strong>cúpula</strong> y separo el tórax del abdomen. Cuando me contraigo, desciendo y el aire entra a los pulmones.',
+      hint:'Pista: estoy debajo de los pulmones, en la base del tórax.' },
+    { qs:'laringe',  lbl:'lbl-laringe',
+      text:'Aquí nacen los sonidos. Los <strong>pliegues vocales</strong> que me rodean vibran cuando el aire sube desde los pulmones. Soy la sede de la fonación.',
+      hint:'Pista: me encontrás entre la faringe y la tráquea, en el cuello.' },
+    { qs:'pulmones', lbl:'lbl-pulmones',
+      text:'Somos los dos grandes órganos esponjosos donde ocurre el intercambio de gases. Guardamos el <strong>aire que alimenta la voz</strong> y lo cedemos de forma controlada al cantar.',
+      hint:'Pista: somos dos, uno a cada lado del tórax.' },
+    { qs:'traquea',  lbl:'lbl-traquea',
+      text:'Soy el tubo principal por donde baja el aire desde la laringe. Mis <strong>anillos cartilaginosos</strong> me mantienen abierto y me distinguen fácilmente en cualquier diagrama.',
+      hint:'Pista: conecto la laringe con los bronquios.' },
+    { qs:'faringe',  lbl:'lbl-faringe',
+      text:'Soy un canal muscular que comparte el recorrido del aire y los alimentos. Participo en la <strong>resonancia faríngea</strong> y conduzco el aire desde la nariz hacia la laringe.',
+      hint:'Pista: estoy detrás de la boca, entre la cavidad nasal y la laringe.' },
+    { qs:'bronquios', lbl:'lbl-bronquios',
+      text:'Soy la bifurcación del sistema. Cuando la tráquea termina, me divido en dos ramas que llevan el aire a cada pulmón. Cuanto más lejos del pulmón, más ancho soy.',
+      hint:'Pista: mi forma recuerda a la letra "Y" invertida.' },
+    { qs:'diafragma', lbl:'lbl-diafragma',
+      text:'En el canto, mi trabajo es <strong>descender lentamente</strong> durante la espiración para dosar el flujo de aire. Esto es lo que los cantantes llaman "apoyo". ¿Quién soy?',
+      hint:'Pista: soy el músculo con forma de cúpula.' },
+    { qs:'laringe',  lbl:'lbl-laringe',
+      text:'Soy la estructura que regula la <strong>presión subglótica</strong>. Si me tensan demasiado, la voz se quiebra o fatiga. Si me coordinan bien con el aire, el sonido fluye.',
+      hint:'Pista: mis pliegues vocales son las protagonistas.' },
+    { qs:'nasal',    lbl:'lbl-nasal',
+      text:'Cuando cantás con "resonancia nasal", el sonido rebota en mí. Tengo cornetes que aumentan la superficie de contacto con el aire y actúan también como <strong>caja de resonancia</strong>.',
+      hint:'Pista: estoy en la parte más alta del recorrido aéreo.' }
+  ];
+
+  const HOTSPOT_IDS = {
+    nasal: ['hs-nasal'],
+    faringe: ['hs-faringe'],
+    laringe: ['hs-laringe'],
+    traquea: ['hs-traquea'],
+    bronquios: ['hs-bronquios'],
+    pulmones: ['hs-pulmon-izq','hs-pulmon-der'],
+    diafragma: ['hs-diafragma']
+  };
+
+  let qIdx = 0;
+  let okN = 0;
+  let errN = 0;
+  let answered = false;
+
+  const clueN    = document.getElementById('quiz-clue-n');
+  const clueText = document.getElementById('quiz-clue-text');
+  const clueHint = document.getElementById('quiz-clue-hint');
+  const instrEl  = document.getElementById('quiz-instruction');
+  const pCur     = document.getElementById('qp-cur');
+  const pTot     = document.getElementById('qp-tot');
+  const pBar     = document.getElementById('quiz-progress-bar');
+  const okEl     = document.getElementById('q-ok-n');
+  const errEl    = document.getElementById('q-err-n');
+  const nextBtn  = document.getElementById('quiz-next-btn');
+  const revBtn   = document.getElementById('quiz-reveal-btn');
+  const restBtn  = document.getElementById('quiz-restart-btn');
+  const endMsg   = document.getElementById('quiz-end-msg');
+
+  if (!clueText) return; // slide not in DOM
+
+  pTot.textContent = QUESTIONS.length;
+
+  function clearHotspots() {
+    document.querySelectorAll('.q-hotspot').forEach(h => {
+      h.classList.remove('hs-correct','hs-wrong','hs-revealed');
+    });
+  }
+
+  function revealLabel(lbl) {
+    const el = document.getElementById(lbl);
+    if (el) el.style.opacity = '1';
+  }
+
+  function loadQuestion(i) {
+    answered = false;
+    nextBtn.disabled = true;
+    revBtn.disabled = false;
+    clearHotspots();
+    const q = QUESTIONS[i];
+    clueN.textContent = 'Pista ' + (i + 1) + ' de ' + QUESTIONS.length;
+    clueText.innerHTML = q.text;
+    clueHint.textContent = q.hint;
+    instrEl.textContent = '👆 Tocá en el diagrama la estructura que corresponde.';
+    instrEl.className = '';
+    pCur.textContent = i + 1;
+    pBar.style.width = ((i / QUESTIONS.length) * 100) + '%';
+    endMsg.className = '';
+    endMsg.style.display = 'none';
+  }
+
+  function handleHotspotClick(hsEl) {
+    if (answered) return;
+    const q = QUESTIONS[qIdx];
+    const clickedQs = hsEl.dataset.qs;
+    const correctIds = HOTSPOT_IDS[q.qs] || [];
+
+    answered = true;
+    nextBtn.disabled = false;
+
+    if (clickedQs === q.qs) {
+      // correct
+      correctIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hs-correct');
+      });
+      instrEl.textContent = '✅ ¡Correcto! ' + getStructureName(q.qs);
+      instrEl.className = 'qi-ok';
+      okN++;
+      okEl.textContent = okN;
+      revealLabel(q.lbl);
+    } else {
+      // wrong
+      hsEl.classList.add('hs-wrong');
+      setTimeout(() => hsEl.classList.remove('hs-wrong'), 600);
+      instrEl.textContent = '✗ No es ahí. Intentá de nuevo o usá "Ver respuesta".';
+      instrEl.className = 'qi-err';
+      errN++;
+      errEl.textContent = errN;
+      answered = false; // let them try again
+      nextBtn.disabled = true;
+    }
+  }
+
+  function getStructureName(qs) {
+    const names = {
+      nasal:'Fosas nasales', faringe:'Faringe', laringe:'Laringe',
+      traquea:'Tráquea', bronquios:'Bronquios', pulmones:'Pulmones', diafragma:'Diafragma'
+    };
+    return names[qs] || qs;
+  }
+
+  function showAnswer() {
+    if (answered) return;
+    answered = true;
+    nextBtn.disabled = false;
+    revBtn.disabled = true;
+    const q = QUESTIONS[qIdx];
+    const correctIds = HOTSPOT_IDS[q.qs] || [];
+    correctIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hs-revealed');
+    });
+    revealLabel(q.lbl);
+    instrEl.textContent = '💡 Era: ' + getStructureName(q.qs) + '. Avanzá a la siguiente pista.';
+    instrEl.className = 'qi-err';
+    errN++;
+    errEl.textContent = errN;
+  }
+
+  function nextQuestion() {
+    qIdx++;
+    if (qIdx >= QUESTIONS.length) {
+      // End
+      pBar.style.width = '100%';
+      clearHotspots();
+      clueN.textContent = 'Fin del juego';
+      clueText.innerHTML = '¡Completaste todas las preguntas!';
+      clueHint.textContent = '';
+      instrEl.textContent = '';
+      nextBtn.disabled = true;
+      revBtn.disabled = true;
+      const pct = Math.round(okN / (okN + errN) * 100) || 0;
+      endMsg.textContent = '🎯 Resultado: ' + okN + ' correctas de ' + QUESTIONS.length + ' (' + pct + '%)';
+      endMsg.className = 'show';
+      endMsg.style.display = 'block';
+    } else {
+      loadQuestion(qIdx);
+    }
+  }
+
+  function restartQuiz() {
+    qIdx = 0; okN = 0; errN = 0;
+    okEl.textContent = '0';
+    errEl.textContent = '0';
+    // hide all labels
+    document.querySelectorAll('.q-label-badge').forEach(l => l.style.opacity = '0');
+    loadQuestion(0);
+  }
+
+  // Wire hotspot clicks via SVG delegation
+  const diagramSvg = document.getElementById('quiz-diagram-svg');
+  if (diagramSvg) {
+    diagramSvg.addEventListener('click', ev => {
+      const hs = ev.target.closest('.q-hotspot');
+      if (hs) handleHotspotClick(hs);
+    });
+  }
+
+  nextBtn.addEventListener('click', nextQuestion);
+  revBtn.addEventListener('click', showAnswer);
+  restBtn.addEventListener('click', restartQuiz);
+
+  loadQuestion(0);
+})();
 </script>
 </body>
 </html>
